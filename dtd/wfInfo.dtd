@@ -1,0 +1,27 @@
+
+<!ELEMENT workflow ((simple_action|process_action)+)>
+<!ELEMENT simple_action (sub_action*)>
+<!ELEMENT process_action EMPTY>
+<!ELEMENT sub_action EMPTY>
+
+<!ATTLIST simple_action
+						name 	 		CDATA						#REQUIRED
+						role 	 		CDATA						#REQUIRED
+						auto			("true"|"false") "false"
+>
+<!ATTLIST process_action
+						name 	 		CDATA						#REQUIRED
+						role 	 		CDATA						#REQUIRED
+						sub_workflow 	IDREF 						#REQUIRED
+						auto			("true"|"false") "false"
+>
+
+<!ATTLIST sub_action
+
+						name_ref		CDATA						#REQUIRED
+>
+
+<!ATTLIST workflow
+						name			ID							#REQUIRED
+						process			("true"|"false") "false"
+>
