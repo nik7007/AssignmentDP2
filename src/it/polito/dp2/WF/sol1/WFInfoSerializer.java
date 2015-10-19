@@ -12,6 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,11 +39,6 @@ public class WFInfoSerializer {
         DocumentBuilderFactory factoryDOM = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factoryDOM.newDocumentBuilder();
         doc = builder.newDocument();
-        DOMImplementation domImpl = doc.getImplementation();
-        DocumentType doctype = domImpl.createDocumentType("wfInfo", "SYSTEM", "wfInfo.dtd");
-        doc.appendChild(doctype);
-
-
         CreateRoot("root");
 
     }
@@ -116,6 +113,13 @@ public class WFInfoSerializer {
         Transformer idTransform;
         idTransform = xformFactory.newTransformer();
         idTransform.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        DOMImplementation domImpl = doc.getImplementation();
+        DocumentType doctype = domImpl.createDocumentType("body", "SYSTEM", "wfInfo.dtd");
+        idTransform.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctype.getPublicId());
+        idTransform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
+
+
         Source input = new DOMSource(doc);
         Result output = new StreamResult(out);
         idTransform.transform(input, output);
@@ -130,7 +134,7 @@ public class WFInfoSerializer {
     }
 
 
-    public static void main(String[] args) throws WorkflowMonitorException, ParserConfigurationException, TransformerException {
+    public static void main(String[] args) throws WorkflowMonitorException, ParserConfigurationException, TransformerException, FileNotFoundException {
 
         WFInfoSerializer infoSerializer = new WFInfoSerializer();
         Set<WorkflowReader> workflowReaders = infoSerializer.getWorkflowReader();
@@ -140,6 +144,7 @@ public class WFInfoSerializer {
         }
 
         infoSerializer.serialize(System.out);
+        infoSerializer.serialize(new PrintStream(new FileOutputStream("dtd//test.xml")));
 
     }
 
