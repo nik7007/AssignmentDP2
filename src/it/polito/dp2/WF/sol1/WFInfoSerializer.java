@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Set;
 
 
@@ -31,7 +32,7 @@ public class WFInfoSerializer {
 
     public WFInfoSerializer() throws WorkflowMonitorException, ParserConfigurationException {
 
-        WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
+        it.polito.dp2.WF.WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         monitor = factory.newWorkflowMonitor();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
@@ -43,33 +44,56 @@ public class WFInfoSerializer {
 
     }
 
+    private String createDate(Calendar calendar) {
+
+        if (calendar != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+            simpleDateFormat.setCalendar(calendar);
+            simpleDateFormat.setTimeZone(calendar.getTimeZone());
+            return simpleDateFormat.format(calendar.getTime());
+        } else return "";
+
+    }
+
     private void CreateRoot(String rootName) {
         root = doc.createElement(rootName);
         doc.appendChild(root);
     }
 
-    public Element CreatWorkFlow(WorkflowReader wFR) {
+    public Element createWorkFlow(WorkflowReader wFR) {
 
         String name = wFR.getName();
         Set<ActionReader> actions = wFR.getActions();
         Element wokFlow = doc.createElement("workflow");
         wokFlow.setAttribute("name", name);
 
+        /*
+        Calendar calendar = null;
+
         for (ProcessReader processReader : getProcesses()) {
             if (processReader.getWorkflow().getName().equals(name)) {
 
                 wokFlow.setAttribute("process", "true");
+
+                calendar = processReader.getStartTime();
                 break;
             }
         }
 
+        if (calendar != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+            simpleDateFormat.setCalendar(calendar);
+            simpleDateFormat.setTimeZone(calendar.getTimeZone());
+            wokFlow.setAttribute("date", simpleDateFormat.format(calendar.getTime()));
+        }*/
+
         for (ActionReader actionReader : actions)
-            wokFlow.appendChild(CreatAction(actionReader));
+            wokFlow.appendChild(createAction(actionReader));
         return wokFlow;
 
     }
 
-    private Element CreatAction(ActionReader actionReader) {
+    private Element createAction(ActionReader actionReader) {
         Element action;
         boolean isSimple = false;
 
@@ -85,7 +109,7 @@ public class WFInfoSerializer {
         if (isSimple) {
             for (ActionReader a : ((SimpleActionReader) actionReader).getPossibleNextActions()) {
 
-                action.appendChild(CreatSubAction(a));
+                action.appendChild(createSubAction(a));
 
             }
 
@@ -93,18 +117,60 @@ public class WFInfoSerializer {
             action.setAttribute("sub_workflow", ((ProcessActionReader) actionReader).getActionWorkflow().getName());
         }
 
-        action.setAttribute("auto", (Boolean.valueOf(actionReader.isAutomaticallyInstantiated())).toString());
+        action.setAttribute("auto", (String.valueOf(actionReader.isAutomaticallyInstantiated())));
 
 
         return action;
     }
 
-    private Element CreatSubAction(ActionReader actionReader) {
+    private Element createSubAction(ActionReader actionReader) {
         Element subAction = doc.createElement("sub_action");
 
         subAction.setAttribute("name_ref", actionReader.getName());
 
         return subAction;
+    }
+
+    public Element createProcess(ProcessReader processReader) {
+        Element process = doc.createElement("process");
+        process.setAttribute("workflow", processReader.getWorkflow().getName());
+        process.setAttribute("date", createDate(processReader.getStartTime()));
+
+        for (ActionStatusReader actionStatusReader : processReader.getStatus()) {
+            process.appendChild(createActionStatus(actionStatusReader));
+        }
+
+        return process;
+
+    }
+
+    private Element createActionStatus(ActionStatusReader actionStatusReader) {
+        Element actionStatus = doc.createElement("action_status");
+
+        actionStatus.setAttribute("name", actionStatusReader.getActionName());
+        actionStatus.setAttribute("date", createDate(actionStatusReader.getTerminationTime()));
+        actionStatus.setAttribute("taken_in_charge", String.valueOf(actionStatusReader.isTakenInCharge()));
+        actionStatus.setAttribute("terminated", String.valueOf(actionStatusReader.isTerminated()));
+
+        Actor actor = actionStatusReader.getActor();
+
+        if (actor != null)
+            actionStatus.appendChild(createActor(actor));
+
+        return actionStatus;
+
+    }
+
+    private Element createActor(Actor actor) {
+
+        if (actor == null)
+            return null;
+        Element actorElement = doc.createElement("actor");
+
+        actorElement.setAttribute("name", actor.getName());
+        actorElement.setAttribute("role", actor.getRole());
+
+        return actorElement;
     }
 
     public void serialize(PrintStream out) throws TransformerException {
@@ -138,13 +204,39 @@ public class WFInfoSerializer {
 
         WFInfoSerializer infoSerializer = new WFInfoSerializer();
         Set<WorkflowReader> workflowReaders = infoSerializer.getWorkflowReader();
+        Set<ProcessReader> processReaders = infoSerializer.getProcesses();
 
         for (WorkflowReader reader : workflowReaders) {
-            infoSerializer.root.appendChild(infoSerializer.CreatWorkFlow(reader));
+            infoSerializer.root.appendChild(infoSerializer.createWorkFlow(reader));
+        }
+        for (ProcessReader processReader : processReaders) {
+            infoSerializer.root.appendChild(infoSerializer.createProcess(processReader));
         }
 
         infoSerializer.serialize(System.out);
-        infoSerializer.serialize(new PrintStream(new FileOutputStream("dtd//test.xml")));
+
+        String fileName = "${output}";
+
+        if (fileName.equals("${output}")) {
+            fileName = "output.xml";
+        } else {
+            char[] ext = {'.', 'x', 'm', 'l'};
+            boolean extension = true;
+
+            for (int i = 0; i < ext.length; i++) {
+                char c = fileName.charAt(fileName.length() - 4 + i);
+
+                if (c != ext[i]) {
+                    extension = false;
+                    break;
+                }
+            }
+
+            if (!extension)
+                fileName += ".xml";
+        }
+
+        infoSerializer.serialize(new PrintStream(new FileOutputStream("dtd//" + fileName)));
 
     }
 
