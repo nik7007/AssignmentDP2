@@ -36,7 +36,7 @@
 
         <!ATTLIST action_status
                 name            CDATA        #REQUIRED
-                date            CDATA        #REQUIRED
+                date            CDATA        #IMPLIED
                 taken_in_charge (true|false) "false"
                 terminated      (true|false) "false"
 

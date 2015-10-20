@@ -148,7 +148,9 @@ public class WFInfoSerializer {
         Element actionStatus = doc.createElement("action_status");
 
         actionStatus.setAttribute("name", actionStatusReader.getActionName());
-        actionStatus.setAttribute("date", createDate(actionStatusReader.getTerminationTime()));
+        String date = createDate(actionStatusReader.getTerminationTime());
+        if (!date.equals(""))
+            actionStatus.setAttribute("date", date);
         actionStatus.setAttribute("taken_in_charge", String.valueOf(actionStatusReader.isTakenInCharge()));
         actionStatus.setAttribute("terminated", String.valueOf(actionStatusReader.isTerminated()));
 
