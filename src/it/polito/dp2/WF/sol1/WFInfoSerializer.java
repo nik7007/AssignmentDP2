@@ -149,6 +149,7 @@ public class WFInfoSerializer {
 
         actionStatus.setAttribute("name", actionStatusReader.getActionName());
         String date = createDate(actionStatusReader.getTerminationTime());
+        //TODO:
         if (!date.equals(""))
             actionStatus.setAttribute("date", date);
         actionStatus.setAttribute("taken_in_charge", String.valueOf(actionStatusReader.isTakenInCharge()));
@@ -156,6 +157,7 @@ public class WFInfoSerializer {
 
         Actor actor = actionStatusReader.getActor();
 
+        //TODO:
         if (actor != null)
             actionStatus.appendChild(createActor(actor));
 
