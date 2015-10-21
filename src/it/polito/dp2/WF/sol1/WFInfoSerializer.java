@@ -15,7 +15,6 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Set;
@@ -24,7 +23,7 @@ import java.util.Set;
 public class WFInfoSerializer {
 
     private WorkflowMonitor monitor;
-    private DateFormat dateFormat;
+    //private DateFormat dateFormat;
 
     //xml stuff...
     private Document doc;    // document element
@@ -34,7 +33,7 @@ public class WFInfoSerializer {
 
         it.polito.dp2.WF.WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         monitor = factory.newWorkflowMonitor();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        //dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
         //DOM
         DocumentBuilderFactory factoryDOM = DocumentBuilderFactory.newInstance();
