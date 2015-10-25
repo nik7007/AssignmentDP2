@@ -34,11 +34,10 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         else {
             processReaderMap.put(date, processReader);
 
-            WorkflowReaderImp workflowReader = (WorkflowReaderImp) workflowReaderMap.get(processReader.getWorkflow().getName());
+            /*WorkflowReaderImp workflowReader = (WorkflowReaderImp) workflowReaderMap.get(processReader.getWorkflow().getName());
             if (workflowReader == null)
                 throw new WorkflowMonitorException("Impossible to find " + processReader.getWorkflow().getName());
-            else workflowReader.addProcessReader(processReader);
-
+            else workflowReader.addProcessReader(processReader);*/
         }
 
 

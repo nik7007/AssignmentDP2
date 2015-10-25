@@ -1,6 +1,9 @@
 package it.polito.dp2.WF.sol1;
 
 import it.polito.dp2.WF.*;
+import it.polito.dp2.WF.sol1.lib.SerializerException;
+import it.polito.dp2.WF.sol1.reference.DateFormat;
+import it.polito.dp2.WF.sol1.reference.XMLFormat;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -39,14 +42,14 @@ public class WFInfoSerializer {
         DocumentBuilderFactory factoryDOM = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factoryDOM.newDocumentBuilder();
         doc = builder.newDocument();
-        CreateRoot("root");
+        CreateRoot(XMLFormat.ELEM_ROOT.toString());
 
     }
 
     private String createDate(Calendar calendar) {
 
         if (calendar != null) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateFormat.DATE_FORMAT.toString());
             simpleDateFormat.setCalendar(calendar);
             simpleDateFormat.setTimeZone(calendar.getTimeZone());
             return simpleDateFormat.format(calendar.getTime());
@@ -59,12 +62,12 @@ public class WFInfoSerializer {
         doc.appendChild(root);
     }
 
-    public Element createWorkFlow(WorkflowReader wFR) {
+    public Element createWorkFlow(WorkflowReader wFR) throws SerializerException {
 
         String name = wFR.getName();
         Set<ActionReader> actions = wFR.getActions();
-        Element wokFlow = doc.createElement("workflow");
-        wokFlow.setAttribute("name", name);
+        Element wokFlow = doc.createElement(XMLFormat.ELEM_WORKFLOW.toString());
+        wokFlow.setAttribute(XMLFormat.ATT_NAME.toString(), name);
 
         /*
         Calendar calendar = null;
@@ -92,18 +95,19 @@ public class WFInfoSerializer {
 
     }
 
-    private Element createAction(ActionReader actionReader) {
+    private Element createAction(ActionReader actionReader) throws SerializerException {
         Element action;
         boolean isSimple = false;
 
         if (actionReader instanceof SimpleActionReader) {
-            action = doc.createElement("simple_action");
+            action = doc.createElement(XMLFormat.ELEM_SIMPLE_ACTION.toString());
             isSimple = true;
-        } else
-            action = doc.createElement("process_action");
+        } else if (actionReader instanceof ProcessActionReader)
+            action = doc.createElement(XMLFormat.ELEM_PROCESS_ACTION.toString());
+        else throw new SerializerException("\'" + actionReader.getClass() + "\' is not a valid class!");
 
-        action.setAttribute("name", actionReader.getName());
-        action.setAttribute("role", actionReader.getRole());
+        action.setAttribute(XMLFormat.ATT_NAME.toString(), actionReader.getName());
+        action.setAttribute(XMLFormat.ATT_ROLE.toString(), actionReader.getRole());
 
         if (isSimple) {
             for (ActionReader a : ((SimpleActionReader) actionReader).getPossibleNextActions()) {
@@ -113,27 +117,27 @@ public class WFInfoSerializer {
             }
 
         } else {
-            action.setAttribute("sub_workflow", ((ProcessActionReader) actionReader).getActionWorkflow().getName());
+            action.setAttribute(XMLFormat.ATT_SUB_WORKFLOW.toString(), ((ProcessActionReader) actionReader).getActionWorkflow().getName());
         }
 
-        action.setAttribute("auto", (String.valueOf(actionReader.isAutomaticallyInstantiated())));
+        action.setAttribute(XMLFormat.ATT_AUTO.toString(), (String.valueOf(actionReader.isAutomaticallyInstantiated())));
 
 
         return action;
     }
 
     private Element createSubAction(ActionReader actionReader) {
-        Element subAction = doc.createElement("sub_action");
+        Element subAction = doc.createElement(XMLFormat.ELEM_SUB_ACTION.toString());
 
-        subAction.setAttribute("name_ref", actionReader.getName());
+        subAction.setAttribute(XMLFormat.ATT_NAME_REF.toString(), actionReader.getName());
 
         return subAction;
     }
 
     public Element createProcess(ProcessReader processReader) {
-        Element process = doc.createElement("process");
-        process.setAttribute("workflow", processReader.getWorkflow().getName());
-        process.setAttribute("date", createDate(processReader.getStartTime()));
+        Element process = doc.createElement(XMLFormat.ELEM_PROCESS.toString());
+        process.setAttribute(XMLFormat.ELEM_WORKFLOW.toString(), processReader.getWorkflow().getName());
+        process.setAttribute(XMLFormat.ATT_DATE.toString(), createDate(processReader.getStartTime()));
 
         for (ActionStatusReader actionStatusReader : processReader.getStatus()) {
             process.appendChild(createActionStatus(actionStatusReader));
@@ -144,19 +148,18 @@ public class WFInfoSerializer {
     }
 
     private Element createActionStatus(ActionStatusReader actionStatusReader) {
-        Element actionStatus = doc.createElement("action_status");
+        Element actionStatus = doc.createElement(XMLFormat.ELEM_ACTION_STATUS.toString());
 
-        actionStatus.setAttribute("name", actionStatusReader.getActionName());
+        actionStatus.setAttribute(XMLFormat.ATT_NAME.toString(), actionStatusReader.getActionName());
         String date = createDate(actionStatusReader.getTerminationTime());
-        //TODO:
+
         if (!date.equals(""))
-            actionStatus.setAttribute("date", date);
-        actionStatus.setAttribute("taken_in_charge", String.valueOf(actionStatusReader.isTakenInCharge()));
-        actionStatus.setAttribute("terminated", String.valueOf(actionStatusReader.isTerminated()));
+            actionStatus.setAttribute(XMLFormat.ATT_DATE.toString(), date);
+        actionStatus.setAttribute(XMLFormat.ATT_TAKEN_IN_CHARGE.toString(), String.valueOf(actionStatusReader.isTakenInCharge()));
+        actionStatus.setAttribute(XMLFormat.ATT_TERMINATED.toString(), String.valueOf(actionStatusReader.isTerminated()));
 
         Actor actor = actionStatusReader.getActor();
 
-        //TODO:
         if (actor != null)
             actionStatus.appendChild(createActor(actor));
 
@@ -168,10 +171,10 @@ public class WFInfoSerializer {
 
         if (actor == null)
             return null;
-        Element actorElement = doc.createElement("actor");
+        Element actorElement = doc.createElement(XMLFormat.ELEM_ACTOR.toString());
 
-        actorElement.setAttribute("name", actor.getName());
-        actorElement.setAttribute("role", actor.getRole());
+        actorElement.setAttribute(XMLFormat.ATT_NAME.toString(), actor.getName());
+        actorElement.setAttribute(XMLFormat.ATT_ROLE.toString(), actor.getRole());
 
         return actorElement;
     }
@@ -203,7 +206,7 @@ public class WFInfoSerializer {
     }
 
 
-    public static void main(String[] args) throws WorkflowMonitorException, ParserConfigurationException, TransformerException, FileNotFoundException {
+    public static void main(String[] args) throws WorkflowMonitorException, ParserConfigurationException, TransformerException, FileNotFoundException, SerializerException {
 
         WFInfoSerializer infoSerializer = new WFInfoSerializer();
         Set<WorkflowReader> workflowReaders = infoSerializer.getWorkflowReader();
