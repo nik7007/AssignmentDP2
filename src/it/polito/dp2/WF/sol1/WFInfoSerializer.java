@@ -221,9 +221,9 @@ public class WFInfoSerializer {
 
         infoSerializer.serialize(System.out);
 
-        String fileName = "${output}";
+        String fileName = args[0];
 
-        if (fileName.equals("${output}")) {
+        if (args.length <= 0) {
             fileName = "output.xml";
         } else {
             char[] ext = {'.', 'x', 'm', 'l'};
@@ -242,7 +242,7 @@ public class WFInfoSerializer {
                 fileName += ".xml";
         }
 
-        infoSerializer.serialize(new PrintStream(new FileOutputStream("dtd//" + fileName)));
+        infoSerializer.serialize(new PrintStream(new FileOutputStream(/*"dtd//" + */fileName)));
 
     }
 

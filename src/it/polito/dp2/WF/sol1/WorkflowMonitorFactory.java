@@ -7,7 +7,7 @@ import it.polito.dp2.WF.sol1.lib.WorkflowMonitorImpl;
 
 public class WorkflowMonitorFactory extends it.polito.dp2.WF.WorkflowMonitorFactory {
 
-    private WorkflowMonitorFactory() {
+    public WorkflowMonitorFactory() {
         super();
     }
 
