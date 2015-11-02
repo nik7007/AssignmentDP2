@@ -1,10 +1,8 @@
 package it.polito.dp2.WF.sol1.lib;
 
 
-import it.polito.dp2.WF.ProcessReader;
-import it.polito.dp2.WF.WorkflowMonitor;
-import it.polito.dp2.WF.WorkflowMonitorException;
-import it.polito.dp2.WF.WorkflowReader;
+import it.polito.dp2.WF.*;
+import it.polito.dp2.WF.sol1.reference.DateFormat;
 import it.polito.dp2.WF.sol1.reference.XMLFormat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,6 +15,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class WorkflowMonitorImpl implements WorkflowMonitor {
@@ -52,7 +52,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-    private void createElements(Document document) throws WorkflowMonitorException {
+    private void createElements(Document document) throws WorkflowMonitorException, ParseException, WorkflowReaderException {
 
         Element root = document.getDocumentElement();
 
@@ -65,12 +65,10 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
                 addWorkflowReader(createWorkflowReader((Element) node));
         }
 
-        for (int i =0;i<processes.getLength();i++)
-        {
+        for (int i = 0; i < processes.getLength(); i++) {
             Node node = processes.item(i);
-            if(node.getNodeType() == Node.ELEMENT_NODE)
-                //ToDO:
-            ;
+            if (node.getNodeType() == Node.ELEMENT_NODE)
+                addProcessReader(createProcessReader((Element) node));
         }
 
     }
@@ -80,11 +78,53 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-    private ProcessReader createProcessReader(Element element)
-    {
-        String date = element.getAttribute(XMLFormat.ATT_DATE.toString());
+    private Calendar createCalendar(String date) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateFormat.DATE_FORMAT.toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(simpleDateFormat.parse(date));
 
-        return null; //new ProcessReaderImp()
+        return calendar;
+
+    }
+
+    private ProcessReader createProcessReader(Element element) throws ParseException, WorkflowReaderException {
+
+        String date = element.getAttribute(XMLFormat.ATT_DATE.toString());
+        Calendar calendar = createCalendar(date);
+        WorkflowReader workflow = getWorkflow(element.getAttribute(XMLFormat.ELEM_WORKFLOW.toString()));
+        NodeList actionStatus = element.getElementsByTagName(XMLFormat.ELEM_ACTION_STATUS.toString());
+
+        for (int i = 0; i < actionStatus.getLength(); i++) {
+            Node node = actionStatus.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE)
+                //ToDo: action_status!
+                ;
+        }
+
+
+        return new ProcessReaderImp(calendar, workflow);
+    }
+
+    private ActionStatusReader createActionStatusReader(Element element) throws ParseException {
+
+        ActionStatusReaderImp actionStatusReader = new ActionStatusReaderImp(element.getAttribute(XMLFormat.ATT_NAME.toString()));
+        Actor actor = null;
+        Calendar date = null;
+
+        if (element.hasAttribute(XMLFormat.ATT_DATE.toString()))
+            date = createCalendar(element.getAttribute(XMLFormat.ATT_DATE.toString()));
+
+        actionStatusReader.terminate(date);
+
+        //ToDo: actor!!
+
+
+        return actionStatusReader;
+    }
+
+    private Actor createActor(Element element) {
+
+        return new Actor(element.getAttribute(XMLFormat.ATT_NAME.toString()),element.getAttribute(XMLFormat.ATT_ROLE.toString()));
     }
 
     public void addWorkflowReader(WorkflowReader workflowReader) throws WorkflowMonitorException {

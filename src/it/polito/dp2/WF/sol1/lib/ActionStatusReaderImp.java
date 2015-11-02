@@ -20,7 +20,7 @@ public class ActionStatusReaderImp implements ActionStatusReader {
         this.actor = actor;
     }
 
-    private void terminate(Calendar terminationTime) {
+    public void terminate(Calendar terminationTime) {
         this.terminationTime = terminationTime;
     }
 
