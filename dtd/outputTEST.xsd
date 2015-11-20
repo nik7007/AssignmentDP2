@@ -26,8 +26,9 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="workflowType">
-        <xs:sequence>
-            <xs:element type="simple_actionType" name="simple_action" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:sequence maxOccurs="unbounded" minOccurs="1" >
+            <xs:element type="simple_actionType" name="simple_action" minOccurs="0"/>
+            <xs:element type="process_actionType" name="process_action"  minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:ID" name="name"/>
     </xs:complexType>
