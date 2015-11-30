@@ -41,11 +41,18 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(new InputSource(xmlFile));
+            createElements(document);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (WorkflowMonitorException e) {
+            e.printStackTrace();
+        } catch (WorkflowReaderException e) {
             e.printStackTrace();
         }
 
@@ -63,6 +70,17 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             Node node = workflows.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE)
                 addWorkflowReader(createWorkflowReader((Element) node));
+        }
+
+        for (int i = 0; i < workflows.getLength(); i++) {
+            Node node = workflows.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                //ToDo: actions!!!
+                Element workflowElement = (Element)node;
+                NodeList simpleActions = workflowElement.getElementsByTagName(XMLFormat.ELEM_SIMPLE_ACTION.toString());
+
+            }
+
         }
 
         for (int i = 0; i < processes.getLength(); i++) {
@@ -93,16 +111,16 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         Calendar calendar = createCalendar(date);
         WorkflowReader workflow = getWorkflow(element.getAttribute(XMLFormat.ELEM_WORKFLOW.toString()));
         NodeList actionStatus = element.getElementsByTagName(XMLFormat.ELEM_ACTION_STATUS.toString());
+        ProcessReaderImp processReader = new ProcessReaderImp(calendar, workflow);
 
         for (int i = 0; i < actionStatus.getLength(); i++) {
             Node node = actionStatus.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE)
-                //ToDo: action_status!
-                ;
+                processReader.addActionStatusReader(createActionStatusReader((Element) node));
         }
 
 
-        return new ProcessReaderImp(calendar, workflow);
+        return processReader;
     }
 
     private ActionStatusReader createActionStatusReader(Element element) throws ParseException {
@@ -116,15 +134,18 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
         actionStatusReader.terminate(date);
 
-        //ToDo: actor!!
-
-
+        if (element.hasChildNodes()) {
+            Node node = element.getFirstChild();
+            if (node.getNodeType() == Node.ELEMENT_NODE)
+                actor = createActor((Element) node);
+        }
+        actionStatusReader.takeInCharge(actor);
         return actionStatusReader;
     }
 
     private Actor createActor(Element element) {
 
-        return new Actor(element.getAttribute(XMLFormat.ATT_NAME.toString()),element.getAttribute(XMLFormat.ATT_ROLE.toString()));
+        return new Actor(element.getAttribute(XMLFormat.ATT_NAME.toString()), element.getAttribute(XMLFormat.ATT_ROLE.toString()));
     }
 
     public void addWorkflowReader(WorkflowReader workflowReader) throws WorkflowMonitorException {
