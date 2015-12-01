@@ -77,7 +77,27 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 //ToDo: actions!!!
                 Element workflowElement = (Element)node;
-                NodeList simpleActions = workflowElement.getElementsByTagName(XMLFormat.ELEM_SIMPLE_ACTION.toString());
+                WorkflowReaderImp workflow = (WorkflowReaderImp) workflowReaderMap.get(workflowElement.getAttribute(XMLFormat.ATT_NAME.toString()));
+
+                NodeList simpleActionElements = workflowElement.getElementsByTagName(XMLFormat.ELEM_SIMPLE_ACTION.toString());
+                NodeList processActionsElements = workflowElement.getElementsByTagName(XMLFormat.ELEM_PROCESS_ACTION.toString());
+
+                for(int j = 0; j<processActionsElements.getLength();j++)
+                {
+                    Node procNode = workflows.item(j);
+
+                    if (procNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                        Element procElem = (Element) procNode;
+
+                        String name = procElem.getAttribute(XMLFormat.ATT_NAME.toString());
+                        String role = procElem.getAttribute(XMLFormat.ATT_ROLE.toString());
+                        boolean auto = new Boolean(procElem.getAttribute(XMLFormat.ATT_AUTO.toString()));
+                        WorkflowReader workflowReader = workflowReaderMap.get(procElem.getAttribute(XMLFormat.ATT_SUB_WORKFLOW.toString()));
+
+                        workflow.addActionReader(new ProcessActionReaderImp(name,workflow,role,auto,workflowReader));
+                    }
+                }
 
             }
 
@@ -88,6 +108,21 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             if (node.getNodeType() == Node.ELEMENT_NODE)
                 addProcessReader(createProcessReader((Element) node));
         }
+
+    }
+
+    private void createSimpleActionReader(WorkflowReaderImp workflow, NodeList simpleActionElements){
+
+        Map<String, ActionReader> actionReaderMap =  new HashMap<>();
+
+        for(ActionReader ar: workflow.getActions())
+            actionReaderMap.put(ar.getName(),ar);
+
+        for(int i = 0 ; i<simpleActionElements.getLength();i++)
+        {
+
+        }
+
 
     }
 
