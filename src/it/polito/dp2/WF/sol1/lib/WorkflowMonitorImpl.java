@@ -24,13 +24,10 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
     private Map<String, WorkflowReader> workflowReaderMap;
     private Map<Calendar, ProcessReader> processReaderMap;
 
-    private String fileName;
-    private Document document;
-
     public WorkflowMonitorImpl() {
         workflowReaderMap = new HashMap<>();
         processReaderMap = new HashMap<>();
-        fileName = System.getProperty("it.polito.dp2.WF.sol1.WFInfo.file");
+        String fileName = System.getProperty("it.polito.dp2.WF.sol1.WFInfo.file");
         parseXMLWithDOM(fileName);
     }
 
@@ -40,7 +37,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(new InputSource(xmlFile));
+            Document document = builder.parse(new InputSource(xmlFile));
             createElements(document);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -54,12 +51,14 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             e.printStackTrace();
         } catch (WorkflowReaderException e) {
             e.printStackTrace();
+        } catch (SerializerException e) {
+            e.printStackTrace();
         }
 
 
     }
 
-    private void createElements(Document document) throws WorkflowMonitorException, ParseException, WorkflowReaderException {
+    private void createElements(Document document) throws WorkflowMonitorException, ParseException, WorkflowReaderException, SerializerException {
 
         Element root = document.getDocumentElement();
 
@@ -76,28 +75,24 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             Node node = workflows.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 //ToDo: actions!!!
-                Element workflowElement = (Element)node;
+                Element workflowElement = (Element) node;
                 WorkflowReaderImp workflow = (WorkflowReaderImp) workflowReaderMap.get(workflowElement.getAttribute(XMLFormat.ATT_NAME.toString()));
 
                 NodeList simpleActionElements = workflowElement.getElementsByTagName(XMLFormat.ELEM_SIMPLE_ACTION.toString());
                 NodeList processActionsElements = workflowElement.getElementsByTagName(XMLFormat.ELEM_PROCESS_ACTION.toString());
 
-                for(int j = 0; j<processActionsElements.getLength();j++)
-                {
+                for (int j = 0; j < processActionsElements.getLength(); j++) {
                     Node procNode = workflows.item(j);
 
                     if (procNode.getNodeType() == Node.ELEMENT_NODE) {
 
                         Element procElem = (Element) procNode;
 
-                        String name = procElem.getAttribute(XMLFormat.ATT_NAME.toString());
-                        String role = procElem.getAttribute(XMLFormat.ATT_ROLE.toString());
-                        boolean auto = new Boolean(procElem.getAttribute(XMLFormat.ATT_AUTO.toString()));
-                        WorkflowReader workflowReader = workflowReaderMap.get(procElem.getAttribute(XMLFormat.ATT_SUB_WORKFLOW.toString()));
-
-                        workflow.addActionReader(new ProcessActionReaderImp(name,workflow,role,auto,workflowReader));
+                        workflow.addActionReader(createAction(procElem, workflow));
                     }
                 }
+
+                createSimpleActionReader(workflow, simpleActionElements);
 
             }
 
@@ -111,16 +106,100 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-    private void createSimpleActionReader(WorkflowReaderImp workflow, NodeList simpleActionElements){
+    private ActionReader createAction(Element action, WorkflowReader workflow) throws SerializerException {
 
-        Map<String, ActionReader> actionReaderMap =  new HashMap<>();
+        String name = action.getAttribute(XMLFormat.ATT_NAME.toString());
+        String role = action.getAttribute(XMLFormat.ATT_ROLE.toString());
+        boolean auto = Boolean.valueOf(action.getAttribute(XMLFormat.ATT_AUTO.toString()));
 
-        for(ActionReader ar: workflow.getActions())
-            actionReaderMap.put(ar.getName(),ar);
+        if (action.getTagName().equals(XMLFormat.ELEM_SIMPLE_ACTION.toString())) {
 
-        for(int i = 0 ; i<simpleActionElements.getLength();i++)
-        {
+            return new SimpleActionReaderImp(name, workflow, role, auto);
 
+        } else if (action.getTagName().equals(XMLFormat.ELEM_PROCESS_ACTION.toString())) {
+
+            WorkflowReader workflowReader = workflowReaderMap.get(action.getAttribute(XMLFormat.ATT_SUB_WORKFLOW.toString()));
+
+            return new ProcessActionReaderImp(name, workflow, role, auto, workflowReader);
+
+        } else {
+            throw new SerializerException("\'" + action.getTagName() + "\' is not a valid tag name!");
+        }
+        //return null;
+    }
+
+    private void createSimpleActionReader(WorkflowReaderImp workflow, NodeList simpleActionElements) throws SerializerException, WorkflowReaderException {
+
+        Map<String, ActionReader> actionReaderMap = new HashMap<>();
+        Map<String, List<String>> simpleNextActions = new HashMap<>();
+
+        for (ActionReader ar : workflow.getActions())
+            actionReaderMap.put(ar.getName(), ar);
+
+        for (int i = 0; i < simpleActionElements.getLength(); i++) {
+
+            Node sActionNode = simpleActionElements.item(i);
+            {
+                if (sActionNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element sActionElem = (Element) sActionNode;
+
+
+                    ActionReader simpleActionReaderImp = createAction(sActionElem, workflow);
+                    String actionName = simpleActionReaderImp.getName();
+                    actionReaderMap.put(actionName, simpleActionReaderImp);
+
+                    workflow.addActionReader(simpleActionReaderImp);
+
+                    if (sActionElem.hasChildNodes()) {
+                        List<String> simpleNextActon = new LinkedList<>();
+                        NodeList subActions = sActionElem.getElementsByTagName(XMLFormat.ELEM_SUB_ACTION.toString());
+                        for (int j = 0; j < subActions.getLength(); j++) {
+                            Node subActionNode = subActions.item(j);
+
+                            if (subActionNode.getNodeType() == Node.ELEMENT_NODE) {
+                                Element subActionElem = (Element) subActionNode;
+                                simpleNextActon.add(subActionElem.getAttribute(XMLFormat.ATT_NAME_REF.toString()));
+
+                            }
+
+                        }
+
+                        simpleNextActions.put(actionName, simpleNextActon);
+
+                    }
+
+                }
+            }
+
+
+        }
+
+        /*simpleNextActions.forEach((actionKey, actionList) -> {
+
+            ActionReader actionReader = actionReaderMap.get(actionKey);
+            if (actionReader instanceof SimpleActionReaderImp) {
+                for (String action : actionList) {
+                    ActionReader actionR = actionReaderMap.get(action);
+                    if (actionR != null)
+                        ((SimpleActionReaderImp) actionReader).addActionReader(actionR);
+                }
+            }
+
+        });*/
+
+        for (Map.Entry<String, List<String>> entry : simpleNextActions.entrySet()) {
+            String actionKey = entry.getKey();
+            List<String> actionList = entry.getValue();
+
+            ActionReader actionReader = actionReaderMap.get(actionKey);
+            if (actionReader instanceof SimpleActionReaderImp) {
+                for (String action : actionList) {
+                    ActionReader actionR = actionReaderMap.get(action);
+                    if (actionR != null)
+                        ((SimpleActionReaderImp) actionReader).addActionReader(actionR);
+                }
+            }
         }
 
 
