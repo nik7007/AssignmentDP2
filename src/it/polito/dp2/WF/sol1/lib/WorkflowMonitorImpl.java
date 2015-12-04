@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         workflowReaderMap = new HashMap<>();
         processReaderMap = new HashMap<>();
         String fileName = System.getProperty("it.polito.dp2.WF.sol1.WFInfo.file");
+        //System.err.println(fileName);
         parseXMLWithDOM(fileName);
     }
 
@@ -37,7 +39,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new InputSource(xmlFile));
+            Document document = builder.parse(String.valueOf((new File(xmlFile)).toURI()));
             createElements(document);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -74,7 +76,6 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         for (int i = 0; i < workflows.getLength(); i++) {
             Node node = workflows.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                //ToDo: actions!!!
                 Element workflowElement = (Element) node;
                 WorkflowReaderImp workflow = (WorkflowReaderImp) workflowReaderMap.get(workflowElement.getAttribute(XMLFormat.ATT_NAME.toString()));
 
