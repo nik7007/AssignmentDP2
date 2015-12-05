@@ -8,7 +8,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -250,9 +249,14 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         actionStatusReader.terminate(date);
 
         if (element.hasChildNodes()) {
-            Node node = element.getFirstChild();
-            if (node.getNodeType() == Node.ELEMENT_NODE)
-                actor = createActor((Element) node);
+            NodeList actorsNode = element.getChildNodes();
+            for (int i = 0; i < actorsNode.getLength(); i++) {
+                Node node = actorsNode.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    actor = createActor((Element) node);
+                    break;
+                }
+            }
         }
         actionStatusReader.takeInCharge(actor);
         return actionStatusReader;
