@@ -13,7 +13,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,21 +37,9 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(String.valueOf((new File(xmlFile)).toURI()));
+            Document document = builder.parse(xmlFile);
             createElements(document);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (WorkflowMonitorException e) {
-            e.printStackTrace();
-        } catch (WorkflowReaderException e) {
-            e.printStackTrace();
-        } catch (SerializerException e) {
+        } catch (ParserConfigurationException | SerializerException | WorkflowReaderException | WorkflowMonitorException | ParseException | IOException | SAXException e) {
             e.printStackTrace();
         }
 
