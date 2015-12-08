@@ -8,8 +8,8 @@
         </xs:sequence>
         <xs:attribute type="xs:dateTime" name="date" use="required"/>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:boolean" name="taken_in_charge" use="required" default="false"/>
-        <xs:attribute type="xs:boolean" name="terminated" use="required" default="false"/>
+        <xs:attribute type="xs:boolean" name="taken_in_charge" use="optional" default="false"/>
+        <xs:attribute type="xs:boolean" name="terminated" use="optional" default="false"/>
     </xs:complexType>
     <xs:complexType name="actorType">
         <xs:simpleContent>
@@ -51,7 +51,7 @@
     <xs:complexType name="actionType">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="role" use="required"/>
-        <xs:attribute type="xs:boolean" name="auto" use="required" default="false"/>
+        <xs:attribute type="xs:boolean" name="auto" use="optional" default="false"/>
     </xs:complexType>
     <xs:complexType name="simple_actionType" mixed="true">
         <xs:complexContent>
