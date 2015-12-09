@@ -6,7 +6,7 @@
         <xs:sequence>
             <xs:element type="actorType" name="actor" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:dateTime" name="date" use="required"/>
+        <xs:attribute type="xs:dateTime" name="date" use="optional"/>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="taken_in_charge" use="optional" default="false"/>
         <xs:attribute type="xs:boolean" name="terminated" use="optional" default="false"/>
