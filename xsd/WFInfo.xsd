@@ -21,26 +21,34 @@
     </xs:complexType>
     <xs:complexType name="rootType">
         <xs:sequence>
-            <xs:element type="workflowType" name="workflow" maxOccurs="unbounded"/>
+            <xs:element name="workflow" maxOccurs="unbounded">
+
+                <xs:complexType>
+                    <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                        <xs:choice>
+                            <xs:element type="simple_actionType" name="simple_action" minOccurs="0"/>
+                            <xs:element type="process_actionType" name="process_action" minOccurs="0"/>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attribute type="xs:ID" name="name"/>
+                </xs:complexType>
+
+                <xs:key name="action_ID">
+                    <xs:selector xpath="simple_actionType/process_actionType"/>
+                    <xs:field xpath="@name"/>
+                </xs:key>
+
+                <xs:keyref name="action_RefID" refer="action_ID">
+                    <xs:selector xpath="sub_actionType"/>
+                    <xs:field xpath="@name_ref"/>
+                </xs:keyref>
+
+            </xs:element>
             <xs:element type="processType" name="process" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="workflowType">
-        <xs:sequence maxOccurs="unbounded" minOccurs="1">
-            <xs:choice>
-                <xs:element type="simple_actionType" name="simple_action" minOccurs="0"/>
-                <xs:element type="process_actionType" name="process_action" minOccurs="0"/>
-            </xs:choice>
-        </xs:sequence>
-        <xs:attribute type="xs:ID" name="name"/>
-    </xs:complexType>
-    <xs:complexType name="sub_actionType">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="name_ref" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
+
+
     <xs:complexType name="processType">
         <xs:sequence>
             <xs:element type="action_statusType" name="action_status" maxOccurs="unbounded" minOccurs="0"/>
@@ -53,6 +61,16 @@
         <xs:attribute type="xs:string" name="role" use="required"/>
         <xs:attribute type="xs:boolean" name="auto" use="optional" default="false"/>
     </xs:complexType>
+
+
+    <xs:complexType name="sub_actionType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name_ref" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="simple_actionType" mixed="true">
         <xs:complexContent>
             <xs:extension base="actionType">
@@ -62,6 +80,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+
+
     <xs:complexType name="process_actionType">
         <xs:complexContent>
             <xs:extension base="actionType">
