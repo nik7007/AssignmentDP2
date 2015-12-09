@@ -185,6 +185,8 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
                     ActionReader actionR = actionReaderMap.get(action);
                     if (actionR != null)
                         ((SimpleActionReaderImp) actionReader).addActionReader(actionR);
+                    else
+                        throw new WorkflowReaderException("\'" + action + "\' does not exit");
                 }
             }
         }
