@@ -2,6 +2,7 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="root" type="rootType"/>
+
     <xs:complexType name="action_statusType" mixed="true">
         <xs:sequence>
             <xs:element type="actorType" name="actor" minOccurs="0"/>
@@ -11,6 +12,7 @@
         <xs:attribute type="xs:boolean" name="taken_in_charge" use="optional" default="false"/>
         <xs:attribute type="xs:boolean" name="terminated" use="optional" default="false"/>
     </xs:complexType>
+
     <xs:complexType name="actorType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
@@ -19,6 +21,7 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
     <xs:complexType name="rootType">
         <xs:sequence>
             <xs:element type="workflowType" name="workflow" maxOccurs="unbounded">
