@@ -2,7 +2,7 @@ package it.polito.dp2.WF.sol1.reference;
 
 public enum DateFormat {
 
-    DATE_FORMAT("yyyy-MM-dd HH:mm:ss.SSS z");
+    DATE_FORMAT("yyyy-MM-dd HH:mm:ss.SSSXXX");
     private String date;
 
     DateFormat(String date) {
