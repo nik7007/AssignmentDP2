@@ -21,17 +21,7 @@
     </xs:complexType>
     <xs:complexType name="rootType">
         <xs:sequence>
-            <xs:element name="workflow" maxOccurs="unbounded">
-
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                        <xs:choice>
-                            <xs:element type="simple_actionType" name="simple_action" minOccurs="0"/>
-                            <xs:element type="process_actionType" name="process_action" minOccurs="0"/>
-                        </xs:choice>
-                    </xs:sequence>
-                    <xs:attribute type="xs:ID" name="name"/>
-                </xs:complexType>
+            <xs:element type="workflowType" name="workflow" maxOccurs="unbounded">
 
                 <xs:key name="action_ID">
                     <xs:selector xpath="simple_actionType/process_actionType"/>
@@ -44,8 +34,19 @@
                 </xs:keyref>
 
             </xs:element>
+
             <xs:element type="processType" name="process" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="workflowType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:choice>
+                <xs:element type="simple_actionType" name="simple_action" minOccurs="0"/>
+                <xs:element type="process_actionType" name="process_action" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute type="xs:ID" name="name"/>
     </xs:complexType>
 
 
