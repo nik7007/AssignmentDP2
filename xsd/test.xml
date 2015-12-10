@@ -13,7 +13,7 @@
             <sub_action name_ref="Publication"/>
         </simple_action>
     </workflow>
-    <process date="2015-10-15T00:16:40.000" workflow="ArticleProduction">
+    <process date="2015-10-15T00:16:40.000+02:00" workflow="ArticleProduction">
         <action_status date="2015-10-15T09:12:40.000" name="Writing" taken_in_charge="true" terminated="true">
             <actor name="Eva Bianchi" role="Journalist"/>
         </action_status>

@@ -3,7 +3,7 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="root" type="rootType"/>
 
-    <xs:complexType name="action_statusType" mixed="true">
+    <xs:complexType name="action_statusType">
         <xs:sequence>
             <xs:element type="actorType" name="actor" minOccurs="0"/>
         </xs:sequence>
@@ -14,12 +14,8 @@
     </xs:complexType>
 
     <xs:complexType name="actorType">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="name" use="required"/>
-                <xs:attribute type="xs:string" name="role" use="required"/>
-            </xs:extension>
-        </xs:simpleContent>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="role" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="rootType">
@@ -27,7 +23,7 @@
             <xs:element type="workflowType" name="workflow" maxOccurs="unbounded">
 
                 <xs:key name="action_ID">
-                    <xs:selector xpath="simple_actionType/process_actionType"/>
+                    <xs:selector xpath="simple_actionType|process_actionType"/>
                     <xs:field xpath="@name"/>
                 </xs:key>
 
@@ -60,6 +56,7 @@
         <xs:attribute type="xs:dateTime" name="date" use="required"/>
         <xs:attribute type="xs:IDREF" name="workflow" use="required"/>
     </xs:complexType>
+
     <xs:complexType name="actionType">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="role" use="required"/>
@@ -68,14 +65,10 @@
 
 
     <xs:complexType name="sub_actionType">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="name_ref" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
+        <xs:attribute type="xs:string" name="name_ref" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="simple_actionType" mixed="true">
+    <xs:complexType name="simple_actionType">
         <xs:complexContent>
             <xs:extension base="actionType">
                 <xs:sequence>
