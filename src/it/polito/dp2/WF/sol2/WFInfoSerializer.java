@@ -51,7 +51,7 @@ public class WFInfoSerializer {
     ProcessType createProcess(ProcessReader process) {
 
         ProcessType processType = new ProcessType();
-
+        // TODO: 11/12/2015 idref
         processType.setWorkflow(process.getWorkflow().getName());
 
         processType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) process.getStartTime()));
@@ -125,6 +125,7 @@ public class WFInfoSerializer {
         } else if (action instanceof ProcessActionReader) {
 
             actionType = new ProcessActionType();
+            // TODO: 11/12/2015 idref
             ((ProcessActionType) actionType).setSubWorkflow(((ProcessActionReader) action).getActionWorkflow().getName());
         }
 
