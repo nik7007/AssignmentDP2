@@ -1,7 +1,7 @@
 //
-// Questo file Ë stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
+// Questo file √® stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr‡ persa durante la ricompilazione dello schema di origine. 
+// Qualsiasi modifica a questo file andr√† persa durante la ricompilazione dello schema di origine.
 // Generato il: 2015.12.11 alle 12:27:05 AM CET 
 //
 
@@ -57,7 +57,7 @@ public class ActionStatusType {
     protected Boolean terminated;
 
     /**
-     * Recupera il valore della propriet‡ actor.
+     * Recupera il valore della propriet√† actor.
      * 
      * @return
      *     possible object is
@@ -69,7 +69,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della propriet‡ actor.
+     * Imposta il valore della propriet√† actor.
      * 
      * @param value
      *     allowed object is
@@ -81,7 +81,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della propriet‡ date.
+     * Recupera il valore della propriet√† date.
      * 
      * @return
      *     possible object is
@@ -93,7 +93,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della propriet‡ date.
+     * Imposta il valore della propriet√† date.
      * 
      * @param value
      *     allowed object is
@@ -105,7 +105,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della propriet‡ name.
+     * Recupera il valore della propriet√† name.
      * 
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della propriet‡ name.
+     * Imposta il valore della propriet√† name.
      * 
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della propriet‡ takenInCharge.
+     * Recupera il valore della propriet√† takenInCharge.
      * 
      * @return
      *     possible object is
@@ -145,7 +145,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della propriet‡ takenInCharge.
+     * Imposta il valore della propriet√† takenInCharge.
      * 
      * @param value
      *     allowed object is
@@ -157,7 +157,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della propriet‡ terminated.
+     * Recupera il valore della propriet√† terminated.
      * 
      * @return
      *     possible object is
@@ -173,7 +173,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della propriet‡ terminated.
+     * Imposta il valore della propriet√† terminated.
      * 
      * @param value
      *     allowed object is

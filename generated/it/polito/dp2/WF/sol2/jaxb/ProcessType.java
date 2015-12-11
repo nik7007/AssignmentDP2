@@ -1,7 +1,7 @@
 //
-// Questo file Ë stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
+// Questo file √® stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr‡ persa durante la ricompilazione dello schema di origine. 
+// Qualsiasi modifica a questo file andr√† persa durante la ricompilazione dello schema di origine. 
 // Generato il: 2015.12.11 alle 12:27:05 AM CET 
 //
 
@@ -87,7 +87,7 @@ public class ProcessType {
     }
 
     /**
-     * Recupera il valore della propriet‡ date.
+     * Recupera il valore della propriet√† date.
      * 
      * @return
      *     possible object is
@@ -99,7 +99,7 @@ public class ProcessType {
     }
 
     /**
-     * Imposta il valore della propriet‡ date.
+     * Imposta il valore della propriet√† date.
      * 
      * @param value
      *     allowed object is
@@ -111,7 +111,7 @@ public class ProcessType {
     }
 
     /**
-     * Recupera il valore della propriet‡ workflow.
+     * Recupera il valore della propriet√† workflow.
      * 
      * @return
      *     possible object is
@@ -123,7 +123,7 @@ public class ProcessType {
     }
 
     /**
-     * Imposta il valore della propriet‡ workflow.
+     * Imposta il valore della propriet√† workflow.
      * 
      * @param value
      *     allowed object is
