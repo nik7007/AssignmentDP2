@@ -74,7 +74,9 @@ public class WFInfoSerializer {
         actionStatusType.setName(actionStatus.getActionName());
         actionStatusType.setTakenInCharge(actionStatus.isTakenInCharge());
         actionStatusType.setTerminated(actionStatus.isTerminated());
-        actionStatusType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) actionStatus.getTerminationTime()));
+
+        if (actionStatus.getTerminationTime() != null)
+            actionStatusType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) actionStatus.getTerminationTime()));
 
         if (actor != null)
             actionStatusType.setActor(createActor(actor));
