@@ -51,7 +51,6 @@ public class WFInfoSerializer {
     ProcessType createProcess(ProcessReader process) {
 
         ProcessType processType = new ProcessType();
-        // TODO: 11/12/2015 idref
         WorkflowType workflowType = getWorkflowType(process.getWorkflow().getName());
         processType.setWorkflow(workflowType);
 
@@ -133,7 +132,7 @@ public class WFInfoSerializer {
         } else if (action instanceof ProcessActionReader) {
 
             actionType = new ProcessActionType();
-            // TODO: 11/12/2015 idref
+
             String workflowName = ((ProcessActionReader) action).getActionWorkflow().getName();
 
             WorkflowType workflowType = getWorkflowType(workflowName);
