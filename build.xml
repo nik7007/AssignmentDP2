@@ -198,6 +198,10 @@
 		<echo>*** XML file validated ***</echo>
 
 		<junit printsummary="yes" dir="${temp.dir}" fork="yes" haltonfailure="no" showoutput="no" filtertrace="true">
+
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" />
+
 			<sysproperty key="it.polito.dp2.WF.Random.testcase" value="${testcase}"/>
 			<sysproperty key="it.polito.dp2.WF.Random.seed" value="${seed}"/>
 			<sysproperty key="it.polito.dp2.WF.sol2.WorkflowInfo.file " value="${temp.xmlfile}"/>

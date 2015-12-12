@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
 
     <xs:element name="root" type="rootType"/>
 
@@ -20,7 +21,7 @@
 
     <xs:complexType name="rootType">
         <xs:sequence>
-            <xs:element type="workflowType" name="workflow" maxOccurs="unbounded">
+            <xs:element type="workflowType" name="workflow" minOccurs="0" maxOccurs="unbounded">
 
                 <xs:key name="action_ID">
                     <xs:selector xpath="simple_actionType|process_actionType"/>
@@ -34,7 +35,7 @@
 
             </xs:element>
 
-            <xs:element type="processType" name="process" maxOccurs="unbounded"/>
+            <xs:element type="processType" name="process" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 

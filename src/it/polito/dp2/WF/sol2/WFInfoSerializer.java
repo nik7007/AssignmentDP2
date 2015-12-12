@@ -21,7 +21,7 @@ public class WFInfoSerializer {
 
     public WFInfoSerializer() throws WorkflowMonitorException, JAXBException {
 
-        WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
+        it.polito.dp2.WF.WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         WorkflowMonitor monitor = factory.newWorkflowMonitor();
         map = new HashMap<>();
 
