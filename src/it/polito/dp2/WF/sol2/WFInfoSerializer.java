@@ -11,19 +11,19 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class WFInfoSerializer {
 
     JAXBContext jaxbContext;
     RootType root;
+    Map<String, WorkflowType> map;
 
     public WFInfoSerializer() throws WorkflowMonitorException, JAXBException {
 
         WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         WorkflowMonitor monitor = factory.newWorkflowMonitor();
+        map = new HashMap<>();
 
         jaxbContext = JAXBContext.newInstance(Reference.bindingPackage);
         root = createRoot(monitor);
@@ -52,7 +52,8 @@ public class WFInfoSerializer {
 
         ProcessType processType = new ProcessType();
         // TODO: 11/12/2015 idref
-        processType.setWorkflow(process.getWorkflow().getName());
+        WorkflowType workflowType = getWorkflowType(process.getWorkflow().getName());
+        processType.setWorkflow(workflowType);
 
         processType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) process.getStartTime()));
 
@@ -95,8 +96,8 @@ public class WFInfoSerializer {
     }
 
 
-    WorkflowType createWokWorkflow(WorkflowReader workflow) {
-        WorkflowType workflowType = new WorkflowType();
+    WorkflowType createWokWorkflow(WorkflowReader workflow, WorkflowType workflowType) {
+
         workflowType.setName(workflow.getName());
 
         List<ActionType> actionsType = workflowType.getSimpleActionOrProcessAction();
@@ -107,6 +108,13 @@ public class WFInfoSerializer {
 
         return workflowType;
     }
+
+    WorkflowType createWokWorkflow(WorkflowReader workflow) {
+        WorkflowType workflowType = getWorkflowType(workflow.getName());
+
+        return createWokWorkflow(workflow, workflowType);
+    }
+
 
     ActionType createAction(ActionReader action) {
         ActionType actionType = null;
@@ -126,7 +134,12 @@ public class WFInfoSerializer {
 
             actionType = new ProcessActionType();
             // TODO: 11/12/2015 idref
-            ((ProcessActionType) actionType).setSubWorkflow(((ProcessActionReader) action).getActionWorkflow().getName());
+            String workflowName = ((ProcessActionReader) action).getActionWorkflow().getName();
+
+            WorkflowType workflowType = getWorkflowType(workflowName);
+
+
+            ((ProcessActionType) actionType).setSubWorkflow(workflowType);
         }
 
         assert actionType != null;
@@ -158,11 +171,40 @@ public class WFInfoSerializer {
 
     }
 
+    WorkflowType getWorkflowType(String name) {
+
+        WorkflowType workflowType;
+        if (map.containsKey(name)) {
+            workflowType = map.get(name);
+        } else {
+            workflowType = new WorkflowType();
+            map.put(name, workflowType);
+        }
+
+        return workflowType;
+
+    }
 
     public static void main(String[] args) throws JAXBException, WorkflowMonitorException {
 
         WFInfoSerializer wfInfoSerializer = new WFInfoSerializer();
         String fileName = args.length <= 0 ? "output.xml" : args[0];
+
+        char[] ext = {'.', 'x', 'm', 'l'};
+        boolean extension = true;
+
+        for (int i = 0; i < ext.length; i++) {
+            char c = fileName.charAt(fileName.length() - 4 + i);
+
+            if (c != ext[i]) {
+                extension = false;
+                break;
+            }
+        }
+
+        if (!extension)
+            fileName += ".xml";
+
         wfInfoSerializer.marshalling(fileName);
 
 
