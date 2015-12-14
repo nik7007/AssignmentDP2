@@ -25,6 +25,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
 
     public WorkflowMonitorImpl() throws MalformedURLException {
+
         workflowReaderMap = new HashMap<>();
         String url = System.getProperty("it.polito.dp2.WF.sol3.URL");
         //System.err.println(url);
@@ -45,7 +46,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     void getWorkflowForServer() throws UnknownNames_Exception {
 
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
-        Holder<List<Workflow>> workflow = new Holder<List<Workflow>>();
+        Holder<List<Workflow>> workflow = new Holder<>();
 
         if (workflowNames == null)
             getWorkflowNames();
@@ -53,6 +54,8 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         proxy.getWorkflows(workflowNames, holderLastWorkflow, workflow);
 
         if (lastModTimeWorkflow == null || !lastModTimeWorkflow.equals(holderLastWorkflow.value)) {
+
+            workflowReaderMap.clear();
 
             lastModTimeWorkflow = holderLastWorkflow.value;
             List<Workflow> workflowList = workflow.value;
