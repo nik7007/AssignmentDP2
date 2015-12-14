@@ -45,7 +45,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     void getWorkflowForServer() throws UnknownNames_Exception {
 
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
-        Holder<List<Workflow>> workflow = new Holder<>();
+        Holder<List<Workflow>> workflow = new Holder<List<Workflow>>();
 
         if (workflowNames == null)
             getWorkflowNames();
