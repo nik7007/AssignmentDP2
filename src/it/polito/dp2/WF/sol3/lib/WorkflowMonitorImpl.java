@@ -1,13 +1,11 @@
 package it.polito.dp2.WF.sol3.lib;
 
 
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import it.polito.dp2.WF.ProcessReader;
 import it.polito.dp2.WF.WorkflowMonitor;
 import it.polito.dp2.WF.WorkflowReader;
 import it.polito.dp2.WF.lab3.Refreshable;
 import it.polito.dp2.WF.lab3.gen.*;
-import it.polito.dp2.WF.sol2.lib.*;
 import it.polito.dp2.WF.sol2.lib.WorkflowReaderException;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -35,11 +33,11 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         proxy = service.getWorkflowInfoPort();
     }
 
-    void getWorkflowNames(){
+    void getWorkflowNames() {
         Holder<List<String>> holderWorkflowNames = new Holder<>();
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
 
-        proxy.getWorkflowNames(holderLastWorkflow,holderWorkflowNames);
+        proxy.getWorkflowNames(holderLastWorkflow, holderWorkflowNames);
         workflowNames = holderWorkflowNames.value;
 
     }
@@ -49,17 +47,17 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
         Holder<List<Workflow>> workflow = new Holder<>();
 
-        if(workflowNames == null)
+        if (workflowNames == null)
             getWorkflowNames();
 
-        proxy.getWorkflows(workflowNames,holderLastWorkflow,workflow);
+        proxy.getWorkflows(workflowNames, holderLastWorkflow, workflow);
 
-        if(lastModTimeWorkflow == null || !lastModTimeWorkflow.equals(holderLastWorkflow.value)){
+        if (lastModTimeWorkflow == null || !lastModTimeWorkflow.equals(holderLastWorkflow.value)) {
 
             lastModTimeWorkflow = holderLastWorkflow.value;
             List<Workflow> workflowList = workflow.value;
 
-            for(Workflow wf:workflowList){
+            for (Workflow wf : workflowList) {
 
                 Map<String, List<String>> actionConnector = new HashMap<>();
                 Map<String, it.polito.dp2.WF.sol2.lib.ActionReaderImp> allActions = new HashMap<>();
@@ -72,7 +70,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     }
 
-  /*  void createWorkflow(Workflow workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
+    private void createWorkflow(Workflow workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
 
         WorkflowReader workflowReader = createWorkflow(workflow);
 
@@ -83,17 +81,26 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
             allActions.put(actionReaderImp.getName(), actionReaderImp);
 
             try {
-                ((it.polito.dp2.WF.sol2.lib.WorkflowReaderImp)workflowReader).addActionReader(actionReaderImp);
+                ((it.polito.dp2.WF.sol2.lib.WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
             } catch (WorkflowReaderException e) {
                 e.printStackTrace();
             }
         }
 
-    }*/
+    }
 
+    private ActionReaderImp createAction(Action actionType, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
 
+        return null;
 
-    WorkflowReader getWorkflowReader(String name) {
+    }
+
+   private WorkflowReader createWorkflow(Workflow workflow) {
+        return getWorkflowReader(workflow.getName());
+
+    }
+
+    private WorkflowReader getWorkflowReader(String name) {
 
         if (workflowReaderMap.containsKey(name))
             return workflowReaderMap.get(name);
