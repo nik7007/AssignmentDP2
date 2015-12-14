@@ -63,7 +63,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         }
     }
 
-    ProcessReader createProcess(ProcessType processType) throws WorkflowReaderException {
+   private ProcessReader createProcess(ProcessType processType) throws WorkflowReaderException {
 
         GregorianCalendar date = processType.getDate().toGregorianCalendar();
         WorkflowReader workflowReader = getWorkflowReader(((WorkflowType) processType.getWorkflow()).getName());
@@ -79,7 +79,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         return processReader;
     }
 
-    ActionStatusReader createActionStatus(ActionStatusType actionStatusType) {
+    private ActionStatusReader createActionStatus(ActionStatusType actionStatusType) {
 
         ActionStatusReader actionStatusReader = new ActionStatusReaderImp(actionStatusType.getName());
 
@@ -93,13 +93,13 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         return actionStatusReader;
     }
 
-    Actor createActor(ActorType actorType) {
+    private Actor createActor(ActorType actorType) {
         return new Actor(actorType.getName(), actorType.getRole());
 
     }
 
 
-    WorkflowReader getWorkflowReader(String name) {
+   private WorkflowReader getWorkflowReader(String name) {
 
         if (workflowReaderMap.containsKey(name))
             return workflowReaderMap.get(name);
@@ -109,7 +109,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         return workflowReader;
     }
 
-    void createWorkflow(WorkflowType workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
+   private void createWorkflow(WorkflowType workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
 
         WorkflowReader workflowReader = createWorkflow(workflow);
 
@@ -127,12 +127,12 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-    WorkflowReader createWorkflow(WorkflowType workflow) {
+   private WorkflowReader createWorkflow(WorkflowType workflow) {
         return getWorkflowReader(workflow.getName());
 
     }
 
-    ActionReaderImp createAction(ActionType action, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
+   private ActionReaderImp createAction(ActionType action, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
 
         ActionReaderImp actionReader;
 
@@ -170,7 +170,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
     }
 
 
-    RootType createRoot(String fileName) {
+    private RootType createRoot(String fileName) {
 
         JAXBContext jaxbContext;
         try {
