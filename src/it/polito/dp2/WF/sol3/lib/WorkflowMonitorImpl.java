@@ -6,7 +6,6 @@ import it.polito.dp2.WF.WorkflowMonitor;
 import it.polito.dp2.WF.WorkflowReader;
 import it.polito.dp2.WF.lab3.Refreshable;
 import it.polito.dp2.WF.lab3.gen.*;
-import it.polito.dp2.WF.sol2.lib.WorkflowReaderException;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
@@ -31,6 +30,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         //System.err.println(url);
         WorkflowInfoService service = new WorkflowInfoService(new URL(url));
         proxy = service.getWorkflowInfoPort();
+        refresh();
     }
 
     void getWorkflowNames() {
@@ -60,8 +60,9 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
             for (Workflow wf : workflowList) {
 
                 Map<String, List<String>> actionConnector = new HashMap<>();
-                Map<String, it.polito.dp2.WF.sol2.lib.ActionReaderImp> allActions = new HashMap<>();
+                Map<String, ActionReaderImp> allActions = new HashMap<>();
 
+                createWorkflow(wf, actionConnector, allActions);
             }
 
 
@@ -74,14 +75,14 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
         WorkflowReader workflowReader = createWorkflow(workflow);
 
-        List<Action> actionTypes = workflow.getAction();
+        List<Action> actions = workflow.getAction();
 
-        for (Action actionType : actionTypes) {
-            ActionReaderImp actionReaderImp = createAction(actionType, workflowReader, actionConnector);
+        for (Action action : actions) {
+            ActionReaderImp actionReaderImp = createAction(action, workflowReader, actionConnector);
             allActions.put(actionReaderImp.getName(), actionReaderImp);
 
             try {
-                ((it.polito.dp2.WF.sol2.lib.WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
+                ((WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
             } catch (WorkflowReaderException e) {
                 e.printStackTrace();
             }
@@ -89,13 +90,27 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     }
 
-    private ActionReaderImp createAction(Action actionType, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
+    private ActionReaderImp createAction(Action action, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
 
-        return null;
+        ActionReaderImp actionReader;
+
+        String name = action.getName();
+        String role = action.getRole();
+        Boolean auto = action.isAutomaticallyInstantiated();
+
+        if (action.getWorkflow() != null)
+            actionReader = new ProcessActionReaderImp(name, workflowReader, role, auto, getWorkflow(action.getWorkflow()));
+        else {
+            actionReader = new SimpleActionReaderImp(name, workflowReader, role, auto);
+            List<String> subAction = action.getNextAction();
+            actionConnector.put(name, subAction);
+        }
+
+        return actionReader;
 
     }
 
-   private WorkflowReader createWorkflow(Workflow workflow) {
+    private WorkflowReader createWorkflow(Workflow workflow) {
         return getWorkflowReader(workflow.getName());
 
     }
@@ -132,5 +147,11 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     @Override
     public void refresh() {
 
+        getWorkflowNames();
+        try {
+            getWorkflowForServer();
+        } catch (UnknownNames_Exception e) {
+            e.printStackTrace();
+        }
     }
 }
