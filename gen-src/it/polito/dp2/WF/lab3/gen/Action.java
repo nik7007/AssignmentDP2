@@ -54,7 +54,7 @@ public class Action {
     protected String workflow;
 
     /**
-     * Recupera il valore della propriet√† name.
+     * Recupera il valore della propriet‡ name.
      * 
      * @return
      *     possible object is
@@ -66,7 +66,7 @@ public class Action {
     }
 
     /**
-     * Imposta il valore della propriet√† name.
+     * Imposta il valore della propriet‡ name.
      * 
      * @param value
      *     allowed object is
@@ -78,7 +78,7 @@ public class Action {
     }
 
     /**
-     * Recupera il valore della propriet√† automaticallyInstantiated.
+     * Recupera il valore della propriet‡ automaticallyInstantiated.
      * 
      */
     public boolean isAutomaticallyInstantiated() {
@@ -86,7 +86,7 @@ public class Action {
     }
 
     /**
-     * Imposta il valore della propriet√† automaticallyInstantiated.
+     * Imposta il valore della propriet‡ automaticallyInstantiated.
      * 
      */
     public void setAutomaticallyInstantiated(boolean value) {
@@ -94,7 +94,7 @@ public class Action {
     }
 
     /**
-     * Recupera il valore della propriet√† role.
+     * Recupera il valore della propriet‡ role.
      * 
      * @return
      *     possible object is
@@ -106,7 +106,7 @@ public class Action {
     }
 
     /**
-     * Imposta il valore della propriet√† role.
+     * Imposta il valore della propriet‡ role.
      * 
      * @param value
      *     allowed object is
@@ -147,7 +147,7 @@ public class Action {
     }
 
     /**
-     * Recupera il valore della propriet√† workflow.
+     * Recupera il valore della propriet‡ workflow.
      * 
      * @return
      *     possible object is
@@ -159,7 +159,7 @@ public class Action {
     }
 
     /**
-     * Imposta il valore della propriet√† workflow.
+     * Imposta il valore della propriet‡ workflow.
      * 
      * @param value
      *     allowed object is

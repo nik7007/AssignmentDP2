@@ -42,7 +42,7 @@ public class Workflow {
     protected List<Action> action;
 
     /**
-     * Recupera il valore della propriet√† name.
+     * Recupera il valore della propriet‡ name.
      * 
      * @return
      *     possible object is
@@ -54,7 +54,7 @@ public class Workflow {
     }
 
     /**
-     * Imposta il valore della propriet√† name.
+     * Imposta il valore della propriet‡ name.
      * 
      * @param value
      *     allowed object is

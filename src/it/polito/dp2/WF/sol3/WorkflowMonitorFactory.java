@@ -5,9 +5,16 @@ import it.polito.dp2.WF.WorkflowMonitor;
 import it.polito.dp2.WF.WorkflowMonitorException;
 import it.polito.dp2.WF.sol3.lib.WorkflowMonitorImpl;
 
+import java.net.MalformedURLException;
+
 public class WorkflowMonitorFactory extends it.polito.dp2.WF.WorkflowMonitorFactory{
     @Override
     public WorkflowMonitor newWorkflowMonitor() throws WorkflowMonitorException {
-        return new WorkflowMonitorImpl();
+        try {
+            return new WorkflowMonitorImpl();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

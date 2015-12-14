@@ -96,7 +96,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
         String name = action.getName();
         String role = action.getRole();
-        Boolean auto = action.isAutomaticallyInstantiated();
+        boolean auto = action.isAutomaticallyInstantiated();
 
         if (action.getWorkflow() != null)
             actionReader = new ProcessActionReaderImp(name, workflowReader, role, auto, getWorkflow(action.getWorkflow()));

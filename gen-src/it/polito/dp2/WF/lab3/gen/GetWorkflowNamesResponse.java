@@ -44,7 +44,7 @@ public class GetWorkflowNamesResponse {
     protected List<String> name;
 
     /**
-     * Recupera il valore della propriet√† lastModTime.
+     * Recupera il valore della propriet‡ lastModTime.
      * 
      * @return
      *     possible object is
@@ -56,7 +56,7 @@ public class GetWorkflowNamesResponse {
     }
 
     /**
-     * Imposta il valore della propriet√† lastModTime.
+     * Imposta il valore della propriet‡ lastModTime.
      * 
      * @param value
      *     allowed object is

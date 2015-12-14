@@ -41,7 +41,7 @@ public class UnknownNames {
     protected List<String> names;
 
     /**
-     * Recupera il valore della propriet√† message.
+     * Recupera il valore della propriet‡ message.
      * 
      * @return
      *     possible object is
@@ -53,7 +53,7 @@ public class UnknownNames {
     }
 
     /**
-     * Imposta il valore della propriet√† message.
+     * Imposta il valore della propriet‡ message.
      * 
      * @param value
      *     allowed object is
