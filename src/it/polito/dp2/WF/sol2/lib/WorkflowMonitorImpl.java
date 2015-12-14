@@ -118,6 +118,11 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         for (ActionType actionType : actionTypes) {
             ActionReaderImp actionReaderImp = createAction(actionType, workflowReader, actionConnector);
             allActions.put(actionReaderImp.getName(), actionReaderImp);
+            try {
+                ((WorkflowReaderImp)workflowReader).addActionReader(actionReaderImp);
+            } catch (WorkflowReaderException e) {
+                e.printStackTrace();
+            }
         }
 
     }
