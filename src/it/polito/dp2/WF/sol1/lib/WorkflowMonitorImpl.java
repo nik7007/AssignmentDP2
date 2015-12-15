@@ -208,7 +208,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-    private ProcessReader createProcessReader(Element element) throws ParseException, WorkflowReaderException {
+    private ProcessReader createProcessReader(Element element) throws ParseException, WorkflowReaderException, SerializerException {
 
         String date = element.getAttribute(XMLFormat.ATT_DATE.toString());
         Calendar calendar = createCalendar(date);
@@ -219,18 +219,22 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         for (int i = 0; i < actionStatus.getLength(); i++) {
             Node node = actionStatus.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE)
-                processReader.addActionStatusReader(createActionStatusReader((Element) node));
+                processReader.addActionStatusReader(createActionStatusReader((Element) node, workflow));
         }
 
 
         return processReader;
     }
 
-    private ActionStatusReader createActionStatusReader(Element element) throws ParseException {
+
+    private ActionStatusReader createActionStatusReader(Element element, WorkflowReader workflow) throws ParseException, SerializerException {
 
         ActionStatusReaderImp actionStatusReader = new ActionStatusReaderImp(element.getAttribute(XMLFormat.ATT_NAME.toString()));
         Actor actor = null;
         Calendar date = null;
+
+        if (workflow.getAction(actionStatusReader.getActionName()) == null)
+            throw new SerializerException("\'" + actionStatusReader.getActionName() + "\' is not an existing action");
 
         if (element.hasAttribute(XMLFormat.ATT_DATE.toString()))
             date = createCalendar(element.getAttribute(XMLFormat.ATT_DATE.toString()));
