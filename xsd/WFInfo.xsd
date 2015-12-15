@@ -2,7 +2,14 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
 
-    <xs:element name="root" type="rootType"/>
+    <xs:element name="root" type="rootType">
+
+        <xs:keyref name="actionStatus_RefID" refer="action_ID">
+            <xs:selector xpath="action_statusType"/>
+            <xs:field xpath="@name"/>
+        </xs:keyref>
+
+    </xs:element>
 
     <xs:complexType name="action_statusType">
         <xs:sequence>
