@@ -1,128 +1,257 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Workflow/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Workflow" targetNamespace="http://www.example.org/Workflow/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Workflow/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  name="Workflow" targetNamespace="http://www.example.org/Workflow/">
     <wsdl:types>
-        <xsd:schema targetNamespace="http://www.example.org/Workflow/">
-            <xsd:import schemaLocation="WFInfo.xsd"/>
+        <xs:schema targetNamespace="http://www.example.org/Workflow/">
+            <xs:import schemaLocation="WFInfo.xsd"/>
 
             <!--  -->
-            <xsd:element name="getAll" type="rootType">
 
-                <xsd:keyref name="actionStatus_RefID" refer="action_ID">
-                    <xsd:selector xpath="action_statusType"/>
-                    <xsd:field xpath="@name"/>
-                </xsd:keyref>
+            <xs:element name="getAll" type="tns:rootType">
 
-            </xsd:element>
+                <xs:keyref name="actionStatus_RefID" refer="action_ID">
+                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:field xpath="@name"/>
+                </xs:keyref>
 
-            <xsd:element name="setProcess" type="processType"/>
+            </xs:element>
 
-            <xsd:element name="setActionInProcess" type="tns:setActionInProcess">
+            <xs:element name="setProcess" type="tns:processType"/>
 
-                <xsd:keyref name="setActionStatus_RefID" refer="action_ID">
-                    <xsd:selector xpath="action_statusType"/>
-                    <xsd:field xpath="@name"/>
-                </xsd:keyref>
+            <xs:element name="setActionInProcess" type="tns:setActionInProcess">
 
-            </xsd:element>
+                <xs:keyref name="setActionStatus_RefID" refer="action_ID">
+                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:field xpath="@name"/>
+                </xs:keyref>
 
-            <xsd:element name="completeActionStatus" type="tns:completeActionStatus">
+            </xs:element>
 
-                <xsd:key name="action_status_ID">
-                    <xsd:selector xpath="tns:action_statusType"/>
-                    <xsd:field xpath="@name"/>
-                </xsd:key>
+            <xs:element name="completeActionStatus" type="tns:completeActionStatus">
 
-                <xsd:keyref name="action_status_RefID" refer="tns:action_status_ID">
-                    <xsd:selector xpath="tns:completeActionStatus"/>
-                    <xsd:field xpath="@completedAction"/>
-                </xsd:keyref>
+                <xs:key name="action_status_ID">
+                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:field xpath="@name"/>
+                </xs:key>
 
-            </xsd:element>
+                <xs:keyref name="action_status_RefID" refer="tns:action_status_ID">
+                    <xs:selector xpath="tns:completeActionStatus"/>
+                    <xs:field xpath="@completedAction"/>
+                </xs:keyref>
 
-            <xsd:complexType name="completeActionStatus">
+            </xs:element>
 
-                <xsd:sequence>
-                    <xsd:element name="process" type="processType"/>
-                    <xsd:element name="workflow" type="workflowType"/>
-                    <xsd:element name="completedAction" type="xsd:string"/>
-                    <xsd:element name="date" type="xsd:dateTime"/>
-                    <xsd:element name="actor" type="actorType"/>
-                </xsd:sequence>
+            <xs:complexType name="completeActionStatus">
 
-            </xsd:complexType>
+                <xs:sequence>
+                    <xs:element name="process" type="tns:processType"/>
+                    <xs:element name="workflow" type="tns:workflowType"/>
+                    <xs:element name="completedAction" type="xs:string"/>
+                    <xs:element name="date" type="xs:dateTime"/>
+                    <xs:element name="actor" type="tns:actorType"/>
+                </xs:sequence>
 
-            <xsd:complexType name="setActionInProcess">
-                <xsd:sequence>
-                    <xsd:element name="process" type="processType"/>
-                    <xsd:element name="workflow" type="workflowType"/>
-                    <xsd:element name="actionStatus" type="action_statusType"/>
-                    <xsd:element name="actor" type="actorType"/>
-                </xsd:sequence>
-            </xsd:complexType>
+            </xs:complexType>
+
+            <xs:complexType name="setActionInProcess">
+                <xs:sequence>
+                    <xs:element name="process" type="tns:processType"/>
+                    <xs:element name="workflow" type="tns:workflowType"/>
+                    <xs:element name="actionStatus" type="tns:action_statusType"/>
+                    <xs:element name="actor" type="tns:actorType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="action_statusType">
+                <xs:sequence>
+                    <xs:element type="tns:actorType" name="actor" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute type="xs:dateTime" name="date" use="optional"/>
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:boolean" name="taken_in_charge" use="optional" default="false"/>
+                <xs:attribute type="xs:boolean" name="terminated" use="optional" default="false"/>
+            </xs:complexType>
+
+            <xs:complexType name="actorType">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="role" use="required"/>
+            </xs:complexType>
+
+            <xs:complexType name="rootType">
+
+                <xs:sequence>
+                    <xs:element type="tns:workflowType" name="workflow" minOccurs="0" maxOccurs="unbounded">
+
+                        <!-- -->
+                        <xs:key name="action_ID">
+                            <xs:selector xpath="tns:simple_actionType|tns:process_actionType"/>
+                            <xs:field xpath="@name"/>
+                        </xs:key>
+
+                        <xs:keyref name="action_RefID" refer="tns:action_ID">
+                            <xs:selector xpath="tns:sub_actionType"/>
+                            <xs:field xpath="@name_ref"/>
+                        </xs:keyref>
+
+                        <!-- -->
+
+                    </xs:element>
+
+                    <xs:element type="tns:processType" name="process" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="workflowType">
+                <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                    <xs:choice>
+                        <xs:element type="tns:simple_actionType" name="simple_action" minOccurs="0"/>
+                        <xs:element type="tns:process_actionType" name="process_action" minOccurs="0"/>
+                    </xs:choice>
+                </xs:sequence>
+                <xs:attribute type="xs:ID" name="name"/>
+            </xs:complexType>
+
+
+            <xs:complexType name="processType">
+                <xs:sequence>
+                    <xs:element type="tns:action_statusType" name="action_status" maxOccurs="unbounded" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute type="xs:dateTime" name="date" use="required"/>
+                <xs:attribute type="xs:IDREF" name="workflow" use="required"/>
+            </xs:complexType>
+
+            <xs:complexType name="actionType">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="role" use="required"/>
+                <xs:attribute type="xs:boolean" name="auto" use="optional" default="false"/>
+            </xs:complexType>
+
+
+            <xs:complexType name="sub_actionType">
+                <xs:attribute type="xs:string" name="name_ref" use="optional"/>
+            </xs:complexType>
+
+            <xs:complexType name="simple_actionType">
+                <xs:complexContent>
+                    <xs:extension base="tns:actionType">
+                        <xs:sequence>
+                            <xs:element type="tns:sub_actionType" name="sub_action" maxOccurs="unbounded"
+                                        minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+
+            <xs:complexType name="process_actionType">
+                <xs:complexContent>
+                    <xs:extension base="tns:actionType">
+                        <xs:attribute type="xs:IDREF" name="sub_workflow" use="required"/>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
             <!--  -->
 
 
-            <xsd:element name="getWorkflowAndProcess">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="in" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+            <xs:element name="getWorkflowAndProcess">
+                <xs:complexType>
+                    <xs:sequence>
 
-            <xsd:element name="getWorkflowAndProcessResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="out" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+                        <xs:element name="in" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getWorkflowAndProcessResponse">
+                <xs:complexType>
+                    <xs:sequence>
 
-            <xsd:element name="setProcessInServer">
-                <xsd:complexType>
-                    <xsd:sequence>
+                        <xs:element name="out" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setProcessInServer">
+                <xs:complexType>
+                    <xs:sequence>
 
-                        <xsd:element name="in" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="completeAction">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="in" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+                        <xs:element name="in" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setProcessInServerResponse">
+                <xs:complexType>
+                    <xs:sequence>
 
-            <xsd:element name="setAction">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="in" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
+                        <xs:element name="out" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeAction">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element name="in" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeActionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element name="out" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setAction">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element name="in" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setActionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+
+                        <xs:element name="out" type="xs:string"></xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
     </wsdl:types>
 
+
+    <wsdl:message name="getWorkflowAndProcessRequest">
+        <wsdl:part name="parameters" element="tns:getWorkflowAndProcess"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getWorkflowAndProcessResponse">
         <wsdl:part name="parameters" element="tns:getAll"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="setProcessInServerRequest">
         <wsdl:part name="parameters" element="tns:setProcess"></wsdl:part>
     </wsdl:message>
-
-
+    <wsdl:message name="setProcessInServerResponse">
+        <wsdl:part name="parameters" element="tns:setProcessInServerResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="completeActionRequest">
         <wsdl:part name="parameters" element="tns:completeActionStatus"></wsdl:part>
     </wsdl:message>
-
+    <wsdl:message name="completeActionResponse">
+        <wsdl:part name="parameters" element="tns:completeActionResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="setActionRequest">
         <wsdl:part name="parameters" element="tns:setActionInProcess"></wsdl:part>
     </wsdl:message>
-
+    <wsdl:message name="setActionResponse">
+        <wsdl:part name="parameters" element="tns:setActionResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="Workflow">
 
+
         <wsdl:operation name="getWorkflowAndProcess">
+
             <wsdl:output message="tns:getWorkflowAndProcessResponse"></wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="setProcessInServer">
