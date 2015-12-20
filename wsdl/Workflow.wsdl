@@ -4,8 +4,6 @@
                   name="Workflow" targetNamespace="http://www.example.org/Workflow/">
     <wsdl:types>
         <xs:schema targetNamespace="http://www.example.org/Workflow/">
-            <xs:import schemaLocation="WFInfo.xsd"/>
-
             <!--  -->
 
             <xs:element name="getAll" type="tns:rootType">
