@@ -2,8 +2,6 @@
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Workflow/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="Workflow" targetNamespace="http://www.example.org/Workflow/">
     <wsdl:types>
         <xs:schema targetNamespace="http://www.example.org/Workflow/">
-            <xs:import schemaLocation="WFInfo.xsd"/>
-
             <!--  -->
 
             <xs:element name="getAll" type="tns:rootType">
@@ -159,31 +157,40 @@
             <!--  -->
 
         </xs:schema>
-
     </wsdl:types>
+
+
 
     <wsdl:message name="getWorkflowAndProcessResponse">
         <wsdl:part name="parameters" element="tns:getAll"></wsdl:part>
     </wsdl:message>
+
     <wsdl:message name="setProcessInServerRequest">
         <wsdl:part name="parameters" element="tns:setProcess"></wsdl:part>
     </wsdl:message>
+
     <wsdl:message name="completeActionRequest">
         <wsdl:part name="parameters" element="tns:completeActionStatus"></wsdl:part>
     </wsdl:message>
+
     <wsdl:message name="setActionRequest">
         <wsdl:part name="parameters" element="tns:setActionInProcess"></wsdl:part>
     </wsdl:message>
+
     <wsdl:message name="getAllRequest">
         <wsdl:part name="parameters" element="tns:getAllRequest"></wsdl:part>
     </wsdl:message>
 
-    <wsdl:portType name="Workflow">
+    <wsdl:portType name="WorkflowInfo">
 
         <wsdl:operation name="getWorkflowAndProcess">
             <wsdl:output message="tns:getWorkflowAndProcessResponse"></wsdl:output>
             <wsdl:input message="tns:getAllRequest"/>
         </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:portType name="WorkflowControl">
 
         <wsdl:operation name="setProcessInServer">
             <wsdl:input message="tns:setProcessInServerRequest"></wsdl:input>
@@ -196,17 +203,33 @@
         <wsdl:operation name="setAction">
             <wsdl:input message="tns:setActionRequest"></wsdl:input>
         </wsdl:operation>
+
     </wsdl:portType>
 
-    <wsdl:binding name="WorkflowSOAP" type="tns:Workflow">
+    <wsdl:binding name="WorkflowInfo" type="tns:WorkflowInfo">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     </wsdl:binding>
 
+    <wsdl:binding name="WorkflowControl"
+                  type="tns:WorkflowControl">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="setProcessInServer">
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/setProcessInServer" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
     <wsdl:service name="Workflow">
-        <wsdl:port binding="tns:WorkflowSOAP" name="WorkflowInfo">
+        <wsdl:port binding="tns:WorkflowInfo" name="WorkflowInfo">
             <soap:address location="http://localhost:7071/wfinfo"/>
         </wsdl:port>
-        <wsdl:port name="WorkflowControl" binding="tns:WorkflowSOAP">
+        <wsdl:port name="WorkflowControl" binding="tns:WorkflowControl">
             <soap:address location="http://localhost:7070/wfcontrol" />
         </wsdl:port>
     </wsdl:service>
