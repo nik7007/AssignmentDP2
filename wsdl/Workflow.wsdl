@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Workflow/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  name="Workflow" targetNamespace="http://www.example.org/Workflow/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Workflow/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="Workflow" targetNamespace="http://www.example.org/Workflow/">
     <wsdl:types>
         <xs:schema targetNamespace="http://www.example.org/Workflow/">
+            <xs:import schemaLocation="WFInfo.xsd"/>
+
             <!--  -->
 
             <xs:element name="getAll" type="tns:rootType">
@@ -159,8 +159,8 @@
             <!--  -->
 
         </xs:schema>
-    </wsdl:types>
 
+    </wsdl:types>
 
     <wsdl:message name="getWorkflowAndProcessResponse">
         <wsdl:part name="parameters" element="tns:getAll"></wsdl:part>
@@ -184,17 +184,17 @@
             <wsdl:output message="tns:getWorkflowAndProcessResponse"></wsdl:output>
             <wsdl:input message="tns:getAllRequest"/>
         </wsdl:operation>
+
         <wsdl:operation name="setProcessInServer">
             <wsdl:input message="tns:setProcessInServerRequest"></wsdl:input>
-
         </wsdl:operation>
+
         <wsdl:operation name="completeAction">
             <wsdl:input message="tns:completeActionRequest"></wsdl:input>
-
         </wsdl:operation>
+
         <wsdl:operation name="setAction">
             <wsdl:input message="tns:setActionRequest"></wsdl:input>
-
         </wsdl:operation>
     </wsdl:portType>
 
@@ -203,8 +203,11 @@
     </wsdl:binding>
 
     <wsdl:service name="Workflow">
-        <wsdl:port binding="tns:WorkflowSOAP" name="WorkflowSOAP">
-            <soap:address location="http://www.example.org/"/>
+        <wsdl:port binding="tns:WorkflowSOAP" name="WorkflowInfo">
+            <soap:address location="http://localhost:7071/wfinfo"/>
+        </wsdl:port>
+        <wsdl:port name="WorkflowControl" binding="tns:WorkflowSOAP">
+            <soap:address location="http://localhost:7070/wfcontrol" />
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
