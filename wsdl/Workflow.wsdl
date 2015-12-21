@@ -15,6 +15,12 @@
 
             </xs:element>
 
+            <xs:element name="getAllRequest">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+
             <xs:element name="setProcess" type="tns:processType"/>
 
             <xs:element name="setActionInProcess" type="tns:setActionInProcess">
@@ -152,105 +158,31 @@
 
             <!--  -->
 
-
-            <xs:element name="getWorkflowAndProcess">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="in" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="getWorkflowAndProcessResponse">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="out" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="setProcessInServer">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="in" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="setProcessInServerResponse">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="out" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="completeAction">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="in" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="completeActionResponse">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="out" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="setAction">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="in" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="setActionResponse">
-                <xs:complexType>
-                    <xs:sequence>
-
-                        <xs:element name="out" type="xs:string"></xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
         </xs:schema>
     </wsdl:types>
 
 
-    <wsdl:message name="getWorkflowAndProcessRequest">
-        <wsdl:part name="parameters" element="tns:getWorkflowAndProcess"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="getWorkflowAndProcessResponse">
         <wsdl:part name="parameters" element="tns:getAll"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="setProcessInServerRequest">
         <wsdl:part name="parameters" element="tns:setProcess"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="setProcessInServerResponse">
-        <wsdl:part name="parameters" element="tns:setProcessInServerResponse"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="completeActionRequest">
         <wsdl:part name="parameters" element="tns:completeActionStatus"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="completeActionResponse">
-        <wsdl:part name="parameters" element="tns:completeActionResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="setActionRequest">
         <wsdl:part name="parameters" element="tns:setActionInProcess"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="setActionResponse">
-        <wsdl:part name="parameters" element="tns:setActionResponse"></wsdl:part>
+    <wsdl:message name="getAllRequest">
+        <wsdl:part name="parameters" element="tns:getAllRequest"></wsdl:part>
     </wsdl:message>
+
     <wsdl:portType name="Workflow">
 
-
         <wsdl:operation name="getWorkflowAndProcess">
-
             <wsdl:output message="tns:getWorkflowAndProcessResponse"></wsdl:output>
+            <wsdl:input message="tns:getAllRequest"/>
         </wsdl:operation>
         <wsdl:operation name="setProcessInServer">
             <wsdl:input message="tns:setProcessInServerRequest"></wsdl:input>
