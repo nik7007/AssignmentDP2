@@ -6,7 +6,7 @@
 
             <xs:element name="getAll" type="tns:rootType">
 
-                <xs:keyref name="actionStatus_RefID" refer="action_ID">
+                <xs:keyref name="actionStatus_RefID" refer="tns:action_ID">
                     <xs:selector xpath="tns:action_statusType"/>
                     <xs:field xpath="@name"/>
                 </xs:keyref>
@@ -23,7 +23,7 @@
 
             <xs:element name="setActionInProcess" type="tns:setActionInProcess">
 
-                <xs:keyref name="setActionStatus_RefID" refer="action_ID">
+                <xs:keyref name="setActionStatus_RefID" refer="tns:action_ID">
                     <xs:selector xpath="tns:action_statusType"/>
                     <xs:field xpath="@name"/>
                 </xs:keyref>
@@ -184,8 +184,8 @@
     <wsdl:portType name="WorkflowInfo">
 
         <wsdl:operation name="getWorkflowAndProcess">
-            <wsdl:output message="tns:getWorkflowAndProcessResponse"></wsdl:output>
             <wsdl:input message="tns:getAllRequest"/>
+            <wsdl:output message="tns:getWorkflowAndProcessResponse"/>
         </wsdl:operation>
 
     </wsdl:portType>
@@ -214,7 +214,7 @@
                   type="tns:WorkflowControl">
         <soap:binding style="document"
                       transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="setProcessInServer">
+       <!-- <wsdl:operation name="setProcessInServer">
             <soap:operation
                     soapAction="http://www.example.org/Workflow/setProcessInServer" />
             <wsdl:input>
@@ -223,7 +223,7 @@
             <wsdl:output>
                 <soap:body use="literal" />
             </wsdl:output>
-        </wsdl:operation>
+        </wsdl:operation>-->
     </wsdl:binding>
     <wsdl:service name="Workflow">
         <wsdl:port binding="tns:WorkflowInfo" name="WorkflowInfo">

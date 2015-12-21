@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WF-4_server_clients" basedir=".">
+
+    <property name="lab4.location" location="."/>
+    <property name="lab4.location.sol" location="src/it/polito/dp2/WF/sol4"/>
+    <property name="lab4.location.server" location="${lab4.location.sol}/server"/>
+    <property name="lab4.location.client1" location="${lab4.location.sol}/client1"/>
+    <property name="lab4.location.client2" location="${lab4.location.sol}/client2"/>
+
+    <property name="WSDL" location="${basedir}/wsdl/Workflow.wsdl"/>
+
+
+    <!-- The random "WorkflowMonitorFactory" used for WFInfo, for the server and for the tests -->
+    <property name="WFInfo.WFMonitorFactory" value="it.polito.dp2.WF.Random.WorkflowMonitorFactoryImpl"/>
+
+    <!-- The location to be used for class files -->
+    <property name="build.dir" location="${lab4.location}/build"/>
+    <!-- The location for source files -->
+    <property name="src.dir" location="${lab4.location}/src"/>
+    <!-- The location for jar files -->
+    <property name="lib.dir" location="${lab4.location}/lib"/>
+
+    <property name="gen.dir" location="${lab4.location}/gen4-src"/>
+
+    <property name="package" value="it.polito.dp2.WF.lab3.gen"/>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${gen.dir}"/>
+    </target>
+
+    <target name="compile-wsdl" depends="init">
+
+        <echo message="${WSDL}"/>
+        <exec executable="wsimport">
+            <arg line="-d '${build.dir}' -p '${package}' -s '${gen.dir}' -keep ${WSDL}"/>
+        </exec>
+
+    </target>
+
+
+</project>
