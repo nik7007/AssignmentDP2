@@ -4,12 +4,12 @@
         attributeFormDefault="unqualified" elementFormDefault="qualified"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
 
     <xs:element name="root" type="rootType">
-
+<!--
         <xs:keyref name="actionStatus_RefID" refer="action_ID">
             <xs:selector xpath="process/action_status"/>
             <xs:field xpath="@name"/>
         </xs:keyref>
-
+        -->
     </xs:element>
 
     <xs:complexType name="action_statusType">

@@ -59,8 +59,10 @@ public class WFInfoSerializer {
         List<ActionStatusReader> actionStatus = process.getStatus();
         List<ActionStatusType> actionStatusTypes = processType.getActionStatus();
 
-        for (ActionStatusReader actionStatusReader : actionStatus)
+        for (ActionStatusReader actionStatusReader : actionStatus) {
+            // TODO: check if action exists
             actionStatusTypes.add(createActionStatus(actionStatusReader));
+        }
 
 
         return processType;
