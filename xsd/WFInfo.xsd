@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        attributeFormDefault="unqualified" elementFormDefault="qualified"> <!--attributeFormDefault="unqualified" elementFormDefault="qualified" -->
 
     <xs:element name="root" type="rootType">
 
         <xs:keyref name="actionStatus_RefID" refer="action_ID">
-            <xs:selector xpath="action_statusType"/>
+            <xs:selector xpath="process/action_status"/>
             <xs:field xpath="@name"/>
         </xs:keyref>
 
@@ -31,12 +32,12 @@
             <xs:element type="workflowType" name="workflow" minOccurs="0" maxOccurs="unbounded">
 
                 <xs:key name="action_ID">
-                    <xs:selector xpath="simple_actionType|process_actionType"/>
+                    <xs:selector xpath="simple_action|process_action"/>
                     <xs:field xpath="@name"/>
                 </xs:key>
 
                 <xs:keyref name="action_RefID" refer="action_ID">
-                    <xs:selector xpath="sub_actionType"/>
+                    <xs:selector xpath="simple_action/sub_action"/>
                     <xs:field xpath="@name_ref"/>
                 </xs:keyref>
 
