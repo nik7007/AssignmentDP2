@@ -69,7 +69,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
                 NodeList processActionsElements = workflowElement.getElementsByTagName(XMLFormat.ELEM_PROCESS_ACTION.toString());
 
                 for (int j = 0; j < processActionsElements.getLength(); j++) {
-                    Node procNode = workflows.item(j);
+                    Node procNode = processActionsElements.item(j);
 
                     if (procNode.getNodeType() == Node.ELEMENT_NODE) {
 
