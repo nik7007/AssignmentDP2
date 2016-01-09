@@ -9,7 +9,7 @@
             <xs:element name="getAll" type="tns:rootType">
 
                 <xs:keyref name="actionStatus_RefID" refer="tns:action_ID">
-                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:selector xpath="tns:process/tns:action_status"/>
                     <xs:field xpath="@name"/>
                 </xs:keyref>
 
@@ -26,7 +26,7 @@
             <xs:element name="setActionInProcess" type="tns:setActionInProcess">
 
                 <xs:keyref name="setActionStatus_RefID" refer="tns:action_ID">
-                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:selector xpath="tns:process/action_status"/>
                     <xs:field xpath="@name"/>
                 </xs:keyref>
 
@@ -35,12 +35,12 @@
             <xs:element name="completeActionStatus" type="tns:completeActionStatus">
 
                 <xs:key name="action_status_ID">
-                    <xs:selector xpath="tns:action_statusType"/>
+                    <xs:selector xpath="tns:process/action_status"/>
                     <xs:field xpath="@name"/>
                 </xs:key>
 
                 <xs:keyref name="action_status_RefID" refer="tns:action_status_ID">
-                    <xs:selector xpath="tns:completeActionStatus"/>
+                    <xs:selector xpath="."/>
                     <xs:field xpath="@completedAction"/>
                 </xs:keyref>
 
@@ -89,12 +89,12 @@
 
                         <!-- -->
                         <xs:key name="action_ID">
-                            <xs:selector xpath="tns:simple_actionType|tns:process_actionType"/>
+                            <xs:selector xpath="tns:simple_action|tns:process_action"/>
                             <xs:field xpath="@name"/>
                         </xs:key>
 
                         <xs:keyref name="action_RefID" refer="tns:action_ID">
-                            <xs:selector xpath="tns:sub_actionType"/>
+                            <xs:selector xpath="tns:simple_action/sub_action"/>
                             <xs:field xpath="@name_ref"/>
                         </xs:keyref>
 
