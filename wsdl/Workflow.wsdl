@@ -176,7 +176,53 @@
             </xs:element>
             <xs:element name="workflowName" type="xs:string"/>
             <xs:element name="dataCreation" type="xs:dateTime"/>
-            <xs:element name="creatProcessFault" type="xs:string"/>
+            <xs:element name="creatProcessFault" type="xs:string"/>      
+            
+            <xs:element name="actionInProcess" type="tns:actionInProcessType"/>
+            
+            <xs:complexType name="actionInProcessType">
+            		<xs:sequence>
+            		
+            			<xs:element name="processIdentifier">
+            				<xs:complexType>
+            					<xs:attribute type="xs:dateTime" name="date" use="required"/>
+                				<xs:attribute type="xs:IDREF" name="workflow" use="required"/>
+                			</xs:complexType>
+            			</xs:element>
+            			
+            			<xs:element name="action">
+            				<xs:complexType>
+            					<xs:attribute name="actionName" type="xs:string"/>
+            				</xs:complexType>
+            			</xs:element>
+            			
+            			<xs:element name="actor" type="tns:actorType"/>
+            			            			
+            		</xs:sequence>            		
+            	</xs:complexType>
+            	
+            	<xs:complexType name="actionToCompleteType">
+            	<xs:complexContent>
+            	<xs:extension base="tns:actionInProcessType">
+            		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+            			<xs:element type="tns:sub_actionType" name="sub_action"/>
+            		</xs:sequence>
+            	</xs:extension>
+            	</xs:complexContent>
+            	</xs:complexType>  
+            
+            <xs:element name="takeOverActionFault" type="xs:string"/>
+            <xs:element name="resultOperation" type="xs:boolean"/>
+            <xs:element name="actionToComplete" type="tns:actionToCompleteType"/>
+            <xs:element name="completeActionFault">
+            	<xs:complexType>
+            		<xs:sequence>
+            			<xs:element name="completeActionFault"
+            				type="xs:string">
+            			</xs:element>
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
         </xs:schema>
     </wsdl:types>
 
@@ -221,6 +267,24 @@
     <wsdl:message name="creatProcessFault">
     	<wsdl:part name="creatProcessResponse" element="tns:creatProcessFault"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="takeOverActionRequest">
+    	<wsdl:part name="takeOverActionRequest" element="tns:actionInProcess"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="takeOverActionResponse">
+    	<wsdl:part name="takeOverActionResponse" element="tns:resultOperation"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="takeOverActionFault">
+    	<wsdl:part name="takeOverActionResponse" element="tns:takeOverActionFault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="completeActionRequest">
+    	<wsdl:part name="completeActionRequest" element="tns:actionToComplete"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="completeActionResponse">
+    	<wsdl:part name="completeActionResponse" element="tns:resultOperation"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="completeActionFault">
+    	<wsdl:part name="completeActionResponse" element="tns:completeActionFault"></wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="WorkflowInfoInterface">
     
     	<wsdl:operation name="getInfoWorkflowName">
@@ -246,6 +310,16 @@
     		<wsdl:input message="tns:creatProcessRequest"></wsdl:input>
     		<wsdl:output message="tns:creatProcessResponse"></wsdl:output>
             <wsdl:fault name="fault" message="tns:creatProcessFault"></wsdl:fault>
+        </wsdl:operation>
+    	<wsdl:operation name="takeOverAction">
+    		<wsdl:input message="tns:takeOverActionRequest"></wsdl:input>
+    		<wsdl:output message="tns:takeOverActionResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:takeOverActionFault"></wsdl:fault>
+        </wsdl:operation>
+    	<wsdl:operation name="completeAction">
+    		<wsdl:input message="tns:completeActionRequest"></wsdl:input>
+    		<wsdl:output message="tns:completeActionResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:completeActionFault"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="WFinfo" type="tns:WorkflowInfoInterface">
@@ -320,6 +394,32 @@
     		</wsdl:output>
     		<wsdl:fault name="fault">
 
+    			<soap:fault use="literal" name="fault" />
+    		</wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="takeOverAction">
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/takeOverAction" />
+    		<wsdl:input>
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    		<wsdl:fault name="fault">
+    			<soap:fault use="literal" name="fault" />
+    		</wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="completeAction">
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/completeAction" />
+    		<wsdl:input>
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    		<wsdl:fault name="fault">
     			<soap:fault use="literal" name="fault" />
     		</wsdl:fault>
     	</wsdl:operation>
