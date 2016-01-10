@@ -22,7 +22,7 @@
 
     <property name="gen.dir" location="${lab4.location}/gen4-src"/>
 
-    <property name="package" value="it.polito.dp2.WF.lab3.gen"/>
+    <property name="package" value="it.polito.dp2.WF.lab4.gen"/>
 
     <target name="init">
         <mkdir dir="${build.dir}"/>
