@@ -4,69 +4,9 @@
                   name="Workflow" targetNamespace="http://www.example.org/Workflow/">
     <wsdl:types>
         <xs:schema targetNamespace="http://www.example.org/Workflow/">
+        
             <!--  -->
-
-            <xs:element name="getAll" type="tns:rootType">
-
-                <xs:keyref name="actionStatus_RefID" refer="tns:action_ID">
-                    <xs:selector xpath="tns:process/tns:action_status"/>
-                    <xs:field xpath="@name"/>
-                </xs:keyref>
-
-            </xs:element>
-
-            <xs:element name="getAllRequest">
-                <xs:complexType>
-                    <xs:sequence/>
-                </xs:complexType>
-            </xs:element>
-
-            <xs:element name="setProcess" type="tns:processType"/>
-
-            <xs:element name="setActionInProcess" type="tns:setActionInProcess">
-
-                <xs:keyref name="setActionStatus_RefID" refer="tns:action_ID">
-                    <xs:selector xpath="tns:process/action_status"/>
-                    <xs:field xpath="@name"/>
-                </xs:keyref>
-
-            </xs:element>
-
-            <xs:element name="completeActionStatus" type="tns:completeActionStatus">
-
-                <xs:key name="action_status_ID">
-                    <xs:selector xpath="tns:process/action_status"/>
-                    <xs:field xpath="@name"/>
-                </xs:key>
-
-                <xs:keyref name="action_status_RefID" refer="tns:action_status_ID">
-                    <xs:selector xpath="."/>
-                    <xs:field xpath="@completedAction"/>
-                </xs:keyref>
-
-            </xs:element>
-
-            <xs:complexType name="completeActionStatus">
-
-                <xs:sequence>
-                    <xs:element name="process" type="tns:processType"/>
-                    <xs:element name="workflow" type="tns:workflowType"/>
-                    <xs:element name="completedAction" type="xs:string"/>
-                    <xs:element name="date" type="xs:dateTime"/>
-                    <xs:element name="actor" type="tns:actorType"/>
-                </xs:sequence>
-
-            </xs:complexType>
-
-            <xs:complexType name="setActionInProcess">
-                <xs:sequence>
-                    <xs:element name="process" type="tns:processType"/>
-                    <xs:element name="workflow" type="tns:workflowType"/>
-                    <xs:element name="actionStatus" type="tns:action_statusType"/>
-                    <xs:element name="actor" type="tns:actorType"/>
-                </xs:sequence>
-            </xs:complexType>
-
+            
             <xs:complexType name="action_statusType">
                 <xs:sequence>
                     <xs:element type="tns:actorType" name="actor" minOccurs="0"/>
@@ -158,80 +98,239 @@
 
             <!--  -->
 
+            <xs:element name="getWorkflowName">            
+            <xs:complexType>
+            	<xs:sequence/>
+            </xs:complexType>
+            </xs:element>
+            
+            <xs:element name="getWorkflowNameResponse" type="xs:string"/>
+                        
+        	<xs:complexType name="getWorkflowNameResponseType">
+        		<xs:sequence>
+        			<xs:element name = "lastModTime" type="xs:dateTime"/>
+        			<xs:element name="workflowName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        		</xs:sequence>
+            </xs:complexType>
+
+        	<xs:element name="getProcessName">
+        		<xs:complexType>
+        			<xs:sequence>
+        				<xs:element name="workflowName" type="xs:string"/>
+        			</xs:sequence>
+        		</xs:complexType>
+        	</xs:element>
+        	
+            <xs:element name="getProcessNameResponse">
+            	<xs:complexType>
+            		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+            			<xs:element name = "lastModTime" type="xs:dateTime"/>
+        				<xs:element name="process" type="tns:processType" />
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
+            
+            <xs:element name="getWorkflowByName">
+            	<xs:complexType>
+            		<xs:sequence maxOccurs="unbounded" minOccurs="1">
+            			<xs:element name="workflowName" type="xs:string"/>
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
+            
+            <xs:element name="getWorkflow">
+            	<xs:complexType>
+            		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					    <xs:element name = "lastModTime" type="xs:dateTime"/>
+        				<xs:element name="workflow" type="tns:workflowType" />
+            		</xs:sequence>            		
+            	</xs:complexType>
+            </xs:element>
+            
+            <xs:element name="creatProcess">
+            	<xs:complexType>
+            		<xs:sequence>
+            			<xs:element name="in" type="xs:string"></xs:element>
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
+            <xs:element name="out" type="xs:string"></xs:element>
+            <xs:element name="getInfoProcessNameFault">
+            	<xs:complexType>
+            		<xs:sequence>
+            			<xs:element name="getInfoProcessNameFault"
+            				type="xs:string">
+            			</xs:element>
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
+            <xs:element name="getInfoWorkflowFault">
+            	<xs:complexType>
+            		<xs:sequence>
+
+            			<xs:element name="getInfoWorkflowFault"
+            				type="xs:string">
+            			</xs:element>
+            		</xs:sequence>
+            	</xs:complexType>
+            </xs:element>
+            <xs:element name="workflowName" type="xs:string"/>
+            <xs:element name="dataCreation" type="xs:dateTime"/>
+            <xs:element name="creatProcessFault" type="xs:string"/>
         </xs:schema>
     </wsdl:types>
 
 
-    <wsdl:message name="getWorkflowAndProcessResponse">
-        <wsdl:part name="parameters" element="tns:getAll"/>
+
+
+
+    <wsdl:message name="getInfoWorkflowNameRequest">
+    	<wsdl:part name="parameters" element="tns:getWorkflowName"></wsdl:part>
     </wsdl:message>
-
-    <wsdl:message name="setProcessInServerRequest">
-        <wsdl:part name="parameters" element="tns:setProcess"/>
+    
+    <wsdl:message name="getInfoWorkflowNameResponse">
+    	<wsdl:part name="getInfoWorkflowNameResponse" element="tns:getWorkflowNameResponse"></wsdl:part>
     </wsdl:message>
-
-    <wsdl:message name="completeActionRequest">
-        <wsdl:part name="parameters" element="tns:completeActionStatus"/>
+    
+    <wsdl:message name="getInfoProcessNameRequest">
+    	<wsdl:part name="parameters" element="tns:getProcessName"></wsdl:part>
     </wsdl:message>
-
-    <wsdl:message name="setActionRequest">
-        <wsdl:part name="parameters" element="tns:setActionInProcess"/>
+    
+    <wsdl:message name="getInfoProcessNameResponse">
+    	<wsdl:part name="getInfoProcessNameResponse" element="tns:getProcessNameResponse"></wsdl:part>
     </wsdl:message>
-
-    <wsdl:message name="getAllRequest">
-        <wsdl:part name="parameters" element="tns:getAllRequest"/>
+    
+    <wsdl:message name="getInfoWorkflowRequest">
+    	<wsdl:part name="parameters" element="tns:getWorkflowByName"></wsdl:part>
     </wsdl:message>
-
-    <wsdl:portType name="WorkflowInfo">
-
-        <wsdl:operation name="getWorkflowAndProcess">
-            <wsdl:input message="tns:getAllRequest"/>
-            <wsdl:output message="tns:getWorkflowAndProcessResponse"/>
+    <wsdl:message name="getInfoWorkflowResponse">
+    	<wsdl:part name="getInfoWorkflowResponse" element="tns:getWorkflow"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="creatProcessRequest">
+    	<wsdl:part name="parameters" element="tns:workflowName"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="creatProcessResponse">
+    	<wsdl:part name="creatProcessResponse" element="tns:dataCreation"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getInfoProcessNameFault">
+    	<wsdl:part name="getInfoProcessNameResponse" element="tns:getInfoProcessNameFault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getInfoWorkflowFault">
+    	<wsdl:part name="getInfoWorkflowResponse" element="tns:getInfoWorkflowFault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="creatProcessFault">
+    	<wsdl:part name="creatProcessResponse" element="tns:creatProcessFault"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="WorkflowInfoInterface">
+    
+    	<wsdl:operation name="getInfoWorkflowName">
+    		<wsdl:input message="tns:getInfoWorkflowNameRequest"></wsdl:input>
+    		<wsdl:output message="tns:getInfoWorkflowNameResponse"></wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="getInfoProcessName">
+    		<wsdl:input message="tns:getInfoProcessNameRequest"></wsdl:input>
+    		<wsdl:output message="tns:getInfoProcessNameResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:getInfoProcessNameFault"></wsdl:fault>
         </wsdl:operation>
 
+    	<wsdl:operation name="getInfoWorkflow">
+    		<wsdl:input message="tns:getInfoWorkflowRequest"></wsdl:input>
+    		<wsdl:output message="tns:getInfoWorkflowResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:getInfoWorkflowFault"></wsdl:fault>
+        </wsdl:operation>
     </wsdl:portType>
-
-    <wsdl:portType name="WorkflowControl">
-
-        <wsdl:operation name="setProcessInServer">
-            <wsdl:input message="tns:setProcessInServerRequest"/>
+    
+    <wsdl:portType name="WorkflowControllnterface">
+    	<wsdl:operation name="creatProcess">
+    		<wsdl:input message="tns:creatProcessRequest"></wsdl:input>
+    		<wsdl:output message="tns:creatProcessResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:creatProcessFault"></wsdl:fault>
         </wsdl:operation>
-
-        <wsdl:operation name="completeAction">
-            <wsdl:input message="tns:completeActionRequest"/>
-        </wsdl:operation>
-
-        <wsdl:operation name="setAction">
-            <wsdl:input message="tns:setActionRequest"/>
-        </wsdl:operation>
-
     </wsdl:portType>
+    <wsdl:binding name="WFinfo" type="tns:WorkflowInfoInterface">
 
-    <wsdl:binding name="WorkflowInfo" type="tns:WorkflowInfo">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<wsdl:operation name="getInfoWorkflowName">
+
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/getInfoWorkflowName" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="getInfoProcessName">
+
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/getInfoProcessName" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    		<wsdl:fault name="fault">
+
+    			<soap:fault use="literal" name="fault" />
+    		</wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="getInfoWorkflow">
+
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/getInfoWorkflow" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    		<wsdl:fault name="fault">
+
+    			<soap:fault use="literal" name="fault" />
+    		</wsdl:fault>
+    	</wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:binding name="WorkflowControl"
-                  type="tns:WorkflowControl">
-        <soap:binding style="document"
-                      transport="http://schemas.xmlsoap.org/soap/http"/>
-        <!-- <wsdl:operation name="setProcessInServer">
-             <soap:operation
-                     soapAction="http://www.example.org/Workflow/setProcessInServer" />
-             <wsdl:input>
-                 <soap:body use="literal" />
-             </wsdl:input>
-             <wsdl:output>
-                 <soap:body use="literal" />
-             </wsdl:output>
-         </wsdl:operation>-->
+    <wsdl:binding name="WFControl"
+    	type="tns:WorkflowControllnterface">
+
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<wsdl:operation name="creatProcess">
+
+    		<soap:operation
+    			soapAction="http://www.example.org/Workflow/creatProcess" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    		<wsdl:fault name="fault">
+
+    			<soap:fault use="literal" name="fault" />
+    		</wsdl:fault>
+    	</wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Workflow">
-        <wsdl:port binding="tns:WorkflowInfo" name="WorkflowInfo">
-            <soap:address location="http://localhost:7071/wfinfo"/>
-        </wsdl:port>
-        <wsdl:port name="WorkflowControl" binding="tns:WorkflowControl">
-            <soap:address location="http://localhost:7070/wfcontrol"/>
-        </wsdl:port>
+    <wsdl:service name="WorkflowService">
+    	<wsdl:port name="WorkflowControl" binding="tns:WFControl">
+    		<soap:address location="http://localhost:7070/wfcontrol" />
+    	</wsdl:port>
+    	<wsdl:port name="WorkflowInfo" binding="tns:WFinfo">
+    		<soap:address location="http://localhost:7071/wfinfo" />
+    	</wsdl:port>
     </wsdl:service>
+    
 </wsdl:definitions>
