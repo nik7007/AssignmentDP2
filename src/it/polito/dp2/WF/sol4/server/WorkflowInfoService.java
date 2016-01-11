@@ -11,7 +11,6 @@ import javax.jws.WebService;
         targetNamespace = Reference.TARGET_NAMESPACE,
         serviceName = Reference.SERVICE_NAME,
         portName = "WorkflowInfo",
-        wsdlLocation = Reference.WSDL_LOCATION_INFO,
         endpointInterface = Reference.BASIC_PACKAGE + "WorkflowInfoInterface"
 )
 public class WorkflowInfoService implements WorkflowInfoInterface {

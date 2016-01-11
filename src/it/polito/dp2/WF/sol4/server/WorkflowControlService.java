@@ -13,7 +13,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
         targetNamespace = Reference.TARGET_NAMESPACE,
         serviceName = Reference.SERVICE_NAME,
         portName = "WorkflowControl",
-        wsdlLocation = Reference.WSDL_LOCATION_CONTROL,
         endpointInterface = Reference.BASIC_PACKAGE + "WorkflowControllnterface"
 )
 public class WorkflowControlService implements WorkflowControllnterface {
