@@ -27,5 +27,25 @@ public class ProcessHolder {
         lastMod = new GregorianCalendar();
         this.process = process;
     }
+    
+    private class ProcessCopier{
+    	private final ProcessType process;
+    	
+    	public ProcessCopier(ProcessType process){
+    		this.process = new ProcessType();
+    		this.process.setWorkflow(process.getWorkflow());
+    		
+    	}
+    	
+    	
+    	private class ActionStatusCopier{
+    		private final ActionStatusType actionStatus;
+    		
+    		
+    		
+    	}
+    	
+    	
+    }
 
 }

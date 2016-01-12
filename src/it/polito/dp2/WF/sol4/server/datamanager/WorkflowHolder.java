@@ -1,6 +1,7 @@
 package it.polito.dp2.WF.sol4.server.datamanager;
 
 
+import it.polito.dp2.WF.lab4.gen.ActionType;
 import it.polito.dp2.WF.lab4.gen.WorkflowType;
 
 import java.util.GregorianCalendar;
@@ -19,11 +20,12 @@ public class WorkflowHolder {
     }
 
     public WorkflowType getWorkflow() {
-        return workflow;
+        return this.workflow;
     }
 
     public void setWorkflow(WorkflowType workflow) {
         lastMod = new GregorianCalendar();
         this.workflow = workflow;
     }
+    
 }
