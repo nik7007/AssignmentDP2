@@ -1,4 +1,4 @@
-<!ELEMENT root ((workflow)+|(process)+)*>
+<!ELEMENT root ((workflow)+|(process)*)*>
         <!ELEMENT workflow ((simple_action|process_action)+)>
         <!ELEMENT simple_action (sub_action*)>
         <!ELEMENT process_action EMPTY>

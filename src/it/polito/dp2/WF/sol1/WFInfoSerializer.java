@@ -26,7 +26,6 @@ import java.util.Set;
 public class WFInfoSerializer {
 
     private WorkflowMonitor monitor;
-    //private DateFormat dateFormat;
 
     //xml stuff...
     private Document doc;    // document element
@@ -36,7 +35,6 @@ public class WFInfoSerializer {
 
         it.polito.dp2.WF.WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         monitor = factory.newWorkflowMonitor();
-        //dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
         //DOM
         DocumentBuilderFactory factoryDOM = DocumentBuilderFactory.newInstance();
@@ -68,26 +66,6 @@ public class WFInfoSerializer {
         Set<ActionReader> actions = wFR.getActions();
         Element wokFlow = doc.createElement(XMLFormat.ELEM_WORKFLOW.toString());
         wokFlow.setAttribute(XMLFormat.ATT_NAME.toString(), name);
-
-        /*
-        Calendar calendar = null;
-
-        for (ProcessReader processReader : getProcesses()) {
-            if (processReader.getWorkflow().getName().equals(name)) {
-
-                wokFlow.setAttribute("process", "true");
-
-                calendar = processReader.getStartTime();
-                break;
-            }
-        }
-
-        if (calendar != null) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-            simpleDateFormat.setCalendar(calendar);
-            simpleDateFormat.setTimeZone(calendar.getTimeZone());
-            wokFlow.setAttribute("date", simpleDateFormat.format(calendar.getTime()));
-        }*/
 
         for (ActionReader actionReader : actions)
             wokFlow.appendChild(createAction(actionReader));
@@ -219,7 +197,7 @@ public class WFInfoSerializer {
             infoSerializer.root.appendChild(infoSerializer.createProcess(processReader));
         }
 
-        infoSerializer.serialize(System.out);
+        //infoSerializer.serialize(System.out);
 
         String fileName = args[0];
 
