@@ -86,4 +86,42 @@ public class DataManager {
     	return date;
 		
 	}
+    
+    public synchronized boolean isProcessPresent(ProcessType process){
+    	
+    	WorkflowType workflow = (WorkflowType) process.getWorkflow();
+    	String name = workflow.getName();
+    	GregorianCalendar date = process.getDate().toGregorianCalendar();
+    	
+    	return isProcessPresent(name,date);
+    	
+    }
+    
+    public synchronized boolean isProcessPresent(String wfName,GregorianCalendar date){
+    	
+    	return processMap.containsKey(wfName) && processMap.get(wfName).containsKey(date);
+    }
+    
+    public GregorianCalendar updateProcess(ProcessType process){
+    	
+    	WorkflowType workflow = (WorkflowType) process.getWorkflow();
+    	String name = workflow.getName();
+    	GregorianCalendar date = process.getDate().toGregorianCalendar();
+    	
+    	
+    	if(!isProcessPresent(process))
+    		return null;
+    	
+    	processMap.get(name).put(date,new ProcessHolder(process));   	
+    	
+    	return date;
+    }
+    
+    public Map<GregorianCalendar, ProcessHolder> getProcessesByWFName(String wfName) {    	
+    	return processMap.get(wfName);		
+	}
+    
+    public ProcessHolder getProcess(String wfName,GregorianCalendar date){    	
+    	return getProcessesByWFName(wfName).get(date);
+    }
 }

@@ -29,7 +29,10 @@ public class ProcessHolder {
     }
 
     public ProcessType getProcess() {
-        return (new ProcessCopier(process)).getProcess();
+    	synchronized (this) {
+    		return (new ProcessCopier(process)).getProcess();
+		}
+    	
     }
     
     public ProcessType getProcessNoTSafe() {
