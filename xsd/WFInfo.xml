@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="WFInfo.xsd">
+
+    <workflow name="ArticleProduction">
+        <simple_action auto="false" name="Publication" role="Editor"/>
+        <simple_action auto="true" name="Writing" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Revising" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Checking" role="Editor">
+            <sub_action name_ref="Revising"/>
+            <sub_action name_ref="Publication"/>
+        </simple_action>
+    </workflow>
+
+    <workflow name="NewsProduction">
+        <simple_action auto="false" name="Publication" role="Editor"/>
+        <simple_action auto="true" name="Writing" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Revising" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Checking" role="Editor">
+            <sub_action name_ref="Revising"/>
+            <sub_action name_ref="Publication"/>
+        </simple_action>
+    </workflow>
+
+    <process date="2015-10-10T23:52:40.000+02:00" workflow="ArticleProduction">
+        <action_status date="2015-10-11T03:20:40.000+02:00" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Joseph Piceni" role="Journalist"/>
+        </action_status>
+        <action_status name="Checking" taken_in_charge="false" terminated="false">
+        </action_status>
+    </process>
+
+    <process date="2015-10-08T18:17:40.000+02:00" workflow="ArticleProduction">
+        <action_status date="2015-10-10T17:48:40.000+02:00" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Joseph Piceni" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-12T14:34:40.000+02:00" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Ludovico Lu Chen" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-14T09:32:40.000+02:00" name="Publication" taken_in_charge="true" terminated="true">
+            <actor name="Anna Menegai" role="Editor"/>
+        </action_status>
+    </process>
+
+    <process date="2015-10-08T18:17:40.000+02:00" workflow="NewsProduction">
+        <action_status date="2015-10-10T17:48:40.000+02:00" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Anna Menegai" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-12T14:34:40.000+02:00" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Ludovico Lu Chen" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-14T09:32:40.000+02:00" name="Publication" taken_in_charge="true" terminated="true">
+            <actor name="Joseph Piceni" role="Editor"/>
+        </action_status>
+    </process>
+
+</root>

@@ -4,6 +4,7 @@ package it.polito.dp2.WF.sol2;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import it.polito.dp2.WF.*;
 import it.polito.dp2.WF.sol2.jaxb.*;
+import it.polito.dp2.WF.sol2.lib.SerializerException;
 import it.polito.dp2.WF.sol2.reference.Reference;
 
 import javax.xml.bind.JAXBContext;
@@ -19,7 +20,7 @@ public class WFInfoSerializer {
     RootType root;
     Map<String, WorkflowType> map;
 
-    public WFInfoSerializer() throws WorkflowMonitorException, JAXBException {
+    public WFInfoSerializer() throws WorkflowMonitorException, JAXBException, SerializerException {
 
         it.polito.dp2.WF.WorkflowMonitorFactory factory = WorkflowMonitorFactory.newInstance();
         WorkflowMonitor monitor = factory.newWorkflowMonitor();
@@ -29,7 +30,7 @@ public class WFInfoSerializer {
         root = createRoot(monitor);
     }
 
-    RootType createRoot(WorkflowMonitor monitor) {
+    RootType createRoot(WorkflowMonitor monitor) throws SerializerException {
 
         RootType root = new RootType();
 
@@ -48,7 +49,7 @@ public class WFInfoSerializer {
         return root;
     }
 
-    ProcessType createProcess(ProcessReader process) {
+    ProcessType createProcess(ProcessReader process) throws SerializerException {
 
         ProcessType processType = new ProcessType();
         WorkflowType workflowType = getWorkflowType(process.getWorkflow().getName());
@@ -60,7 +61,19 @@ public class WFInfoSerializer {
         List<ActionStatusType> actionStatusTypes = processType.getActionStatus();
 
         for (ActionStatusReader actionStatusReader : actionStatus) {
-            // TODO: check if action exists
+
+            boolean flag = false;
+            for(ActionType actionType :workflowType.getSimpleActionOrProcessAction()){
+                if(actionType.getName().equals(actionStatusReader.getActionName()))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if(!flag)
+                throw new SerializerException(actionStatusReader.getActionName()+ "does not exist!");
+
             actionStatusTypes.add(createActionStatus(actionStatusReader));
         }
 
@@ -186,7 +199,7 @@ public class WFInfoSerializer {
 
     }
 
-    public static void main(String[] args) throws JAXBException, WorkflowMonitorException {
+    public static void main(String[] args) throws JAXBException, WorkflowMonitorException, SerializerException {
 
         WFInfoSerializer wfInfoSerializer = new WFInfoSerializer();
         String fileName = args.length <= 0 ? "output.xml" : args[0];

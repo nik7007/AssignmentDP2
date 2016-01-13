@@ -30,6 +30,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         //System.err.println(fileName);
 
         RootType root = createRoot(fileName);
+        assert root != null;
         List<WorkflowType> workflowTypes = root.getWorkflow();
         List<ProcessType> processTypes = root.getProcess();
 
@@ -58,12 +59,12 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         for (ProcessType processType : processTypes) {
 
             ProcessReader processReader = createProcess(processType);
-            processReaderMap.put(processReader.getStartTime(),processReader);
+            processReaderMap.put(processReader.getStartTime(), processReader);
 
         }
     }
 
-   private ProcessReader createProcess(ProcessType processType) throws WorkflowReaderException {
+    private ProcessReader createProcess(ProcessType processType) throws WorkflowReaderException {
 
         GregorianCalendar date = processType.getDate().toGregorianCalendar();
         WorkflowReader workflowReader = getWorkflowReader(((WorkflowType) processType.getWorkflow()).getName());
@@ -72,8 +73,14 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
         List<ActionStatusType> actionStatusList = processType.getActionStatus();
 
-        for(ActionStatusType actionStatusType : actionStatusList){
-            ((ProcessReaderImp)processReader).addActionStatusReader(createActionStatus(actionStatusType));
+        for (ActionStatusType actionStatusType : actionStatusList) {
+
+            if (workflowReader.getAction(actionStatusType.getName()) == null) {
+
+                throw new WorkflowReaderException(actionStatusType.getName() + "does not exist!");
+            }
+
+            ((ProcessReaderImp) processReader).addActionStatusReader(createActionStatus(actionStatusType));
         }
 
         return processReader;
@@ -99,7 +106,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
     }
 
 
-   private WorkflowReader getWorkflowReader(String name) {
+    private WorkflowReader getWorkflowReader(String name) {
 
         if (workflowReaderMap.containsKey(name))
             return workflowReaderMap.get(name);
@@ -109,7 +116,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
         return workflowReader;
     }
 
-   private void createWorkflow(WorkflowType workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
+    private void createWorkflow(WorkflowType workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
 
         WorkflowReader workflowReader = createWorkflow(workflow);
 
@@ -119,7 +126,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             ActionReaderImp actionReaderImp = createAction(actionType, workflowReader, actionConnector);
             allActions.put(actionReaderImp.getName(), actionReaderImp);
             try {
-                ((WorkflowReaderImp)workflowReader).addActionReader(actionReaderImp);
+                ((WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
             } catch (WorkflowReaderException e) {
                 e.printStackTrace();
             }
@@ -127,12 +134,12 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
     }
 
-   private WorkflowReader createWorkflow(WorkflowType workflow) {
+    private WorkflowReader createWorkflow(WorkflowType workflow) {
         return getWorkflowReader(workflow.getName());
 
     }
 
-   private ActionReaderImp createAction(ActionType action, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
+    private ActionReaderImp createAction(ActionType action, WorkflowReader workflowReader, Map<String, List<String>> actionConnector) {
 
         ActionReaderImp actionReader;
 
@@ -190,6 +197,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
         } catch (JAXBException | SAXException e) {
             e.printStackTrace();
+            System.exit(-1);
         }
 
 
