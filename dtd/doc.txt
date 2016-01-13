@@ -5,7 +5,7 @@ In my dtd file I have only one ID, which is the attribute name of the workflow.
 Because the workflow is identify by its name and it must be unique in the entire XML document.
 This ID is referenced by the process which was created at a certain instant to execute a workflow.
 
-For each element the information is stored has attribute, at most some elements can have a sub-element also
+For each element the information is stored as attribute, at most some elements can have a sub-element also
 described by its attributes.
 
 My DTD does not allow workflow without any action (process or simple).
