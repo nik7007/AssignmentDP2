@@ -1,14 +1,29 @@
-This XML schema allows to have an XML without any information, but also an undefined number of workflow and process.
-Each element has its own complex type, so the entire schema can be easily expended and used for other purposes.
+This XML Schema Definition allows to have an XML without any information, but also an undefined
+number of workflow and process.
+This schema allows XML without any information: an empty root element.
+Each element has its own complex type, so the entire schema can be easily extended and used for other purposes.
 
-The characteristics of each element are store as attribute, it can have, at most some elements can have a
+The characteristics of each element are store as attribute, it can have at most some elements having a
 sub-element also described by its attributes.
 
-Because the workflow's name identify the element, and each workflow are unique int the entire, the name attribute
-is the only ID in the entire file.
+Because the workflow's name identify the element, and each workflow are unique int the entire document,
+the name attribute is the only ID in the entire file.
 This ID is referenced by the process action and by the process.
 
 The name of any action is unique but only inside the same workflow.
 Two different workflow can have an action with the same name, but inside the same workflow is not possible.
 So inside the workflow element the name of any action is defined as a key (using a special element).
 The nex possible action (sub_action element) references it.
+
+In a workflow could be any type of action (simple_action and process_action) in any number and order,
+also can have no action.
+Simple action is allowed to have only sub_action (next possible action) as sub element.
+Process action has no sub element, but contains a reference to a workflow ID.
+
+A processes is unique identify by the workflow reference and a date.
+It can have no sub element or unlimited number of action status element
+
+An action status can have only one sub element which is a actor element.
+Its name references the name of an action inside a workflow referenced by the process.
+
+The actor element is only characterized by two attribute: name and role.
