@@ -34,7 +34,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         this.refresh();
     }
 
-    void getWorkflowNames() {
+    private void getWorkflowNames() {
         Holder<List<String>> holderWorkflowNames = new Holder<>();
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
 
@@ -43,7 +43,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     }
 
-    void getWorkflowForServer() throws UnknownNames_Exception {
+    private void getWorkflowForServer() throws UnknownNames_Exception {
 
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
         Holder<List<Workflow>> workflow = new Holder<>();
