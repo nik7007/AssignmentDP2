@@ -69,6 +69,10 @@ public class DataManager {
         return result;
     }
 
+    public WorkflowType getWorkflow(String wfName) {
+        return this.workflowMap.get(wfName).getWorkflow();
+    }
+
     public GregorianCalendar addNewProcess(ProcessType process) {
 
         WorkflowType workflow = (WorkflowType) process.getWorkflow();

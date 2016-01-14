@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="WF-4_server_clients" basedir=".">
 
-    <property name="lab4.location" location="."/>
+    <property name="lab4.location" location="${basedir}"/>
     <property name="lab4.location.sol" location="src/it/polito/dp2/WF/sol4"/>
     <property name="lab4.location.server" location="${lab4.location.sol}/server"/>
     <property name="lab4.location.client1" location="${lab4.location.sol}/client1"/>
@@ -24,9 +24,23 @@
 
     <property name="package" value="it.polito.dp2.WF.lab4.gen"/>
 
+    <property name="debug" value="true"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+
+    <path id="sol.classpath">
+        <pathelement location="${lib.dir}/WF.jar"/>
+    </path>
+
     <target name="init">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${gen.dir}"/>
+    </target>
+
+    <target name="clean" description="Clean generated files and class files">
+        <delete dir="${build.dir}"/>
+        <delete dir="${gen.dir}"/>
     </target>
 
     <target name="compile-wsdl" depends="init">
@@ -36,6 +50,24 @@
             <arg line="-d '${build.dir}' -p '${package}' -s '${gen.dir}' -keep ${WSDL}"/>
         </exec>
 
+    </target>
+
+    <target name="build-server" depends="init,compile-wsdl">
+        <echo>- Building Server -</echo>
+        <javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}"
+               includeantruntime="false">
+
+            <src path="${src.dir}"/>
+            <src path="${gen.dir}"/>
+            <include name="it/polito/dp2/WF/sol4/server/**"/>
+            <include name="it/polito/dp2/WF/lab4/server/*.java"/>
+            <classpath>
+                <path refid="sol.classpath"/>
+            </classpath>
+
+        </javac>
+
+        <echo>- Done -</echo>
     </target>
 
 

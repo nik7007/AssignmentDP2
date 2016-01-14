@@ -1,4 +1,4 @@
-package it.polito.dp2.WF.sol4.lib;
+package it.polito.dp2.WF.sol4.server.lib;
 
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;

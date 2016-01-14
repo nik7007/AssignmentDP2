@@ -28,9 +28,9 @@ public class ObjectFactory {
     private final static QName _ResultOperation_QNAME = new QName("http://www.example.org/Workflow/", "resultOperation");
     private final static QName _WorkflowName_QNAME = new QName("http://www.example.org/Workflow/", "workflowName");
     private final static QName _TakeOverActionFault_QNAME = new QName("http://www.example.org/Workflow/", "takeOverActionFault");
+    private final static QName _CreateProcessFault_QNAME = new QName("http://www.example.org/Workflow/", "createProcessFault");
     private final static QName _GetWorkflowNameResponse_QNAME = new QName("http://www.example.org/Workflow/", "getWorkflowNameResponse");
     private final static QName _Out_QNAME = new QName("http://www.example.org/Workflow/", "out");
-    private final static QName _CreatProcessFault_QNAME = new QName("http://www.example.org/Workflow/", "creatProcessFault");
     private final static QName _ActionInProcess_QNAME = new QName("http://www.example.org/Workflow/", "actionInProcess");
     private final static QName _DataCreation_QNAME = new QName("http://www.example.org/Workflow/", "dataCreation");
     private final static QName _ActionToComplete_QNAME = new QName("http://www.example.org/Workflow/", "actionToComplete");
@@ -99,19 +99,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CreatProcess }
-     * 
-     */
-    public CreatProcess createCreatProcess() {
-        return new CreatProcess();
-    }
-
-    /**
      * Create an instance of {@link ActionToCompleteType }
      * 
      */
     public ActionToCompleteType createActionToCompleteType() {
         return new ActionToCompleteType();
+    }
+
+    /**
+     * Create an instance of {@link CreateProcess }
+     * 
+     */
+    public CreateProcess createCreateProcess() {
+        return new CreateProcess();
     }
 
     /**
@@ -270,6 +270,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "createProcessFault")
+    public JAXBElement<String> createCreateProcessFault(String value) {
+        return new JAXBElement<String>(_CreateProcessFault_QNAME, String.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetWorkflowNameResponseType }{@code >}}
      * 
      */
@@ -285,15 +294,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "out")
     public JAXBElement<String> createOut(String value) {
         return new JAXBElement<String>(_Out_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "creatProcessFault")
-    public JAXBElement<String> createCreatProcessFault(String value) {
-        return new JAXBElement<String>(_CreatProcessFault_QNAME, String.class, null, value);
     }
 
     /**

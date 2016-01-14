@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "in"
 })
-@XmlRootElement(name = "creatProcess")
-public class CreatProcess {
+@XmlRootElement(name = "createProcess")
+public class CreateProcess {
 
     @XmlElement(required = true)
     protected String in;

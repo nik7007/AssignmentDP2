@@ -10,8 +10,8 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "creatProcessFault", targetNamespace = "http://www.example.org/Workflow/")
-public class CreatProcessFault
+@WebFault(name = "createProcessFault", targetNamespace = "http://www.example.org/Workflow/")
+public class CreateProcessFault
     extends Exception
 {
 
@@ -26,7 +26,7 @@ public class CreatProcessFault
      * @param faultInfo
      * @param message
      */
-    public CreatProcessFault(String message, String faultInfo) {
+    public CreateProcessFault(String message, String faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class CreatProcessFault
      * @param cause
      * @param message
      */
-    public CreatProcessFault(String message, String faultInfo, Throwable cause) {
+    public CreateProcessFault(String message, String faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }

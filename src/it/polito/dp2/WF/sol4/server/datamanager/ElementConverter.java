@@ -2,7 +2,7 @@ package it.polito.dp2.WF.sol4.server.datamanager;
 
 
 import it.polito.dp2.WF.*;
-import it.polito.dp2.WF.sol4.lib.DataConvert;
+import it.polito.dp2.WF.sol4.server.lib.DataConvert;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public class ElementConverter {
         try {
             WorkflowMonitorFactory monitorFactory = WorkflowMonitorFactory.newInstance();
             monitor = monitorFactory.newWorkflowMonitor();
-        } catch (/*FactoryConfigurationError |*/ WorkflowMonitorException e) {
+        } catch (FactoryConfigurationError | WorkflowMonitorException e) {
             //e.printStackTrace();
             monitor = null;
         }

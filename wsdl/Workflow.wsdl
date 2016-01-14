@@ -159,7 +159,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="creatProcess">
+            <xs:element name="createProcess">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="in" type="xs:string"/>
@@ -188,7 +188,7 @@
             </xs:element>
             <xs:element name="workflowName" type="xs:string"/>
             <xs:element name="dataCreation" type="xs:dateTime"/>
-            <xs:element name="creatProcessFault" type="xs:string"/>
+            <xs:element name="createProcessFault" type="xs:string"/>
 
             <xs:element name="actionInProcess" type="tns:actionInProcessType"/>
 
@@ -261,11 +261,11 @@
     <wsdl:message name="getInfoWorkflowResponse">
         <wsdl:part name="getInfoWorkflowResponse" element="tns:getWorkflow"/>
     </wsdl:message>
-    <wsdl:message name="creatProcessRequest">
+    <wsdl:message name="createProcessRequest">
         <wsdl:part name="parameters" element="tns:workflowName"/>
     </wsdl:message>
-    <wsdl:message name="creatProcessResponse">
-        <wsdl:part name="creatProcessResponse" element="tns:dataCreation"/>
+    <wsdl:message name="createProcessResponse">
+        <wsdl:part name="createProcessResponse" element="tns:dataCreation"/>
     </wsdl:message>
     <wsdl:message name="getInfoProcessNameFault">
         <wsdl:part name="getInfoProcessNameResponse" element="tns:getInfoProcessNameFault"/>
@@ -273,8 +273,8 @@
     <wsdl:message name="getInfoWorkflowFault">
         <wsdl:part name="getInfoWorkflowResponse" element="tns:getInfoWorkflowFault"/>
     </wsdl:message>
-    <wsdl:message name="creatProcessFault">
-        <wsdl:part name="creatProcessResponse" element="tns:creatProcessFault"/>
+    <wsdl:message name="createProcessFault">
+        <wsdl:part name="createProcessResponse" element="tns:createProcessFault"/>
     </wsdl:message>
     <wsdl:message name="takeOverActionRequest">
         <wsdl:part name="takeOverActionRequest" element="tns:actionInProcess"/>
@@ -315,10 +315,10 @@
     </wsdl:portType>
 
     <wsdl:portType name="WorkflowControllnterface">
-        <wsdl:operation name="creatProcess">
-            <wsdl:input message="tns:creatProcessRequest"/>
-            <wsdl:output message="tns:creatProcessResponse"/>
-            <wsdl:fault name="fault" message="tns:creatProcessFault"/>
+        <wsdl:operation name="createProcess">
+            <wsdl:input message="tns:createProcessRequest"/>
+            <wsdl:output message="tns:createProcessResponse"/>
+            <wsdl:fault name="fault" message="tns:createProcessFault"/>
         </wsdl:operation>
         <wsdl:operation name="takeOverAction">
             <wsdl:input message="tns:takeOverActionRequest"/>
@@ -389,10 +389,10 @@
 
         <soap:binding style="document"
                       transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="creatProcess">
+        <wsdl:operation name="createProcess">
 
             <soap:operation
-                    soapAction="http://www.example.org/Workflow/creatProcess"/>
+                    soapAction="http://www.example.org/Workflow/createProcess"/>
             <wsdl:input>
 
                 <soap:body use="literal"/>

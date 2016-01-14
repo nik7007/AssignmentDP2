@@ -29,14 +29,14 @@ public interface WorkflowControllnterface {
      * @param parameters
      * @return
      *     returns javax.xml.datatype.XMLGregorianCalendar
-     * @throws CreatProcessFault
+     * @throws CreateProcessFault
      */
-    @WebMethod(action = "http://www.example.org/Workflow/creatProcess")
-    @WebResult(name = "dataCreation", targetNamespace = "http://www.example.org/Workflow/", partName = "creatProcessResponse")
-    public XMLGregorianCalendar creatProcess(
+    @WebMethod(action = "http://www.example.org/Workflow/createProcess")
+    @WebResult(name = "dataCreation", targetNamespace = "http://www.example.org/Workflow/", partName = "createProcessResponse")
+    public XMLGregorianCalendar createProcess(
         @WebParam(name = "workflowName", targetNamespace = "http://www.example.org/Workflow/", partName = "parameters")
         String parameters)
-        throws CreatProcessFault
+        throws CreateProcessFault
     ;
 
     /**

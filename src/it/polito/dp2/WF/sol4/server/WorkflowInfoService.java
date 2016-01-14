@@ -23,7 +23,7 @@ import java.util.Map;
 )
 public class WorkflowInfoService implements WorkflowInfoInterface {
 
-    final DataManager DM;
+    private final DataManager DM;
 
     public WorkflowInfoService() {
         this.DM = WorkflowServer.DATA_MANAGER;
