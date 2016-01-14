@@ -1,9 +1,8 @@
 package it.polito.dp2.WF.sol4.server;
 
 
-import it.polito.dp2.WF.WorkflowMonitor;
-import it.polito.dp2.WF.WorkflowMonitorException;
-import it.polito.dp2.WF.WorkflowMonitorFactory;
+import it.polito.dp2.WF.sol4.server.datamanager.DataManager;
+import it.polito.dp2.WF.sol4.server.datamanager.ElementConverter;
 import it.polito.dp2.WF.sol4.server.reference.Reference;
 
 import javax.xml.ws.Endpoint;
@@ -13,14 +12,7 @@ public class WorkflowServer {
 
     public static void main(String[] args) {
 
-        WorkflowMonitorFactory monitorFactory = WorkflowMonitorFactory.newInstance();
-        WorkflowMonitor monitor = null;
-
-        try {
-            monitor = monitorFactory.newWorkflowMonitor();
-        } catch (WorkflowMonitorException e) {
-            e.printStackTrace();
-        }
+        final DataManager dataManager = ElementConverter.init();
 
         Endpoint info = Endpoint.create(new WorkflowInfoService());
         info.setExecutor(Executors.newFixedThreadPool(Reference.THREAD_NUMBER));

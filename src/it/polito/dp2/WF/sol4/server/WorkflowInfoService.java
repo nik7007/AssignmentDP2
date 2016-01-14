@@ -15,8 +15,9 @@ import javax.jws.WebService;
 )
 public class WorkflowInfoService implements WorkflowInfoInterface {
 
+
     @Override
-    public String getInfoWorkflowName(GetWorkflowName parameters) {
+    public GetWorkflowNameResponseType getInfoWorkflowName(GetWorkflowName parameters) {
         return null;
     }
 

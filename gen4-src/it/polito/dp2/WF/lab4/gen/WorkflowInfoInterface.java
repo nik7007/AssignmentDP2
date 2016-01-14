@@ -27,11 +27,11 @@ public interface WorkflowInfoInterface {
      * 
      * @param parameters
      * @return
-     *     returns java.lang.String
+     *     returns it.polito.dp2.WF.lab4.gen.GetWorkflowNameResponseType
      */
     @WebMethod(action = "http://www.example.org/Workflow/getInfoWorkflowName")
     @WebResult(name = "getWorkflowNameResponse", targetNamespace = "http://www.example.org/Workflow/", partName = "getInfoWorkflowNameResponse")
-    public String getInfoWorkflowName(
+    public GetWorkflowNameResponseType getInfoWorkflowName(
         @WebParam(name = "getWorkflowName", targetNamespace = "http://www.example.org/Workflow/", partName = "parameters")
         GetWorkflowName parameters);
 

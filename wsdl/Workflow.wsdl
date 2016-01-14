@@ -104,7 +104,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="getWorkflowNameResponse" type="xs:string"/>
+            <xs:element name="getWorkflowNameResponse" type="tns:getWorkflowNameResponseType"/>
 
             <xs:complexType name="getWorkflowNameResponseType">
                 <xs:sequence>

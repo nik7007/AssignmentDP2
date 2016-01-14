@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE root PUBLIC "SYSTEM" "wfInfo.dtd">
+<root>
+    <workflow name="ArticleProduction">
+        <simple_action auto="false" name="Publication" role="Editor"/>
+        <simple_action auto="true" name="Writing" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Revising" role="Journalist">
+            <sub_action name_ref="Checking"/>
+        </simple_action>
+        <simple_action auto="false" name="Checking" role="Editor">
+            <sub_action name_ref="Revising"/>
+            <sub_action name_ref="Publication"/>
+        </simple_action>
+    </workflow>
+    <process date="2015-10-07 08:46:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-08 15:31:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-09 09:13:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Margy Di Noto" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-11 06:40:40.000 CEST" name="Publication" taken_in_charge="true" terminated="true">
+            <actor name="Margy Di Noto" role="Editor"/>
+        </action_status>
+    </process>
+    <process date="2015-10-14 09:07:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-15 00:49:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-15 16:35:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Margy Di Noto" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-17 17:33:40.000 CEST" name="Revising" taken_in_charge="true" terminated="true">
+            <actor name="Maura Verdi" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-18 06:12:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status name="Revising" taken_in_charge="true" terminated="false">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+    </process>
+    <process date="2015-10-18 11:35:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-19 08:52:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Maura Verdi" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-20 18:59:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-22 01:45:40.000 CEST" name="Revising" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status name="Checking" taken_in_charge="true" terminated="false">
+            <actor name="Joseph Tasca" role="Editor"/>
+        </action_status>
+    </process>
+    <process date="2015-10-15 03:27:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-15 11:12:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Alessia Di Creo" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-16 16:35:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-18 10:59:40.000 CEST" name="Publication" taken_in_charge="true" terminated="true">
+            <actor name="Margy Di Noto" role="Editor"/>
+        </action_status>
+    </process>
+    <process date="2015-10-07 19:11:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-09 15:20:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-09 16:14:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Margy Di Noto" role="Editor"/>
+        </action_status>
+        <action_status name="Revising" taken_in_charge="true" terminated="false">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+    </process>
+    <process date="2015-10-10 04:51:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-10 17:27:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-11 23:24:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status name="Publication" taken_in_charge="false" terminated="false"/>
+    </process>
+    <process date="2015-10-10 09:32:40.000 CEST" workflow="ArticleProduction">
+        <action_status name="Writing" taken_in_charge="true" terminated="false">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+    </process>
+    <process date="2015-10-16 04:59:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-16 07:12:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Diana Eijk" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-17 09:32:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-17 19:41:40.000 CEST" name="Publication" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+    </process>
+    <process date="2015-10-21 04:52:40.000 CEST" workflow="ArticleProduction">
+        <action_status date="2015-10-22 23:43:40.000 CEST" name="Writing" taken_in_charge="true" terminated="true">
+            <actor name="Maura Verdi" role="Journalist"/>
+        </action_status>
+        <action_status date="2015-10-23 11:40:40.000 CEST" name="Checking" taken_in_charge="true" terminated="true">
+            <actor name="Caio Lamarn" role="Editor"/>
+        </action_status>
+        <action_status date="2015-10-24 19:10:40.000 CEST" name="Revising" taken_in_charge="true" terminated="true">
+            <actor name="Maura Verdi" role="Journalist"/>
+        </action_status>
+        <action_status name="Checking" taken_in_charge="false" terminated="false"/>
+    </process>
+</root>

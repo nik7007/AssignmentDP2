@@ -139,6 +139,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetWorkflowNameResponseType }
+     * 
+     */
+    public GetWorkflowNameResponseType createGetWorkflowNameResponseType() {
+        return new GetWorkflowNameResponseType();
+    }
+
+    /**
      * Create an instance of {@link GetWorkflowByName }
      * 
      */
@@ -195,14 +203,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetWorkflowNameResponseType }
-     * 
-     */
-    public GetWorkflowNameResponseType createGetWorkflowNameResponseType() {
-        return new GetWorkflowNameResponseType();
-    }
-
-    /**
      * Create an instance of {@link SimpleActionType }
      * 
      */
@@ -254,12 +254,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetWorkflowNameResponseType }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "getWorkflowNameResponse")
-    public JAXBElement<String> createGetWorkflowNameResponse(String value) {
-        return new JAXBElement<String>(_GetWorkflowNameResponse_QNAME, String.class, null, value);
+    public JAXBElement<GetWorkflowNameResponseType> createGetWorkflowNameResponse(GetWorkflowNameResponseType value) {
+        return new JAXBElement<GetWorkflowNameResponseType>(_GetWorkflowNameResponse_QNAME, GetWorkflowNameResponseType.class, null, value);
     }
 
     /**

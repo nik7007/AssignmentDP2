@@ -14,11 +14,16 @@ public class DataManager {
     private NamesHolder workflowNames;
     private Map<String, WorkflowHolder> workflowMap;
     private Map<String, Map<GregorianCalendar, ProcessHolder>> processMap;
+    private boolean isEmpty = false;
 
     private static final DataManager DATA_MANAGER = new DataManager();
 
-    public static DataManager getInstance() {
+    static DataManager getInstance() {
         return DATA_MANAGER;
+    }
+
+    void setEmpty(boolean empty) {
+        this.isEmpty = empty;
     }
 
     private DataManager() {
@@ -50,78 +55,78 @@ public class DataManager {
 
         return result;
     }
-    
-    public GregorianCalendar addNewProcess(ProcessType process) {
-    	
-    	WorkflowType workflow = (WorkflowType) process.getWorkflow();
-    	String name = workflow.getName();
-    	GregorianCalendar date = process.getDate().toGregorianCalendar();
-    	
-    	boolean flag = true;
-    	
-    	synchronized (this) {
-    		if(!processMap.containsKey(name)){
-    			Map<GregorianCalendar, ProcessHolder> toPut = new ConcurrentHashMap<>();
-    			toPut.put(date, new ProcessHolder(process));
-    			processMap.put(name,toPut);	
-    			flag =false;
-    		}
 
-		}
-    	
-    	if(flag){
-    		Map<GregorianCalendar, ProcessHolder> map = processMap.get(name);
-    		
-    		synchronized (this) {
-    			if(map.containsKey(date)){
-    				process.getDate().setMillisecond(process.getDate().getMillisecond() +1 );
-    				date = process.getDate().toGregorianCalendar();
-    			}    			
-    			map.put(date, new ProcessHolder(process));
-    		}
-    		
-    	}
-    	
-    	
-    	return date;
-		
-	}
-    
-    public synchronized boolean isProcessPresent(ProcessType process){
-    	
-    	WorkflowType workflow = (WorkflowType) process.getWorkflow();
-    	String name = workflow.getName();
-    	GregorianCalendar date = process.getDate().toGregorianCalendar();
-    	
-    	return isProcessPresent(name,date);
-    	
+    public GregorianCalendar addNewProcess(ProcessType process) {
+
+        WorkflowType workflow = (WorkflowType) process.getWorkflow();
+        String name = workflow.getName();
+        GregorianCalendar date = process.getDate().toGregorianCalendar();
+
+        boolean flag = true;
+
+        synchronized (this) {
+            if (!processMap.containsKey(name)) {
+                Map<GregorianCalendar, ProcessHolder> toPut = new ConcurrentHashMap<>();
+                toPut.put(date, new ProcessHolder(process));
+                processMap.put(name, toPut);
+                flag = false;
+            }
+
+        }
+
+        if (flag) {
+            Map<GregorianCalendar, ProcessHolder> map = processMap.get(name);
+
+            synchronized (this) {
+                if (map.containsKey(date)) {
+                    process.getDate().setMillisecond(process.getDate().getMillisecond() + 1);
+                    date = process.getDate().toGregorianCalendar();
+                }
+                map.put(date, new ProcessHolder(process));
+            }
+
+        }
+
+
+        return date;
+
     }
-    
-    public synchronized boolean isProcessPresent(String wfName,GregorianCalendar date){
-    	
-    	return processMap.containsKey(wfName) && processMap.get(wfName).containsKey(date);
+
+    public synchronized boolean isProcessPresent(ProcessType process) {
+
+        WorkflowType workflow = (WorkflowType) process.getWorkflow();
+        String name = workflow.getName();
+        GregorianCalendar date = process.getDate().toGregorianCalendar();
+
+        return isProcessPresent(name, date);
+
     }
-    
-    public GregorianCalendar updateProcess(ProcessType process){
-    	
-    	WorkflowType workflow = (WorkflowType) process.getWorkflow();
-    	String name = workflow.getName();
-    	GregorianCalendar date = process.getDate().toGregorianCalendar();
-    	
-    	
-    	if(!isProcessPresent(process))
-    		return null;
-    	
-    	processMap.get(name).put(date,new ProcessHolder(process));   	
-    	
-    	return date;
+
+    public synchronized boolean isProcessPresent(String wfName, GregorianCalendar date) {
+
+        return processMap.containsKey(wfName) && processMap.get(wfName).containsKey(date);
     }
-    
-    public Map<GregorianCalendar, ProcessHolder> getProcessesByWFName(String wfName) {    	
-    	return processMap.get(wfName);		
-	}
-    
-    public ProcessHolder getProcess(String wfName,GregorianCalendar date){    	
-    	return getProcessesByWFName(wfName).get(date);
+
+    public GregorianCalendar updateProcess(ProcessType process) {
+
+        WorkflowType workflow = (WorkflowType) process.getWorkflow();
+        String name = workflow.getName();
+        GregorianCalendar date = process.getDate().toGregorianCalendar();
+
+
+        if (!isProcessPresent(process))
+            return null;
+
+        processMap.get(name).put(date, new ProcessHolder(process));
+
+        return date;
+    }
+
+    public Map<GregorianCalendar, ProcessHolder> getProcessesByWFName(String wfName) {
+        return processMap.get(wfName);
+    }
+
+    public ProcessHolder getProcess(String wfName, GregorianCalendar date) {
+        return getProcessesByWFName(wfName).get(date);
     }
 }
