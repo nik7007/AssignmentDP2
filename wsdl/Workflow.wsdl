@@ -124,8 +124,14 @@
             <xs:element name="getProcessNameResponse">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="lastModTime" type="xs:dateTime"/>
-                        <xs:element name="process" type="tns:processType"/>
+                        <xs:element name="processAndTime">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="lastModTime" type="xs:dateTime"/>
+                                    <xs:element name="process" type="tns:processType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -141,8 +147,14 @@
             <xs:element name="getWorkflow">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="lastModTime" type="xs:dateTime"/>
-                        <xs:element name="workflow" type="tns:workflowType"/>
+                        <xs:element name="lastModTimeAndWorkflow">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="lastModTime" type="xs:dateTime"/>
+                                    <xs:element name="workflow" type="tns:workflowType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>

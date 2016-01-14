@@ -10,9 +10,9 @@ import java.util.concurrent.Executors;
 
 public class WorkflowServer {
 
-    public static void main(String[] args) {
+    static final DataManager DATA_MANAGER = ElementConverter.init();
 
-        final DataManager dataManager = ElementConverter.init();
+    public static void main(String[] args) {
 
         Endpoint info = Endpoint.create(new WorkflowInfoService());
         info.setExecutor(Executors.newFixedThreadPool(Reference.THREAD_NUMBER));

@@ -1,12 +1,10 @@
 package it.polito.dp2.WF.sol4.server.datamanager;
 
 
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import it.polito.dp2.WF.*;
-import it.polito.dp2.WF.lab4.gen.*;
 import it.polito.dp2.WF.sol4.lib.DataConvert;
 
-import java.util.*;
+import java.util.Set;
 
 public class ElementConverter {
 
@@ -19,7 +17,7 @@ public class ElementConverter {
         try {
             WorkflowMonitorFactory monitorFactory = WorkflowMonitorFactory.newInstance();
             monitor = monitorFactory.newWorkflowMonitor();
-        } catch (WorkflowMonitorException e) {
+        } catch (/*FactoryConfigurationError |*/ WorkflowMonitorException e) {
             //e.printStackTrace();
             monitor = null;
         }
@@ -30,11 +28,14 @@ public class ElementConverter {
         DataManager dataManager = DataManager.getInstance();
 
         WorkflowMonitor monitor = ELEMENT_CONVERTER.monitor;
-        DataConvert convert = new DataConvert();
+
 
         if (monitor == null)
             dataManager.setEmpty(true);
         else {
+
+            DataConvert convert = new DataConvert();
+
             Set<WorkflowReader> workflowSet = monitor.getWorkflows();
             Set<ProcessReader> processSet = monitor.getProcesses();
 

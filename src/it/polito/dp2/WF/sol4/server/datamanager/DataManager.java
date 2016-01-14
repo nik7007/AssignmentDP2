@@ -45,12 +45,25 @@ public class DataManager {
         return this.workflowNames.getLastMod();
     }
 
+    public boolean containWorkflow(String name) {
+        return workflowMap.containsKey(name);
+    }
+
     public List<WorkflowHolder> getWorkflowByNames(List<String> names) {
 
         List<WorkflowHolder> result = new LinkedList<>();
 
         for (String name : names) {
-            result.add(this.workflowMap.get(name));
+            WorkflowHolder wH = this.workflowMap.get(name);
+
+            if (wH == null) {
+                WorkflowHolder.WorkflowHolderError error = new WorkflowHolder.WorkflowHolderError(name);
+                result.clear();
+                result.add(error);
+                return result;
+            }
+
+            result.add(wH);
         }
 
         return result;
@@ -104,10 +117,13 @@ public class DataManager {
 
     public synchronized boolean isProcessPresent(String wfName, GregorianCalendar date) {
 
-        return processMap.containsKey(wfName) && processMap.get(wfName).containsKey(date);
+        return !isEmpty && processMap.containsKey(wfName) && processMap.get(wfName).containsKey(date);
     }
 
     public GregorianCalendar updateProcess(ProcessType process) {
+
+        if (isEmpty)
+            return null;
 
         WorkflowType workflow = (WorkflowType) process.getWorkflow();
         String name = workflow.getName();

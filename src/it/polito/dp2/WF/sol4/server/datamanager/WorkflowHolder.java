@@ -1,7 +1,6 @@
 package it.polito.dp2.WF.sol4.server.datamanager;
 
 
-import it.polito.dp2.WF.lab4.gen.ActionType;
 import it.polito.dp2.WF.lab4.gen.WorkflowType;
 
 import java.util.GregorianCalendar;
@@ -13,6 +12,10 @@ public class WorkflowHolder {
     public WorkflowHolder(WorkflowType workflow) {
         this.lastMod = new GregorianCalendar();
         this.workflow = workflow;
+    }
+
+    private WorkflowHolder() {
+
     }
 
     public GregorianCalendar getLastMod() {
@@ -27,5 +30,18 @@ public class WorkflowHolder {
         lastMod = new GregorianCalendar();
         this.workflow = workflow;
     }
-    
+
+    public static class WorkflowHolderError extends WorkflowHolder {
+        String name;
+
+        public WorkflowHolderError(String name) {
+            super();
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 }

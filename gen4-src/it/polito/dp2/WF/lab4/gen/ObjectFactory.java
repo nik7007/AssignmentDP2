@@ -43,6 +43,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetWorkflow }
+     * 
+     */
+    public GetWorkflow createGetWorkflow() {
+        return new GetWorkflow();
+    }
+
+    /**
+     * Create an instance of {@link GetProcessNameResponse }
+     * 
+     */
+    public GetProcessNameResponse createGetProcessNameResponse() {
+        return new GetProcessNameResponse();
+    }
+
+    /**
      * Create an instance of {@link ActionInProcessType }
      * 
      */
@@ -59,19 +75,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetWorkflow }
+     * Create an instance of {@link GetWorkflow.LastModTimeAndWorkflow }
      * 
      */
-    public GetWorkflow createGetWorkflow() {
-        return new GetWorkflow();
-    }
-
-    /**
-     * Create an instance of {@link WorkflowType }
-     * 
-     */
-    public WorkflowType createWorkflowType() {
-        return new WorkflowType();
+    public GetWorkflow.LastModTimeAndWorkflow createGetWorkflowLastModTimeAndWorkflow() {
+        return new GetWorkflow.LastModTimeAndWorkflow();
     }
 
     /**
@@ -107,19 +115,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetProcessNameResponse }
+     * Create an instance of {@link GetProcessNameResponse.ProcessAndTime }
      * 
      */
-    public GetProcessNameResponse createGetProcessNameResponse() {
-        return new GetProcessNameResponse();
-    }
-
-    /**
-     * Create an instance of {@link ProcessType }
-     * 
-     */
-    public ProcessType createProcessType() {
-        return new ProcessType();
+    public GetProcessNameResponse.ProcessAndTime createGetProcessNameResponseProcessAndTime() {
+        return new GetProcessNameResponse.ProcessAndTime();
     }
 
     /**
@@ -187,11 +187,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link WorkflowType }
+     * 
+     */
+    public WorkflowType createWorkflowType() {
+        return new WorkflowType();
+    }
+
+    /**
      * Create an instance of {@link ProcessActionType }
      * 
      */
     public ProcessActionType createProcessActionType() {
         return new ProcessActionType();
+    }
+
+    /**
+     * Create an instance of {@link ProcessType }
+     * 
+     */
+    public ProcessType createProcessType() {
+        return new ProcessType();
     }
 
     /**

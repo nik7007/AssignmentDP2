@@ -2,6 +2,7 @@ package it.polito.dp2.WF.sol4.server;
 
 
 import it.polito.dp2.WF.lab4.gen.*;
+import it.polito.dp2.WF.sol4.server.datamanager.DataManager;
 import it.polito.dp2.WF.sol4.server.reference.Reference;
 
 import javax.jws.WebService;
@@ -16,6 +17,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
         endpointInterface = Reference.BASIC_PACKAGE + "WorkflowControllnterface"
 )
 public class WorkflowControlService implements WorkflowControllnterface {
+
+    final DataManager DM;
+
+    public WorkflowControlService() {
+        this.DM = WorkflowServer.DATA_MANAGER;
+    }
+
     @Override
     public XMLGregorianCalendar creatProcess(String parameters) throws CreatProcessFault {
         return null;
