@@ -1,9 +1,9 @@
 My DTD allows to have a XML without any information, with only workflow without a maximum number,
 and it allows a XML with workflow and processes also both without a maximum number.
 
-In my dtd file I have only one ID, which is the attribute name of the workflow.
-Because the workflow is identify by its name and it must be unique in the entire XML document.
-This ID is referenced by the process action and by the process which was created at a certain instant
+In my dtd file I have only one ID, which is the attribute name of the workflow, because the workflow
+is identify by its name and it must be unique in the entire XML document.
+This ID is referenced by the process actions and by the processes which are created at a certain instant
 to execute a workflow.
 
 For each element the information is stored as attribute, at most some elements can have a sub-element also
@@ -15,9 +15,10 @@ If a workflow exists must have at least one action of any kind.
 A simple action can have a sub action element, which is the next action to instantiate when the current one is over.
 The process action does not have any sub element.
 
+A processes is unique identify by the workflow reference and a string which represent a date.
 If a process exist must have at least a sub element, which is action status.
 An action status can have an optional sub element which is the actor.
 The only attribute that is not required to be included is the date inside the action status element.
 
-Must of the attribute are string, I tried to recreate the boolean value by having an enumerated
+Most of the attribute are string, I tried to recreate the boolean value by having an enumerated
 list which allow only the "true", "false" string and setting as default value the "false" string.
