@@ -26,20 +26,20 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     public WorkflowMonitorImpl() throws MalformedURLException {
 
-        workflowReaderMap = new HashMap<>();
+        this.workflowReaderMap = new HashMap<>();
         String url = System.getProperty("it.polito.dp2.WF.sol3.URL");
         //System.err.println(url);
         WorkflowInfoService service = new WorkflowInfoService(new URL(url));
-        proxy = service.getWorkflowInfoPort();
-        refresh();
+        this.proxy = service.getWorkflowInfoPort();
+        this.refresh();
     }
 
     void getWorkflowNames() {
         Holder<List<String>> holderWorkflowNames = new Holder<>();
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
 
-        proxy.getWorkflowNames(holderLastWorkflow, holderWorkflowNames);
-        workflowNames = holderWorkflowNames.value;
+        this.proxy.getWorkflowNames(holderLastWorkflow, holderWorkflowNames);
+        this.workflowNames = holderWorkflowNames.value;
 
     }
 
@@ -48,16 +48,16 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
         Holder<List<Workflow>> workflow = new Holder<>();
 
-        if (workflowNames == null)
-            getWorkflowNames();
+        //if (workflowNames == null)
+        this.getWorkflowNames();
 
-        proxy.getWorkflows(workflowNames, holderLastWorkflow, workflow);
+        this.proxy.getWorkflows(workflowNames, holderLastWorkflow, workflow);
 
         if (lastModTimeWorkflow == null || !lastModTimeWorkflow.equals(holderLastWorkflow.value)) {
 
-            workflowReaderMap.clear();
+            this.workflowReaderMap.clear();
 
-            lastModTimeWorkflow = holderLastWorkflow.value;
+            this.lastModTimeWorkflow = holderLastWorkflow.value;
             List<Workflow> workflowList = workflow.value;
 
             for (Workflow wf : workflowList) {
@@ -65,7 +65,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
                 Map<String, List<String>> actionConnector = new HashMap<>();
                 Map<String, ActionReaderImp> allActions = new HashMap<>();
 
-                createWorkflow(wf, actionConnector, allActions);
+                this.createWorkflow(wf, actionConnector, allActions);
             }
 
 
@@ -81,7 +81,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         List<Action> actions = workflow.getAction();
 
         for (Action action : actions) {
-            ActionReaderImp actionReaderImp = createAction(action, workflowReader, actionConnector);
+            ActionReaderImp actionReaderImp = this.createAction(action, workflowReader, actionConnector);
             allActions.put(actionReaderImp.getName(), actionReaderImp);
 
             try {
@@ -120,24 +120,24 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     private WorkflowReader getWorkflowReader(String name) {
 
-        if (workflowReaderMap.containsKey(name))
-            return workflowReaderMap.get(name);
+        if (this.workflowReaderMap.containsKey(name))
+            return this.workflowReaderMap.get(name);
         WorkflowReader workflowReader = new WorkflowReaderImp(name);
 
-        workflowReaderMap.put(name, workflowReader);
+        this.workflowReaderMap.put(name, workflowReader);
         return workflowReader;
     }
 
     @Override
     public Set<WorkflowReader> getWorkflows() {
-        return new HashSet<>(workflowReaderMap.values());
+        return new HashSet<>(this.workflowReaderMap.values());
     }
 
     @Override
     public WorkflowReader getWorkflow(String s) {
 
-        if (workflowReaderMap.containsKey(s))
-            return workflowReaderMap.get(s);
+        if (this.workflowReaderMap.containsKey(s))
+            return this.workflowReaderMap.get(s);
         else
             return null;
     }
@@ -150,11 +150,12 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     @Override
     public void refresh() {
 
-        getWorkflowNames();
+        this.getWorkflowNames();
         try {
-            getWorkflowForServer();
+            this.getWorkflowForServer();
         } catch (UnknownNames_Exception e) {
             e.printStackTrace();
+            System.err.println("Refresh failed!");
         }
     }
 }
