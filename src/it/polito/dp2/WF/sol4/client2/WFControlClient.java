@@ -2,7 +2,7 @@ package it.polito.dp2.WF.sol4.client2;
 
 
 import it.polito.dp2.WF.lab4.gen.CreateProcessFault;
-import it.polito.dp2.WF.lab4.gen.WorkflowControllnterface;
+import it.polito.dp2.WF.lab4.gen.WorkflowControlInterface;
 import it.polito.dp2.WF.lab4.gen.WorkflowService;
 
 import java.net.MalformedURLException;
@@ -16,7 +16,7 @@ public class WFControlClient {
             System.exit(2);
         }
 
-        WorkflowControllnterface proxy;
+        WorkflowControlInterface proxy;
         String url = args[0];
         String workflowName = args[1];
 

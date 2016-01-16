@@ -16,9 +16,9 @@ import java.util.GregorianCalendar;
         targetNamespace = Reference.TARGET_NAMESPACE,
         serviceName = Reference.SERVICE_NAME,
         portName = "WorkflowControl",
-        endpointInterface = Reference.BASIC_PACKAGE + "WorkflowControllnterface"
+        endpointInterface = Reference.BASIC_PACKAGE + "WorkflowControlInterface"
 )
-public class WorkflowControlService implements WorkflowControllnterface {
+public class WorkflowControlService implements WorkflowControlInterface {
 
     private final DataManager DM;
 

@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "WorkflowService", targetNamespace = "http://www.example.org/Workflow/", wsdlLocation = "file:/C:/eclips/workspace/AssignmentDP2/wsdl/Workflow.wsdl")
+@WebServiceClient(name = "WorkflowService", targetNamespace = "http://www.example.org/Workflow/", wsdlLocation = "file:/C:/IdeaProjects/AssignmentDP2/wsdl/Workflow.wsdl")
 public class WorkflowService
     extends Service
 {
@@ -30,7 +30,7 @@ public class WorkflowService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/C:/eclips/workspace/AssignmentDP2/wsdl/Workflow.wsdl");
+            url = new URL("file:/C:/IdeaProjects/AssignmentDP2/wsdl/Workflow.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -65,11 +65,11 @@ public class WorkflowService
     /**
      * 
      * @return
-     *     returns WorkflowControllnterface
+     *     returns WorkflowControlInterface
      */
     @WebEndpoint(name = "WorkflowControl")
-    public WorkflowControllnterface getWorkflowControl() {
-        return super.getPort(new QName("http://www.example.org/Workflow/", "WorkflowControl"), WorkflowControllnterface.class);
+    public WorkflowControlInterface getWorkflowControl() {
+        return super.getPort(new QName("http://www.example.org/Workflow/", "WorkflowControl"), WorkflowControlInterface.class);
     }
 
     /**
@@ -77,11 +77,11 @@ public class WorkflowService
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns WorkflowControllnterface
+     *     returns WorkflowControlInterface
      */
     @WebEndpoint(name = "WorkflowControl")
-    public WorkflowControllnterface getWorkflowControl(WebServiceFeature... features) {
-        return super.getPort(new QName("http://www.example.org/Workflow/", "WorkflowControl"), WorkflowControllnterface.class, features);
+    public WorkflowControlInterface getWorkflowControl(WebServiceFeature... features) {
+        return super.getPort(new QName("http://www.example.org/Workflow/", "WorkflowControl"), WorkflowControlInterface.class, features);
     }
 
     /**
