@@ -29,6 +29,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                 &lt;sequence>
  *                   &lt;element name="lastModTime" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *                   &lt;element name="process" type="{http://www.example.org/Workflow/}processType"/>
+ *                   &lt;element name="workflow" type="{http://www.example.org/Workflow/}workflowType"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -93,6 +94,7 @@ public class GetProcessNameResponse {
      *       &lt;sequence>
      *         &lt;element name="lastModTime" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
      *         &lt;element name="process" type="{http://www.example.org/Workflow/}processType"/>
+     *         &lt;element name="workflow" type="{http://www.example.org/Workflow/}workflowType"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -104,7 +106,8 @@ public class GetProcessNameResponse {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "lastModTime",
-        "process"
+        "process",
+        "workflow"
     })
     public static class ProcessAndTime {
 
@@ -113,6 +116,8 @@ public class GetProcessNameResponse {
         protected XMLGregorianCalendar lastModTime;
         @XmlElement(required = true)
         protected ProcessType process;
+        @XmlElement(required = true)
+        protected WorkflowType workflow;
 
         /**
          * Recupera il valore della proprietà lastModTime.
@@ -160,6 +165,30 @@ public class GetProcessNameResponse {
          */
         public void setProcess(ProcessType value) {
             this.process = value;
+        }
+
+        /**
+         * Recupera il valore della proprietà workflow.
+         * 
+         * @return
+         *     possible object is
+         *     {@link WorkflowType }
+         *     
+         */
+        public WorkflowType getWorkflow() {
+            return workflow;
+        }
+
+        /**
+         * Imposta il valore della proprietà workflow.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link WorkflowType }
+         *     
+         */
+        public void setWorkflow(WorkflowType value) {
+            this.workflow = value;
         }
 
     }

@@ -1,4 +1,4 @@
-package it.polito.dp2.WF.lab2.tests;
+package it.polito.dp2.WF.lab4.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,8 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.polito.dp2.WF.*;
-import it.polito.dp2.WF.lab1.WFInfo;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +45,7 @@ public class WFTests {
 	private static WorkflowMonitor referenceWorkflowMonitor;	// reference data generator
 	private static WorkflowMonitor testWorkflowMonitor;			// implementation under test
 	private static long testcase;
+	private static long numproc;
 	
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -56,7 +55,7 @@ public class WFTests {
         referenceWorkflowMonitor = WorkflowMonitorFactory.newInstance().newWorkflowMonitor();
 
         // Create implementation under test
-        System.setProperty("it.polito.dp2.WF.WorkflowMonitorFactory", "it.polito.dp2.WF.sol2.WorkflowMonitorFactory");
+        System.setProperty("it.polito.dp2.WF.WorkflowMonitorFactory", "it.polito.dp2.WF.sol4.client1.WorkflowMonitorFactory");
 
         testWorkflowMonitor = WorkflowMonitorFactory.newInstance().newWorkflowMonitor();
         
@@ -66,6 +65,14 @@ public class WFTests {
         	testcase = 0;
         else
         	testcase = testcaseObj.longValue();
+        
+        // read number of processes created before starting the test
+        Long numprocObj = Long.getLong("it.polito.dp2.WF.lab4.test.numproc");
+        if (numprocObj == null)
+        	numproc = 0;
+        else
+        	numproc = numprocObj.longValue();
+        
     }
     
     @Before
@@ -126,7 +133,6 @@ public class WFTests {
 
         // check the WorkflowReaders return the same data
         compareString(rwr.getName(), twr.getName(), "workflow name");
-        compareProcessSets(rwr.getProcesses(), twr.getProcesses());
 	}
 	
     @Test
@@ -154,13 +160,19 @@ public class WFTests {
 		}
 		
         // check that the number of processes matches
-		assertEquals("Wrong Number of processes", rs.size(), ts.size());
+		assertEquals("Wrong Number of processes", rs.size()+numproc, ts.size());
 		
         // create treesets of processes, using the comparator for sorting, one for reference and one for impl. under test 
 		TreeSet<ProcessReader> rts = new TreeSet<ProcessReader>(new ProcessReaderComparator());
 		TreeSet<ProcessReader> tts = new TreeSet<ProcessReader>(new ProcessReaderComparator());
    
+		// add all reference processes to reference process set
 		rts.addAll(rs);
+		// add numproc ArticleProduction processes to reference process set
+		WorkflowReader wfr = referenceWorkflowMonitor.getWorkflow("ArticleProduction");
+		for (int i=0; i<numproc; i++)
+			rts.add(new ProcessReaderImpl(wfr));
+		// add all test processes to test process set
 		tts.addAll(ts);
 		
 		Iterator<ProcessReader> ri = rts.iterator();
@@ -181,11 +193,13 @@ public class WFTests {
         System.out.println("Comparing process workflow " + rpr.getWorkflow().getName() + " start time " + dateFormat.format(rpr.getStartTime().getTime()));
         
         // Test start time
+        /* start time is not required to match
         if (testcase==2) {
 	        Calendar rc = rpr.getStartTime();
 	        Calendar tc = tpr.getStartTime();
 			compareTime(rc, tc, "start time");
         }
+        */
         
         // Test workflow
         WorkflowReader rwr = rpr.getWorkflow();

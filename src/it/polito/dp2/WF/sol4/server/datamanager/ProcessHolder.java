@@ -84,7 +84,7 @@ public class ProcessHolder {
     			 try {
     				 date = DatatypeFactory.newInstance().newXMLGregorianCalendar(actionStatus.getDate().toGregorianCalendar());
     				 this.actionStatus.setDate(date);    				 
-				} catch (DatatypeConfigurationException e) {
+				} catch (NullPointerException | DatatypeConfigurationException e) {
 					//e.printStackTrace();
 					date = actionStatus.getDate();
 				}

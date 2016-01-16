@@ -67,7 +67,30 @@
 
         </javac>
 
-        <echo>- Done -</echo>
+        <echo>- Done building Server -</echo>
+    </target>
+
+    <target name="build-client" depends="init,compile-wsdl">
+        <echo>- Building Client 1 and 2 -</echo>
+
+        <javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}"
+               includeantruntime="false">
+
+            <src path="${src.dir}"/>
+            <src path="${gen.dir}"/>
+            <include name="it/polito/dp2/WF/sol4/client1/**"/>
+            <include name="it/polito/dp2/WF/lab4/client1/*.java"/>
+
+            <include name="it/polito/dp2/WF/sol4/client2/**"/>
+            <include name="it/polito/dp2/WF/lab4/client2/*.java"/>
+            <classpath>
+                <path refid="sol.classpath"/>
+            </classpath>
+
+        </javac>
+
+
+        <echo>- Done building Client 1 and 2-</echo>
     </target>
 
 

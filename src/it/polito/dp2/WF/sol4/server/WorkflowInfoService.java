@@ -58,7 +58,7 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
             for (Map.Entry<GregorianCalendar, ProcessHolder> entry : map.entrySet()) {
                 ProcessHolder pH = entry.getValue();
 
-                response.getProcessAndTime().add(createElement(new XMLGregorianCalendarImpl(pH.getLastMod()), pH.getProcess()));
+                response.getProcessAndTime().add(createElement(new XMLGregorianCalendarImpl(pH.getLastMod()), pH.getProcessNoTSafe()));
 
             }
 
@@ -71,6 +71,7 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
 
         result.setLastModTime(date);
         result.setProcess(processType);
+        result.setWorkflow((WorkflowType) processType.getWorkflow());
 
         return result;
 
