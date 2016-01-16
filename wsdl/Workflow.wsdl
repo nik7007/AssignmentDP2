@@ -129,7 +129,7 @@
                                 <xs:sequence>
                                     <xs:element name="lastModTime" type="xs:dateTime"/>
                                     <xs:element name="process" type="tns:processType"/>
-                                    <xs:element name="workflow" type = "tns:workflowType"/>
+                                    <xs:element name="workflow" type="tns:workflowType"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -296,26 +296,39 @@
         <wsdl:part name="completeActionResponse" element="tns:completeActionFault"/>
     </wsdl:message>
     <wsdl:portType name="WorkflowInfoInterface">
-        <wsdl:documentation>This interface provides only operations to get all the processes and workflow fro the serve</wsdl:documentation>
+        <wsdl:documentation>
+            This interface provides only operations to get all the processes and workflow fro the
+            serve
+        </wsdl:documentation>
 
         <wsdl:operation name="getInfoWorkflowName">
-            <wsdl:documentation>This operation allows the client to get the name of all the workflow in the server. Each workflow is characterized by its name.
-The sever doe not only send a list of names but also a date which indicates the last time that the entire list was modified</wsdl:documentation>
+            <wsdl:documentation>
+                This operation allows the client to get the name of all the workflow in the server. Each
+                workflow is characterized by its name.
+                The sever doe not only send a list of names but also a date which indicates the last time that the
+                entire list was modified
+            </wsdl:documentation>
             <wsdl:input message="tns:getInfoWorkflowNameRequest"/>
             <wsdl:output message="tns:getInfoWorkflowNameResponse"/>
         </wsdl:operation>
 
         <wsdl:operation name="getInfoProcessName">
-            <wsdl:documentation>With the parameter &quot;getProcessName&quot; the client sends the te server a list of workflow names and the server will respond with a sequence of processes active for each workflow.
-Attached to each process thereis also a date which indicates the last modification time.</wsdl:documentation>
+            <wsdl:documentation>
+                With the parameter &quot;getProcessName&quot; the client sends the te server a list of
+                workflow names and the server will respond with a sequence of processes active for each workflow.
+                Attached to each process there is also a date which indicates the last modification time.
+            </wsdl:documentation>
             <wsdl:input message="tns:getInfoProcessNameRequest"/>
             <wsdl:output message="tns:getInfoProcessNameResponse"/>
             <wsdl:fault name="fault" message="tns:getInfoProcessNameFault"/>
         </wsdl:operation>
 
         <wsdl:operation name="getInfoWorkflow">
-            <wsdl:documentation>The server recive a sequence of workflow's names and send to the client all the workflow corresponding to those names.
-Attached to each workflow thereis also a date which indicates the last modification time.</wsdl:documentation>
+            <wsdl:documentation>
+                The server recive a sequence of workflow's names and send to the client all the workflow
+                corresponding to those names.
+                Attached to each workflow there is also a date which indicates the last modification time.
+            </wsdl:documentation>
             <wsdl:input message="tns:getInfoWorkflowRequest"/>
             <wsdl:output message="tns:getInfoWorkflowResponse"/>
             <wsdl:fault name="fault" message="tns:getInfoWorkflowFault"/>
@@ -341,113 +354,113 @@ Attached to each workflow thereis also a date which indicates the last modificat
     </wsdl:portType>
     <wsdl:binding name="WFinfo" type="tns:WorkflowInfoInterface">
 
-    	<soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http" />
-    	<wsdl:operation name="getInfoWorkflowName">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getInfoWorkflowName">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/getInfoWorkflowName" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/getInfoWorkflowName"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    	</wsdl:operation>
-    	<wsdl:operation name="getInfoProcessName">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getInfoProcessName">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/getInfoProcessName" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/getInfoProcessName"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    		<wsdl:fault name="fault">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
 
-    			<soap:fault use="literal" name="fault" />
-    		</wsdl:fault>
-    	</wsdl:operation>
-    	<wsdl:operation name="getInfoWorkflow">
+                <soap:fault use="literal" name="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getInfoWorkflow">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/getInfoWorkflow" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/getInfoWorkflow"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    		<wsdl:fault name="fault">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
 
-    			<soap:fault use="literal" name="fault" />
-    		</wsdl:fault>
-    	</wsdl:operation>
+                <soap:fault use="literal" name="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
     </wsdl:binding>
 
     <wsdl:binding name="WFControl"
-    	type="tns:WorkflowControlInterface">
+                  type="tns:WorkflowControlInterface">
 
-    	<soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http" />
-    	<wsdl:operation name="createProcess">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createProcess">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/createProcess" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/createProcess"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    		<wsdl:fault name="fault">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
 
-    			<soap:fault use="literal" name="fault" />
-    		</wsdl:fault>
-    	</wsdl:operation>
-    	<wsdl:operation name="takeOverAction">
+                <soap:fault use="literal" name="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="takeOverAction">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/takeOverAction" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/takeOverAction"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    		<wsdl:fault name="fault">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
 
-    			<soap:fault use="literal" name="fault" />
-    		</wsdl:fault>
-    	</wsdl:operation>
-    	<wsdl:operation name="completeAction">
+                <soap:fault use="literal" name="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="completeAction">
 
-    		<soap:operation
-    			soapAction="http://www.example.org/Workflow/completeAction" />
-    		<wsdl:input>
+            <soap:operation
+                    soapAction="http://www.example.org/Workflow/completeAction"/>
+            <wsdl:input>
 
-    			<soap:body use="literal" />
-    		</wsdl:input>
-    		<wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
 
-    			<soap:body use="literal" />
-    		</wsdl:output>
-    		<wsdl:fault name="fault">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
 
-    			<soap:fault use="literal" name="fault" />
-    		</wsdl:fault>
-    	</wsdl:operation>
+                <soap:fault use="literal" name="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="WorkflowService">
         <wsdl:port name="WorkflowControl" binding="tns:WFControl">
