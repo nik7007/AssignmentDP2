@@ -129,6 +129,7 @@
                                 <xs:sequence>
                                     <xs:element name="lastModTime" type="xs:dateTime"/>
                                     <xs:element name="process" type="tns:processType"/>
+                                    <xs:element name="workflow" type = "tns:workflowType"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
