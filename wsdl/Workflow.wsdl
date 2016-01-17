@@ -296,17 +296,14 @@
         <wsdl:part name="completeActionResponse" element="tns:completeActionFault"/>
     </wsdl:message>
     <wsdl:portType name="WorkflowInfoInterface">
-        <wsdl:documentation>
-            This interface provides only operations to get all the processes and workflow fro the
-            serve
+        <wsdl:documentation>This interface provides only operations to get all the processes and workflow fro the serve
         </wsdl:documentation>
 
         <wsdl:operation name="getInfoWorkflowName">
-            <wsdl:documentation>
-                This operation allows the client to get the name of all the workflow in the server. Each
-                workflow is characterized by its name.
-                The sever doe not only send a list of names but also a date which indicates the last time that the
-                entire list was modified
+            <wsdl:documentation>This operation allows the client to get the name of all the workflow in the server.
+Each workflow is characterized by its name.
+The sever doe not only send a list of names but also a date which indicates the last time that the
+entire list was modified
             </wsdl:documentation>
             <wsdl:input message="tns:getInfoWorkflowNameRequest"/>
             <wsdl:output message="tns:getInfoWorkflowNameResponse"/>
