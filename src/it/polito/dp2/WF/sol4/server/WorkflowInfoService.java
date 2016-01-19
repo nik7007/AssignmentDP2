@@ -83,6 +83,14 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
 
         List<WorkflowHolder> wfList = DM.getWorkflowByNames(parameters.getWorkflowName());
 
+        if (wfList == null) {
+            String errMessage = "ERROR";
+            GetInfoWorkflowFault e = new GetInfoWorkflowFault();
+            e.setGetInfoWorkflowFault(errMessage);
+            throw new GetInfoWorkflowFault_Exception(errMessage, e);
+
+        }
+
         if (wfList.size() == 1) {
             WorkflowHolder holder = wfList.get(0);
 

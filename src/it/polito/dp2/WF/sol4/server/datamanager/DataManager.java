@@ -46,36 +46,53 @@ public class DataManager {
     }
 
     public boolean containWorkflow(String name) {
-        return workflowMap.containsKey(name);
+        try {
+            return workflowMap.containsKey(name);
+        } catch (ClassCastException e) {
+            return false;
+        }
     }
 
     public List<WorkflowHolder> getWorkflowByNames(List<String> names) {
 
+        if (names == null)
+            return null;
+
         List<WorkflowHolder> result = new LinkedList<>();
 
         for (String name : names) {
-            WorkflowHolder wH = this.workflowMap.get(name);
+            if (name != null) {
+                WorkflowHolder wH = this.workflowMap.get(name);
 
-            if (wH == null) {
-                WorkflowHolder.WorkflowHolderError error = new WorkflowHolder.WorkflowHolderError(name);
-                result.clear();
-                result.add(error);
-                return result;
+                if (wH == null) {
+                    WorkflowHolder.WorkflowHolderError error = new WorkflowHolder.WorkflowHolderError(name);
+                    result.clear();
+                    result.add(error);
+                    return result;
+                }
+
+                result.add(wH);
             }
-
-            result.add(wH);
         }
 
         return result;
     }
 
     public WorkflowType getWorkflow(String wfName) {
-        return this.workflowMap.get(wfName).getWorkflow();
+        WorkflowHolder holder = this.workflowMap.get(wfName);
+        return holder == null ? null : holder.getWorkflow();
     }
 
     public GregorianCalendar addNewProcess(ProcessType process) {
 
+        if (process == null)
+            return null;
+
         WorkflowType workflow = (WorkflowType) process.getWorkflow();
+
+        if (workflow == null)
+            return null;
+
         String name = workflow.getName();
         GregorianCalendar date = process.getDate().toGregorianCalendar();
 
@@ -111,7 +128,14 @@ public class DataManager {
 
     public synchronized boolean isProcessPresent(ProcessType process) {
 
+        if (process == null)
+            return false;
+
         WorkflowType workflow = (WorkflowType) process.getWorkflow();
+
+        if (workflow == null)
+            return false;
+
         String name = workflow.getName();
         GregorianCalendar date = process.getDate().toGregorianCalendar();
 
@@ -126,10 +150,14 @@ public class DataManager {
 
     public GregorianCalendar updateProcess(ProcessType process) {
 
-        if (isEmpty)
+        if (isEmpty || process == null)
             return null;
 
         WorkflowType workflow = (WorkflowType) process.getWorkflow();
+
+        if (workflow == null)
+            return null;
+
         String name = workflow.getName();
         GregorianCalendar date = process.getDate().toGregorianCalendar();
 

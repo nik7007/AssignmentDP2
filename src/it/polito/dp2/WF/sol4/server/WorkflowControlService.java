@@ -38,10 +38,19 @@ public class WorkflowControlService implements WorkflowControlInterface {
 
         GregorianCalendar calendar = DM.addNewProcess(createProcess(workflow));
 
+        if (calendar == null) {
+            String errMsg = "ERROR creating the process!!";
+            throw new CreateProcessFault(errMsg, errMsg);
+        }
+
         return new XMLGregorianCalendarImpl(calendar);
     }
 
     private ProcessType createProcess(WorkflowType workflowType) {
+
+        if (workflowType == null)
+            return null;
+
         ProcessType process = new ProcessType();
 
         process.setDate(new XMLGregorianCalendarImpl(new GregorianCalendar()));
