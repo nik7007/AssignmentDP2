@@ -253,7 +253,8 @@
     </wsdl:message>
 
     <wsdl:message name="getInfoProcessNameResponse">
-        <wsdl:part name="getInfoProcessNameResponse" element="tns:getProcessNameResponse"/>
+        <wsdl:part name="getInfoProcessNameResponse" element="tns:getProcessNameResponse">
+        	<wsdl:documentation>The output contains all the processes for the input workflow, or an empty list if the workflow exist but has not any process.</wsdl:documentation></wsdl:part>
     </wsdl:message>
 
     <wsdl:message name="getInfoWorkflowRequest">
@@ -266,43 +267,56 @@
         <wsdl:part name="parameters" element="tns:workflowName"/>
     </wsdl:message>
     <wsdl:message name="createProcessResponse">
-        <wsdl:part name="createProcessResponse" element="tns:dataCreation"/>
+        <wsdl:part name="createProcessResponse" element="tns:dataCreation">
+        	<wsdl:documentation>A process is uniquely identify by the workflow name and the creation time (and date), so this method returns the creation time to the client.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getInfoProcessNameFault">
-        <wsdl:part name="getInfoProcessNameResponse" element="tns:getInfoProcessNameFault"/>
+        <wsdl:part name="getInfoProcessNameResponse" element="tns:getInfoProcessNameFault">
+        	<wsdl:documentation>The operation throws this fault if does not exist any workflow with the name specified by the input</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getInfoWorkflowFault">
-        <wsdl:part name="getInfoWorkflowResponse" element="tns:getInfoWorkflowFault"/>
+        <wsdl:part name="getInfoWorkflowResponse" element="tns:getInfoWorkflowFault">
+        	<wsdl:documentation>The operation throws this fault if does not exist one of the workflow names specified by the input.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="createProcessFault">
-        <wsdl:part name="createProcessResponse" element="tns:createProcessFault"/>
+        <wsdl:part name="createProcessResponse" element="tns:createProcessFault">
+        	<wsdl:documentation>If the workflow does not exist the operation will throw a fault</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="takeOverActionRequest">
-        <wsdl:part name="takeOverActionRequest" element="tns:actionInProcess"/>
+        <wsdl:part name="takeOverActionRequest" element="tns:actionInProcess">
+        	<wsdl:documentation>The client sends a workflow name and a creation time of a process (this two element identify a process), a action in the process and a actor.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="takeOverActionResponse">
-        <wsdl:part name="takeOverActionResponse" element="tns:resultOperation"/>
+        <wsdl:part name="takeOverActionResponse" element="tns:resultOperation">
+        	<wsdl:documentation>The result is simply a boolean value.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="takeOverActionFault">
-        <wsdl:part name="takeOverActionResponse" element="tns:takeOverActionFault"/>
+        <wsdl:part name="takeOverActionResponse" element="tns:takeOverActionFault">
+        	<wsdl:documentation>If there is not any process of the given workflow name at the specify date, or the process does not contain the action, or also the action has already
+an actor the operation will throw a fault.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="completeActionRequest">
-        <wsdl:part name="completeActionRequest" element="tns:actionToComplete"/>
+        <wsdl:part name="completeActionRequest" element="tns:actionToComplete">
+        	<wsdl:documentation>This parameter first identify a process given a workflow name and a creation time, then an action to complete and the relative actor,
+and finaly the next action which will replace the terminated one.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="completeActionResponse">
-        <wsdl:part name="completeActionResponse" element="tns:resultOperation"/>
+        <wsdl:part name="completeActionResponse" element="tns:resultOperation">
+        	<wsdl:documentation>The result is simply a boolean value.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:message name="completeActionFault">
-        <wsdl:part name="completeActionResponse" element="tns:completeActionFault"/>
+        <wsdl:part name="completeActionResponse" element="tns:completeActionFault">
+        	<wsdl:documentation>If the process identify by the input parameter does not exist, or it does not contain the indicated action, or the actor is not correct,
+or also the indicated next action is wrong the server will throw a fault.</wsdl:documentation></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="WorkflowInfoInterface">
-        <wsdl:documentation>This interface provides only operations to get all the processes and workflow fro the serve
+        <wsdl:documentation>This interface provides only operations to get all the processes and workflow from the serve
         </wsdl:documentation>
 
         <wsdl:operation name="getInfoWorkflowName">
             <wsdl:documentation>This operation allows the client to get the name of all the workflow in the server.
 Each workflow is characterized by its name.
-The sever doe not only send a list of names but also a date which indicates the last time that the
+The sever does not only send a list of names but also a date which indicates the last time that the
 entire list was modified
             </wsdl:documentation>
             <wsdl:input message="tns:getInfoWorkflowNameRequest"/>
@@ -310,10 +324,9 @@ entire list was modified
         </wsdl:operation>
 
         <wsdl:operation name="getInfoProcessName">
-            <wsdl:documentation>
-                With the parameter &quot;getProcessName&quot; the client sends the te server a list of
-                workflow names and the server will respond with a sequence of processes active for each workflow.
-                Attached to each process there is also a date which indicates the last modification time.
+            <wsdl:documentation>With the parameter &quot;getProcessName&quot; the client sends the the server a list of
+ workflow names and the server will respond with a sequence of processes active for each workflow.
+Attached to each process there is also a date which indicates the last modification time.
             </wsdl:documentation>
             <wsdl:input message="tns:getInfoProcessNameRequest"/>
             <wsdl:output message="tns:getInfoProcessNameResponse"/>
@@ -321,10 +334,9 @@ entire list was modified
         </wsdl:operation>
 
         <wsdl:operation name="getInfoWorkflow">
-            <wsdl:documentation>
-                The server recive a sequence of workflow's names and send to the client all the workflow
-                corresponding to those names.
-                Attached to each workflow there is also a date which indicates the last modification time.
+            <wsdl:documentation> The server receives a sequence of workflow's names and send to the client all the workflow
+corresponding to those names.
+ Attached to each workflow there is also a date which indicates the last modification time.
             </wsdl:documentation>
             <wsdl:input message="tns:getInfoWorkflowRequest"/>
             <wsdl:output message="tns:getInfoWorkflowResponse"/>
@@ -333,17 +345,21 @@ entire list was modified
     </wsdl:portType>
 
     <wsdl:portType name="WorkflowControlInterface">
+        <wsdl:documentation>This interface provides only the operation to change the data on the server.</wsdl:documentation>
         <wsdl:operation name="createProcess">
+            <wsdl:documentation>Given a existing workflow name this operation allows the client to create a process on the server</wsdl:documentation>
             <wsdl:input message="tns:createProcessRequest"/>
             <wsdl:output message="tns:createProcessResponse"/>
             <wsdl:fault name="fault" message="tns:createProcessFault"/>
         </wsdl:operation>
         <wsdl:operation name="takeOverAction">
+            <wsdl:documentation>This operation allows to take over an action in one of the active process identify an action in a process and an actor.</wsdl:documentation>
             <wsdl:input message="tns:takeOverActionRequest"/>
             <wsdl:output message="tns:takeOverActionResponse"/>
             <wsdl:fault name="fault" message="tns:takeOverActionFault"/>
         </wsdl:operation>
         <wsdl:operation name="completeAction">
+            <wsdl:documentation>Selected an action in a process this operation will terminated and start a new one indicated by the client.</wsdl:documentation>
             <wsdl:input message="tns:completeActionRequest"/>
             <wsdl:output message="tns:completeActionResponse"/>
             <wsdl:fault name="fault" message="tns:completeActionFault"/>
