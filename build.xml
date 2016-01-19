@@ -174,7 +174,7 @@
 
 	<!-- Target runFuncTest.real	-->
 	<target name="runFuncTest.real" depends="run-client2"> <!-- timeout="120000"-->
-		<junit printsummary="yes" dir="." fork="yes" haltonfailure="no" showoutput="no" filtertrace="true" >
+		<junit printsummary="yes" dir="." fork="yes" haltonfailure="no" showoutput="no" filtertrace="true" timeout="120000" >
 
 			<!--
             <jvmarg value="-Xdebug" />

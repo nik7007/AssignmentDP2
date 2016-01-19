@@ -181,9 +181,9 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
 
         } else {
 
-            WorkflowType workflowType = (WorkflowType) ((ProcessActionType) action).getSubWorkflow();
+            String workflowName = ((ProcessActionType) action).getSubWorkflow();
 
-            WorkflowReader wr = createWorkflow(workflowType);
+            WorkflowReader wr = getWorkflowReader(workflowName);
 
             actionReader = new ProcessActionReaderImp(name, workflowReader, role, auto, wr);
 

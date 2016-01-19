@@ -43,6 +43,7 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
 
         String wfName = parameters.getWorkflowName();
         Map<GregorianCalendar, ProcessHolder> map = DM.getProcessesByWFName(wfName);
+        boolean isFirst = true;
 
         if (!DM.containWorkflow(wfName)) {
             String errS = wfName + " does not exist!";
@@ -58,6 +59,11 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
             for (Map.Entry<GregorianCalendar, ProcessHolder> entry : map.entrySet()) {
                 ProcessHolder pH = entry.getValue();
 
+                if (isFirst) {
+                    isFirst = false;
+                    response.setWorkflow((WorkflowType) pH.getProcess().getWorkflow());
+                }
+
                 response.getProcessAndTime().add(createElement(new XMLGregorianCalendarImpl(pH.getLastMod()), pH.getProcessNoTSafe()));
 
             }
@@ -71,7 +77,6 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
 
         result.setLastModTime(date);
         result.setProcess(processType);
-        result.setWorkflow((WorkflowType) processType.getWorkflow());
 
         return result;
 

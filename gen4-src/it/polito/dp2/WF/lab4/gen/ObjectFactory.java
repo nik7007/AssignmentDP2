@@ -115,6 +115,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link WorkflowType }
+     * 
+     */
+    public WorkflowType createWorkflowType() {
+        return new WorkflowType();
+    }
+
+    /**
      * Create an instance of {@link GetProcessNameResponse.ProcessAndTime }
      * 
      */
@@ -184,14 +192,6 @@ public class ObjectFactory {
      */
     public RootType createRootType() {
         return new RootType();
-    }
-
-    /**
-     * Create an instance of {@link WorkflowType }
-     * 
-     */
-    public WorkflowType createWorkflowType() {
-        return new WorkflowType();
     }
 
     /**

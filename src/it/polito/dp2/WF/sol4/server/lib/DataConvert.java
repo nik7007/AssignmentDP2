@@ -80,7 +80,7 @@ public class DataConvert {
             WorkflowType workflowType = getWorkflowType(workflowName);
 
 
-            ((ProcessActionType) actionType).setSubWorkflow(workflowType);
+            ((ProcessActionType) actionType).setSubWorkflow(workflowType.getName());
         }
 
         assert actionType != null;
