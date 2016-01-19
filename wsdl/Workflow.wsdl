@@ -91,7 +91,7 @@
             <xs:complexType name="process_actionType">
                 <xs:complexContent>
                     <xs:extension base="tns:actionType">
-                        <xs:attribute type="xs:IDREF" name="sub_workflow" use="required"/>
+                        <xs:attribute type="xs:string" name="sub_workflow" use="required"/>
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
@@ -124,12 +124,12 @@
             <xs:element name="getProcessNameResponse">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    	<xs:element name="workflow" type="tns:workflowType"/>
                         <xs:element name="processAndTime">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="lastModTime" type="xs:dateTime"/>
-                                    <xs:element name="process" type="tns:processType"/>
-                                    <xs:element name="workflow" type="tns:workflowType"/>
+                                    <xs:element name="process" type="tns:processType"/>                                    
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
