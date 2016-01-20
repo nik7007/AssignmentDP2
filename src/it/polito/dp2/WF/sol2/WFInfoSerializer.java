@@ -1,18 +1,45 @@
 package it.polito.dp2.WF.sol2;
 
-
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import it.polito.dp2.WF.*;
-import it.polito.dp2.WF.sol2.jaxb.*;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import it.polito.dp2.WF.ActionReader;
+import it.polito.dp2.WF.ActionStatusReader;
+import it.polito.dp2.WF.Actor;
+import it.polito.dp2.WF.ProcessActionReader;
+import it.polito.dp2.WF.ProcessReader;
+import it.polito.dp2.WF.SimpleActionReader;
+import it.polito.dp2.WF.WorkflowMonitor;
+import it.polito.dp2.WF.WorkflowMonitorException;
+import it.polito.dp2.WF.WorkflowReader;
+import it.polito.dp2.WF.sol2.jaxb.ActionStatusType;
+import it.polito.dp2.WF.sol2.jaxb.ActionType;
+import it.polito.dp2.WF.sol2.jaxb.ActorType;
+import it.polito.dp2.WF.sol2.jaxb.ObjectFactory;
+import it.polito.dp2.WF.sol2.jaxb.ProcessActionType;
+import it.polito.dp2.WF.sol2.jaxb.ProcessType;
+import it.polito.dp2.WF.sol2.jaxb.RootType;
+import it.polito.dp2.WF.sol2.jaxb.SimpleActionType;
+import it.polito.dp2.WF.sol2.jaxb.SubActionType;
+import it.polito.dp2.WF.sol2.jaxb.WorkflowType;
 import it.polito.dp2.WF.sol2.lib.SerializerException;
 import it.polito.dp2.WF.sol2.reference.Reference;
+
+import java.io.File;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.File;
-import java.util.*;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.SAXException;
+
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 public class WFInfoSerializer {
 
@@ -177,10 +204,12 @@ public class WFInfoSerializer {
 
     }
 
-    public void marshalling(String fileName) throws JAXBException {
+    public void marshalling(String fileName) throws JAXBException, SAXException {
         JAXBElement<RootType> jaxbElement = (new ObjectFactory()).createRoot(root);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        Schema schema = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI).newSchema(new File("xsd/Wfinfo.xsd"));
+        marshaller.setSchema(schema);
         marshaller.marshal(jaxbElement, new File(fileName));
 
     }
@@ -199,7 +228,7 @@ public class WFInfoSerializer {
 
     }
 
-    public static void main(String[] args) throws JAXBException, WorkflowMonitorException, SerializerException {
+    public static void main(String[] args) throws JAXBException, WorkflowMonitorException, SerializerException, SAXException {
 
         WFInfoSerializer wfInfoSerializer = new WFInfoSerializer();
         String fileName = args.length <= 0 ? "output.xml" : args[0];
