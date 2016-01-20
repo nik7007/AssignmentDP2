@@ -13,9 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -55,7 +55,7 @@ public class GetProcessNameResponse {
     protected List<GetProcessNameResponse.ProcessAndTime> processAndTime;
 
     /**
-     * Recupera il valore della proprietà workflow.
+     * Gets the value of the workflow property.
      * 
      * @return
      *     possible object is
@@ -67,7 +67,7 @@ public class GetProcessNameResponse {
     }
 
     /**
-     * Imposta il valore della proprietà workflow.
+     * Sets the value of the workflow property.
      * 
      * @param value
      *     allowed object is
@@ -109,9 +109,9 @@ public class GetProcessNameResponse {
 
 
     /**
-     * <p>Classe Java per anonymous complex type.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -142,7 +142,7 @@ public class GetProcessNameResponse {
         protected ProcessType process;
 
         /**
-         * Recupera il valore della proprietà lastModTime.
+         * Gets the value of the lastModTime property.
          * 
          * @return
          *     possible object is
@@ -154,7 +154,7 @@ public class GetProcessNameResponse {
         }
 
         /**
-         * Imposta il valore della proprietà lastModTime.
+         * Sets the value of the lastModTime property.
          * 
          * @param value
          *     allowed object is
@@ -166,7 +166,7 @@ public class GetProcessNameResponse {
         }
 
         /**
-         * Recupera il valore della proprietà process.
+         * Gets the value of the process property.
          * 
          * @return
          *     possible object is
@@ -178,7 +178,7 @@ public class GetProcessNameResponse {
         }
 
         /**
-         * Imposta il valore della proprietà process.
+         * Sets the value of the process property.
          * 
          * @param value
          *     allowed object is

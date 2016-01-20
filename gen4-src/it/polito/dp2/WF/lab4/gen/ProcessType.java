@@ -14,9 +14,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per processType complex type.
+ * <p>Java class for processType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="processType">
@@ -80,7 +80,7 @@ public class ProcessType {
     }
 
     /**
-     * Recupera il valore della proprietà date.
+     * Gets the value of the date property.
      * 
      * @return
      *     possible object is
@@ -92,7 +92,7 @@ public class ProcessType {
     }
 
     /**
-     * Imposta il valore della proprietà date.
+     * Sets the value of the date property.
      * 
      * @param value
      *     allowed object is
@@ -104,7 +104,7 @@ public class ProcessType {
     }
 
     /**
-     * Recupera il valore della proprietà workflow.
+     * Gets the value of the workflow property.
      * 
      * @return
      *     possible object is
@@ -116,7 +116,7 @@ public class ProcessType {
     }
 
     /**
-     * Imposta il valore della proprietà workflow.
+     * Sets the value of the workflow property.
      * 
      * @param value
      *     allowed object is

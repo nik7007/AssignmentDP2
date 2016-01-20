@@ -12,9 +12,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per getWorkflowNameResponseType complex type.
+ * <p>Java class for getWorkflowNameResponseType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="getWorkflowNameResponseType">
@@ -44,7 +44,7 @@ public class GetWorkflowNameResponseType {
     protected List<String> workflowName;
 
     /**
-     * Recupera il valore della proprietà lastModTime.
+     * Gets the value of the lastModTime property.
      * 
      * @return
      *     possible object is
@@ -56,7 +56,7 @@ public class GetWorkflowNameResponseType {
     }
 
     /**
-     * Imposta il valore della proprietà lastModTime.
+     * Sets the value of the lastModTime property.
      * 
      * @param value
      *     allowed object is

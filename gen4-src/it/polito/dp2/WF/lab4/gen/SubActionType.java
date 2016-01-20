@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per sub_actionType complex type.
+ * <p>Java class for sub_actionType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="sub_actionType">
@@ -32,7 +32,7 @@ public class SubActionType {
     protected String nameRef;
 
     /**
-     * Recupera il valore della proprietà nameRef.
+     * Gets the value of the nameRef property.
      * 
      * @return
      *     possible object is
@@ -44,7 +44,7 @@ public class SubActionType {
     }
 
     /**
-     * Imposta il valore della proprietà nameRef.
+     * Sets the value of the nameRef property.
      * 
      * @param value
      *     allowed object is

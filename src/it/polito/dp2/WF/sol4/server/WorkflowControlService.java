@@ -2,12 +2,15 @@ package it.polito.dp2.WF.sol4.server;
 
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+
 import it.polito.dp2.WF.lab4.gen.*;
+import it.polito.dp2.WF.lab4.gen.ActionInProcessType.ProcessIdentifier;
 import it.polito.dp2.WF.sol4.server.datamanager.DataManager;
 import it.polito.dp2.WF.sol4.server.reference.Reference;
 
 import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import java.util.GregorianCalendar;
 
 
@@ -81,6 +84,11 @@ public class WorkflowControlService implements WorkflowControlInterface {
 
     @Override
     public boolean takeOverAction(ActionInProcessType takeOverActionRequest) throws TakeOverActionFault {
+    	
+    	ProcessIdentifier processID = takeOverActionRequest.getProcessIdentifier();
+    	String wfName = ((WorkflowType)processID.getWorkflow()).getName();
+    	GregorianCalendar calendar = processID.getDate().toGregorianCalendar();
+    	
         return false;
     }
 

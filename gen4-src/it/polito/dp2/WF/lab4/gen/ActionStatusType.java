@@ -10,9 +10,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per action_statusType complex type.
+ * <p>Java class for action_statusType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="action_statusType">
@@ -50,7 +50,7 @@ public class ActionStatusType {
     protected Boolean terminated;
 
     /**
-     * Recupera il valore della proprietà actor.
+     * Gets the value of the actor property.
      * 
      * @return
      *     possible object is
@@ -62,7 +62,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della proprietà actor.
+     * Sets the value of the actor property.
      * 
      * @param value
      *     allowed object is
@@ -74,7 +74,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della proprietà date.
+     * Gets the value of the date property.
      * 
      * @return
      *     possible object is
@@ -86,7 +86,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della proprietà date.
+     * Sets the value of the date property.
      * 
      * @param value
      *     allowed object is
@@ -98,7 +98,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della proprietà name.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della proprietà name.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della proprietà takenInCharge.
+     * Gets the value of the takenInCharge property.
      * 
      * @return
      *     possible object is
@@ -138,7 +138,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della proprietà takenInCharge.
+     * Sets the value of the takenInCharge property.
      * 
      * @param value
      *     allowed object is
@@ -150,7 +150,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Recupera il valore della proprietà terminated.
+     * Gets the value of the terminated property.
      * 
      * @return
      *     possible object is
@@ -166,7 +166,7 @@ public class ActionStatusType {
     }
 
     /**
-     * Imposta il valore della proprietà terminated.
+     * Sets the value of the terminated property.
      * 
      * @param value
      *     allowed object is

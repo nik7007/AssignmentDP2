@@ -13,9 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per actionInProcessType complex type.
+ * <p>Java class for actionInProcessType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="actionInProcessType">
@@ -69,7 +69,7 @@ public class ActionInProcessType {
     protected ActorType actor;
 
     /**
-     * Recupera il valore della proprietà processIdentifier.
+     * Gets the value of the processIdentifier property.
      * 
      * @return
      *     possible object is
@@ -81,7 +81,7 @@ public class ActionInProcessType {
     }
 
     /**
-     * Imposta il valore della proprietà processIdentifier.
+     * Sets the value of the processIdentifier property.
      * 
      * @param value
      *     allowed object is
@@ -93,7 +93,7 @@ public class ActionInProcessType {
     }
 
     /**
-     * Recupera il valore della proprietà action.
+     * Gets the value of the action property.
      * 
      * @return
      *     possible object is
@@ -105,7 +105,7 @@ public class ActionInProcessType {
     }
 
     /**
-     * Imposta il valore della proprietà action.
+     * Sets the value of the action property.
      * 
      * @param value
      *     allowed object is
@@ -117,7 +117,7 @@ public class ActionInProcessType {
     }
 
     /**
-     * Recupera il valore della proprietà actor.
+     * Gets the value of the actor property.
      * 
      * @return
      *     possible object is
@@ -129,7 +129,7 @@ public class ActionInProcessType {
     }
 
     /**
-     * Imposta il valore della proprietà actor.
+     * Sets the value of the actor property.
      * 
      * @param value
      *     allowed object is
@@ -142,9 +142,9 @@ public class ActionInProcessType {
 
 
     /**
-     * <p>Classe Java per anonymous complex type.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -166,7 +166,7 @@ public class ActionInProcessType {
         protected String actionName;
 
         /**
-         * Recupera il valore della proprietà actionName.
+         * Gets the value of the actionName property.
          * 
          * @return
          *     possible object is
@@ -178,7 +178,7 @@ public class ActionInProcessType {
         }
 
         /**
-         * Imposta il valore della proprietà actionName.
+         * Sets the value of the actionName property.
          * 
          * @param value
          *     allowed object is
@@ -193,9 +193,9 @@ public class ActionInProcessType {
 
 
     /**
-     * <p>Classe Java per anonymous complex type.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -223,7 +223,7 @@ public class ActionInProcessType {
         protected Object workflow;
 
         /**
-         * Recupera il valore della proprietà date.
+         * Gets the value of the date property.
          * 
          * @return
          *     possible object is
@@ -235,7 +235,7 @@ public class ActionInProcessType {
         }
 
         /**
-         * Imposta il valore della proprietà date.
+         * Sets the value of the date property.
          * 
          * @param value
          *     allowed object is
@@ -247,7 +247,7 @@ public class ActionInProcessType {
         }
 
         /**
-         * Recupera il valore della proprietà workflow.
+         * Gets the value of the workflow property.
          * 
          * @return
          *     possible object is
@@ -259,7 +259,7 @@ public class ActionInProcessType {
         }
 
         /**
-         * Imposta il valore della proprietà workflow.
+         * Sets the value of the workflow property.
          * 
          * @param value
          *     allowed object is

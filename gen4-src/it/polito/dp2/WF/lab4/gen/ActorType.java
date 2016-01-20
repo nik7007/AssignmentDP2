@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per actorType complex type.
+ * <p>Java class for actorType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="actorType">
@@ -35,7 +35,7 @@ public class ActorType {
     protected String role;
 
     /**
-     * Recupera il valore della proprietà name.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -47,7 +47,7 @@ public class ActorType {
     }
 
     /**
-     * Imposta il valore della proprietà name.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
@@ -59,7 +59,7 @@ public class ActorType {
     }
 
     /**
-     * Recupera il valore della proprietà role.
+     * Gets the value of the role property.
      * 
      * @return
      *     possible object is
@@ -71,7 +71,7 @@ public class ActorType {
     }
 
     /**
-     * Imposta il valore della proprietà role.
+     * Sets the value of the role property.
      * 
      * @param value
      *     allowed object is

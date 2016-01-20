@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java per actionType complex type.
+ * <p>Java class for actionType complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="actionType">
@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "actionType")
 @XmlSeeAlso({
-    ProcessActionType.class,
-    SimpleActionType.class
+    SimpleActionType.class,
+    ProcessActionType.class
 })
 public class ActionType {
 
@@ -43,7 +43,7 @@ public class ActionType {
     protected Boolean auto;
 
     /**
-     * Recupera il valore della proprietà name.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
@@ -55,7 +55,7 @@ public class ActionType {
     }
 
     /**
-     * Imposta il valore della proprietà name.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
@@ -67,7 +67,7 @@ public class ActionType {
     }
 
     /**
-     * Recupera il valore della proprietà role.
+     * Gets the value of the role property.
      * 
      * @return
      *     possible object is
@@ -79,7 +79,7 @@ public class ActionType {
     }
 
     /**
-     * Imposta il valore della proprietà role.
+     * Sets the value of the role property.
      * 
      * @param value
      *     allowed object is
@@ -91,7 +91,7 @@ public class ActionType {
     }
 
     /**
-     * Recupera il valore della proprietà auto.
+     * Gets the value of the auto property.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class ActionType {
     }
 
     /**
-     * Imposta il valore della proprietà auto.
+     * Sets the value of the auto property.
      * 
      * @param value
      *     allowed object is

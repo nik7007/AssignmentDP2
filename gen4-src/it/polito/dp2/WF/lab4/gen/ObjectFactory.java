@@ -25,29 +25,21 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ResultOperation_QNAME = new QName("http://www.example.org/Workflow/", "resultOperation");
     private final static QName _WorkflowName_QNAME = new QName("http://www.example.org/Workflow/", "workflowName");
-    private final static QName _TakeOverActionFault_QNAME = new QName("http://www.example.org/Workflow/", "takeOverActionFault");
-    private final static QName _CreateProcessFault_QNAME = new QName("http://www.example.org/Workflow/", "createProcessFault");
     private final static QName _GetWorkflowNameResponse_QNAME = new QName("http://www.example.org/Workflow/", "getWorkflowNameResponse");
-    private final static QName _Out_QNAME = new QName("http://www.example.org/Workflow/", "out");
-    private final static QName _ActionInProcess_QNAME = new QName("http://www.example.org/Workflow/", "actionInProcess");
-    private final static QName _DataCreation_QNAME = new QName("http://www.example.org/Workflow/", "dataCreation");
+    private final static QName _CreateProcessFault_QNAME = new QName("http://www.example.org/Workflow/", "createProcessFault");
+    private final static QName _TakeOverActionFault_QNAME = new QName("http://www.example.org/Workflow/", "takeOverActionFault");
     private final static QName _ActionToComplete_QNAME = new QName("http://www.example.org/Workflow/", "actionToComplete");
+    private final static QName _ActionInProcess_QNAME = new QName("http://www.example.org/Workflow/", "actionInProcess");
+    private final static QName _ResultOperation_QNAME = new QName("http://www.example.org/Workflow/", "resultOperation");
+    private final static QName _DataCreation_QNAME = new QName("http://www.example.org/Workflow/", "dataCreation");
+    private final static QName _Out_QNAME = new QName("http://www.example.org/Workflow/", "out");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: it.polito.dp2.WF.lab4.gen
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link GetWorkflow }
-     * 
-     */
-    public GetWorkflow createGetWorkflow() {
-        return new GetWorkflow();
     }
 
     /**
@@ -59,6 +51,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetWorkflow }
+     * 
+     */
+    public GetWorkflow createGetWorkflow() {
+        return new GetWorkflow();
+    }
+
+    /**
      * Create an instance of {@link ActionInProcessType }
      * 
      */
@@ -67,35 +67,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetProcessName }
+     * Create an instance of {@link GetWorkflowNameResponseType }
      * 
      */
-    public GetProcessName createGetProcessName() {
-        return new GetProcessName();
-    }
-
-    /**
-     * Create an instance of {@link GetWorkflow.LastModTimeAndWorkflow }
-     * 
-     */
-    public GetWorkflow.LastModTimeAndWorkflow createGetWorkflowLastModTimeAndWorkflow() {
-        return new GetWorkflow.LastModTimeAndWorkflow();
-    }
-
-    /**
-     * Create an instance of {@link GetInfoProcessNameFault }
-     * 
-     */
-    public GetInfoProcessNameFault createGetInfoProcessNameFault() {
-        return new GetInfoProcessNameFault();
-    }
-
-    /**
-     * Create an instance of {@link CompleteActionFault }
-     * 
-     */
-    public CompleteActionFault createCompleteActionFault() {
-        return new CompleteActionFault();
+    public GetWorkflowNameResponseType createGetWorkflowNameResponseType() {
+        return new GetWorkflowNameResponseType();
     }
 
     /**
@@ -104,14 +80,6 @@ public class ObjectFactory {
      */
     public ActionToCompleteType createActionToCompleteType() {
         return new ActionToCompleteType();
-    }
-
-    /**
-     * Create an instance of {@link CreateProcess }
-     * 
-     */
-    public CreateProcess createCreateProcess() {
-        return new CreateProcess();
     }
 
     /**
@@ -131,27 +99,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetWorkflowName }
+     * Create an instance of {@link GetInfoProcessNameFault }
      * 
      */
-    public GetWorkflowName createGetWorkflowName() {
-        return new GetWorkflowName();
+    public GetInfoProcessNameFault createGetInfoProcessNameFault() {
+        return new GetInfoProcessNameFault();
     }
 
     /**
-     * Create an instance of {@link GetInfoWorkflowFault }
+     * Create an instance of {@link GetWorkflow.LastModTimeAndWorkflow }
      * 
      */
-    public GetInfoWorkflowFault createGetInfoWorkflowFault() {
-        return new GetInfoWorkflowFault();
+    public GetWorkflow.LastModTimeAndWorkflow createGetWorkflowLastModTimeAndWorkflow() {
+        return new GetWorkflow.LastModTimeAndWorkflow();
     }
 
     /**
-     * Create an instance of {@link GetWorkflowNameResponseType }
+     * Create an instance of {@link GetProcessName }
      * 
      */
-    public GetWorkflowNameResponseType createGetWorkflowNameResponseType() {
-        return new GetWorkflowNameResponseType();
+    public GetProcessName createGetProcessName() {
+        return new GetProcessName();
     }
 
     /**
@@ -163,43 +131,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ActionStatusType }
+     * Create an instance of {@link CompleteActionFault }
      * 
      */
-    public ActionStatusType createActionStatusType() {
-        return new ActionStatusType();
+    public CompleteActionFault createCompleteActionFault() {
+        return new CompleteActionFault();
     }
 
     /**
-     * Create an instance of {@link ActionType }
+     * Create an instance of {@link GetInfoWorkflowFault }
      * 
      */
-    public ActionType createActionType() {
-        return new ActionType();
+    public GetInfoWorkflowFault createGetInfoWorkflowFault() {
+        return new GetInfoWorkflowFault();
     }
 
     /**
-     * Create an instance of {@link ActorType }
+     * Create an instance of {@link CreateProcess }
      * 
      */
-    public ActorType createActorType() {
-        return new ActorType();
+    public CreateProcess createCreateProcess() {
+        return new CreateProcess();
     }
 
     /**
-     * Create an instance of {@link RootType }
+     * Create an instance of {@link GetWorkflowName }
      * 
      */
-    public RootType createRootType() {
-        return new RootType();
+    public GetWorkflowName createGetWorkflowName() {
+        return new GetWorkflowName();
     }
 
     /**
-     * Create an instance of {@link ProcessActionType }
+     * Create an instance of {@link SimpleActionType }
      * 
      */
-    public ProcessActionType createProcessActionType() {
-        return new ProcessActionType();
+    public SimpleActionType createSimpleActionType() {
+        return new SimpleActionType();
     }
 
     /**
@@ -211,6 +179,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ActorType }
+     * 
+     */
+    public ActorType createActorType() {
+        return new ActorType();
+    }
+
+    /**
+     * Create an instance of {@link ProcessActionType }
+     * 
+     */
+    public ProcessActionType createProcessActionType() {
+        return new ProcessActionType();
+    }
+
+    /**
      * Create an instance of {@link SubActionType }
      * 
      */
@@ -219,11 +203,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SimpleActionType }
+     * Create an instance of {@link RootType }
      * 
      */
-    public SimpleActionType createSimpleActionType() {
-        return new SimpleActionType();
+    public RootType createRootType() {
+        return new RootType();
+    }
+
+    /**
+     * Create an instance of {@link ActionType }
+     * 
+     */
+    public ActionType createActionType() {
+        return new ActionType();
+    }
+
+    /**
+     * Create an instance of {@link ActionStatusType }
+     * 
+     */
+    public ActionStatusType createActionStatusType() {
+        return new ActionStatusType();
     }
 
     /**
@@ -243,39 +243,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "resultOperation")
-    public JAXBElement<Boolean> createResultOperation(Boolean value) {
-        return new JAXBElement<Boolean>(_ResultOperation_QNAME, Boolean.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "workflowName")
     public JAXBElement<String> createWorkflowName(String value) {
         return new JAXBElement<String>(_WorkflowName_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "takeOverActionFault")
-    public JAXBElement<String> createTakeOverActionFault(String value) {
-        return new JAXBElement<String>(_TakeOverActionFault_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "createProcessFault")
-    public JAXBElement<String> createCreateProcessFault(String value) {
-        return new JAXBElement<String>(_CreateProcessFault_QNAME, String.class, null, value);
     }
 
     /**
@@ -291,9 +264,27 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "out")
-    public JAXBElement<String> createOut(String value) {
-        return new JAXBElement<String>(_Out_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "createProcessFault")
+    public JAXBElement<String> createCreateProcessFault(String value) {
+        return new JAXBElement<String>(_CreateProcessFault_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "takeOverActionFault")
+    public JAXBElement<String> createTakeOverActionFault(String value) {
+        return new JAXBElement<String>(_TakeOverActionFault_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ActionToCompleteType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "actionToComplete")
+    public JAXBElement<ActionToCompleteType> createActionToComplete(ActionToCompleteType value) {
+        return new JAXBElement<ActionToCompleteType>(_ActionToComplete_QNAME, ActionToCompleteType.class, null, value);
     }
 
     /**
@@ -306,6 +297,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "resultOperation")
+    public JAXBElement<Boolean> createResultOperation(Boolean value) {
+        return new JAXBElement<Boolean>(_ResultOperation_QNAME, Boolean.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
      * 
      */
@@ -315,12 +315,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ActionToCompleteType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "actionToComplete")
-    public JAXBElement<ActionToCompleteType> createActionToComplete(ActionToCompleteType value) {
-        return new JAXBElement<ActionToCompleteType>(_ActionToComplete_QNAME, ActionToCompleteType.class, null, value);
+    @XmlElementDecl(namespace = "http://www.example.org/Workflow/", name = "out")
+    public JAXBElement<String> createOut(String value) {
+        return new JAXBElement<String>(_Out_QNAME, String.class, null, value);
     }
 
 }

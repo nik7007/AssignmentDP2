@@ -13,9 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java per anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -82,9 +82,9 @@ public class GetWorkflow {
 
 
     /**
-     * <p>Classe Java per anonymous complex type.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -115,7 +115,7 @@ public class GetWorkflow {
         protected WorkflowType workflow;
 
         /**
-         * Recupera il valore della proprietà lastModTime.
+         * Gets the value of the lastModTime property.
          * 
          * @return
          *     possible object is
@@ -127,7 +127,7 @@ public class GetWorkflow {
         }
 
         /**
-         * Imposta il valore della proprietà lastModTime.
+         * Sets the value of the lastModTime property.
          * 
          * @param value
          *     allowed object is
@@ -139,7 +139,7 @@ public class GetWorkflow {
         }
 
         /**
-         * Recupera il valore della proprietà workflow.
+         * Gets the value of the workflow property.
          * 
          * @return
          *     possible object is
@@ -151,7 +151,7 @@ public class GetWorkflow {
         }
 
         /**
-         * Imposta il valore della proprietà workflow.
+         * Sets the value of the workflow property.
          * 
          * @param value
          *     allowed object is
