@@ -208,7 +208,7 @@ public class WFInfoSerializer {
         JAXBElement<RootType> jaxbElement = (new ObjectFactory()).createRoot(root);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        Schema schema = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI).newSchema(new File("xsd/Wfinfo.xsd"));
+        Schema schema = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI).newSchema(new File("xsd//WFInfo.xsd"));
         marshaller.setSchema(schema);
         marshaller.marshal(jaxbElement, new File(fileName));
 
