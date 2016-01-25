@@ -4,6 +4,7 @@ package it.polito.dp2.WF.sol4.server.datamanager;
 import it.polito.dp2.WF.lab4.gen.ProcessType;
 import it.polito.dp2.WF.lab4.gen.WorkflowType;
 
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -172,6 +173,9 @@ public class DataManager {
 
     public Map<GregorianCalendar, ProcessHolder> getProcessesByWFName(String wfName) {
         return processMap.get(wfName);
+    }
+    public Collection<ProcessHolder> getWorflowProcesses(String wfName){
+    	return  getProcessesByWFName(wfName).values();
     }
 
     public ProcessHolder getProcess(String wfName, GregorianCalendar date) {

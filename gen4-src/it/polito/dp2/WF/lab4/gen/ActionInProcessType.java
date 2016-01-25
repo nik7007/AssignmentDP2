@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
@@ -26,8 +25,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;attribute name="date" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
- *                 &lt;attribute name="workflow" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
+ *                 &lt;attribute name="date" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+ *                 &lt;attribute name="workflow" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *               &lt;/restriction>
  *             &lt;/complexContent>
  *           &lt;/complexType>
@@ -41,7 +40,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="actor" type="{http://www.example.org/Workflow/}actorType"/>
+ *         &lt;choice>
+ *           &lt;element name="actor" type="{http://www.example.org/Workflow/}actorType"/>
+ *           &lt;element name="actorName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -54,7 +56,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "actionInProcessType", propOrder = {
     "processIdentifier",
     "action",
-    "actor"
+    "actor",
+    "actorName"
 })
 @XmlSeeAlso({
     ActionToCompleteType.class
@@ -65,8 +68,8 @@ public class ActionInProcessType {
     protected ActionInProcessType.ProcessIdentifier processIdentifier;
     @XmlElement(required = true)
     protected ActionInProcessType.Action action;
-    @XmlElement(required = true)
     protected ActorType actor;
+    protected String actorName;
 
     /**
      * Gets the value of the processIdentifier property.
@@ -140,6 +143,30 @@ public class ActionInProcessType {
         this.actor = value;
     }
 
+    /**
+     * Gets the value of the actorName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getActorName() {
+        return actorName;
+    }
+
+    /**
+     * Sets the value of the actorName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setActorName(String value) {
+        this.actorName = value;
+    }
+
 
     /**
      * <p>Java class for anonymous complex type.
@@ -201,8 +228,8 @@ public class ActionInProcessType {
      * &lt;complexType>
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="date" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
-     *       &lt;attribute name="workflow" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
+     *       &lt;attribute name="date" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+     *       &lt;attribute name="workflow" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
      *     &lt;/restriction>
      *   &lt;/complexContent>
      * &lt;/complexType>
@@ -214,13 +241,11 @@ public class ActionInProcessType {
     @XmlType(name = "")
     public static class ProcessIdentifier {
 
-        @XmlAttribute(name = "date", required = true)
+        @XmlAttribute(name = "date")
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar date;
         @XmlAttribute(name = "workflow", required = true)
-        @XmlIDREF
-        @XmlSchemaType(name = "IDREF")
-        protected Object workflow;
+        protected String workflow;
 
         /**
          * Gets the value of the date property.
@@ -251,10 +276,10 @@ public class ActionInProcessType {
          * 
          * @return
          *     possible object is
-         *     {@link Object }
+         *     {@link String }
          *     
          */
-        public Object getWorkflow() {
+        public String getWorkflow() {
             return workflow;
         }
 
@@ -263,10 +288,10 @@ public class ActionInProcessType {
          * 
          * @param value
          *     allowed object is
-         *     {@link Object }
+         *     {@link String }
          *     
          */
-        public void setWorkflow(Object value) {
+        public void setWorkflow(String value) {
             this.workflow = value;
         }
 
