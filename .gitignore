@@ -20,3 +20,4 @@ out
 #random junk
 *.pdf
 temp*
+/bin/

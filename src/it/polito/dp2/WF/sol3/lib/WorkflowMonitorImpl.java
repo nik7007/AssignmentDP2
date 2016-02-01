@@ -3,12 +3,14 @@ package it.polito.dp2.WF.sol3.lib;
 
 import it.polito.dp2.WF.ProcessReader;
 import it.polito.dp2.WF.WorkflowMonitor;
+import it.polito.dp2.WF.WorkflowMonitorException;
 import it.polito.dp2.WF.WorkflowReader;
 import it.polito.dp2.WF.lab3.Refreshable;
 import it.polito.dp2.WF.lab3.gen.*;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -17,14 +19,16 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     private Map<String, WorkflowReader> workflowReaderMap;
 
-    WorkflowInfo proxy;
+    private WorkflowInfo proxy;
 
-    List<String> workflowNames = null;
+    private List<String> workflowNames = null;
 
-    XMLGregorianCalendar lastModTimeWorkflow = null;
+    private XMLGregorianCalendar lastModTimeWorkflow = null;
+   
+    private boolean needExcemption = false;
 
 
-    public WorkflowMonitorImpl() throws MalformedURLException {
+    public WorkflowMonitorImpl() throws MalformedURLException, WorkflowMonitorException {
 
         this.workflowReaderMap = new HashMap<>();
         String url = System.getProperty("it.polito.dp2.WF.sol3.URL");
@@ -32,6 +36,9 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         WorkflowInfoService service = new WorkflowInfoService(new URL(url));
         this.proxy = service.getWorkflowInfoPort();
         this.refresh();
+        if(needExcemption){
+        	throw new WorkflowMonitorException();
+        }
     }
 
     private void getWorkflowNames() {
@@ -43,7 +50,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     }
 
-    private void getWorkflowForServer() throws UnknownNames_Exception {
+    private void getWorkflowForServer() throws UnknownNames_Exception, WorkflowMonitorException {
 
         Holder<XMLGregorianCalendar> holderLastWorkflow = new Holder<>();
         Holder<List<Workflow>> workflow = new Holder<>();
@@ -74,7 +81,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     }
 
-    private void createWorkflow(Workflow workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) {
+    private void createWorkflow(Workflow workflow, Map<String, List<String>> actionConnector, Map<String, ActionReaderImp> allActions) throws WorkflowMonitorException {
 
         WorkflowReader workflowReader = createWorkflow(workflow);
 
@@ -87,7 +94,8 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
             try {
                 ((WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
             } catch (WorkflowReaderException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+            	throw new WorkflowMonitorException();
             }
         }
 
@@ -151,11 +159,13 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     public void refresh() {
 
         this.getWorkflowNames();
+        needExcemption = false;
         try {
             this.getWorkflowForServer();
-        } catch (UnknownNames_Exception e) {
+        } catch (UnknownNames_Exception | WorkflowMonitorException e) {
             e.printStackTrace();
             System.err.println("Refresh failed!");
+            needExcemption = true;
         }
     }
 }
