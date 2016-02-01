@@ -17,8 +17,9 @@ public class WorkflowMonitorFactory extends it.polito.dp2.WF.WorkflowMonitorFact
         try {
             return new WorkflowMonitorImpl();
         } catch (MalformedURLException | GetInfoWorkflowFault_Exception | GetInfoProcessNameFault_Exception | WorkflowReaderException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	throw new WorkflowMonitorException();
         }
-        return null;
+       // return null;
     }
 }
