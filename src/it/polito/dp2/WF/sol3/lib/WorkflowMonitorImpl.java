@@ -10,7 +10,6 @@ import it.polito.dp2.WF.lab3.gen.*;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Holder;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -24,7 +23,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     private List<String> workflowNames = null;
 
     private XMLGregorianCalendar lastModTimeWorkflow = null;
-   
+
     private boolean needExcemption = false;
 
 
@@ -36,8 +35,8 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         WorkflowInfoService service = new WorkflowInfoService(new URL(url));
         this.proxy = service.getWorkflowInfoPort();
         this.refresh();
-        if(needExcemption){
-        	throw new WorkflowMonitorException();
+        if (needExcemption) {
+            throw new WorkflowMonitorException();
         }
     }
 
@@ -95,7 +94,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
                 ((WorkflowReaderImp) workflowReader).addActionReader(actionReaderImp);
             } catch (WorkflowReaderException e) {
                 //e.printStackTrace();
-            	throw new WorkflowMonitorException();
+                throw new WorkflowMonitorException();
             }
         }
 
