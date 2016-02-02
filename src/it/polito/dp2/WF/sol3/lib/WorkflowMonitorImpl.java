@@ -24,7 +24,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
 
     private XMLGregorianCalendar lastModTimeWorkflow = null;
 
-    private boolean needExcemption = false;
+    private boolean needException = false;
 
 
     public WorkflowMonitorImpl() throws MalformedURLException, WorkflowMonitorException {
@@ -35,7 +35,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
         WorkflowInfoService service = new WorkflowInfoService(new URL(url));
         this.proxy = service.getWorkflowInfoPort();
         this.refresh();
-        if (needExcemption) {
+        if (needException) {
             throw new WorkflowMonitorException();
         }
     }
@@ -158,13 +158,13 @@ public class WorkflowMonitorImpl implements WorkflowMonitor, Refreshable {
     public void refresh() {
 
         this.getWorkflowNames();
-        needExcemption = false;
+        needException = false;
         try {
             this.getWorkflowForServer();
         } catch (UnknownNames_Exception | WorkflowMonitorException e) {
             e.printStackTrace();
             System.err.println("Refresh failed!");
-            needExcemption = true;
+            needException = true;
         }
     }
 }
