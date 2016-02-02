@@ -4,7 +4,6 @@ package it.polito.dp2.WF.sol1.lib;
 import it.polito.dp2.WF.*;
 import it.polito.dp2.WF.sol1.reference.DateFormat;
 import it.polito.dp2.WF.sol1.reference.XMLFormat;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,7 +13,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +41,7 @@ public class WorkflowMonitorImpl implements WorkflowMonitor {
             createElements(document);
         } catch (ParserConfigurationException | SerializerException | WorkflowReaderException | WorkflowMonitorException | ParseException | IOException | SAXException e) {
             //e.printStackTrace();
-        	throw new WorkflowMonitorException();
+            throw new WorkflowMonitorException();
         }
 
 
