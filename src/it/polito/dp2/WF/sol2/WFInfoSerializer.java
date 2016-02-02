@@ -1,34 +1,11 @@
 package it.polito.dp2.WF.sol2;
 
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
-import it.polito.dp2.WF.ActionReader;
-import it.polito.dp2.WF.ActionStatusReader;
-import it.polito.dp2.WF.Actor;
-import it.polito.dp2.WF.ProcessActionReader;
-import it.polito.dp2.WF.ProcessReader;
-import it.polito.dp2.WF.SimpleActionReader;
-import it.polito.dp2.WF.WorkflowMonitor;
-import it.polito.dp2.WF.WorkflowMonitorException;
-import it.polito.dp2.WF.WorkflowReader;
-import it.polito.dp2.WF.sol2.jaxb.ActionStatusType;
-import it.polito.dp2.WF.sol2.jaxb.ActionType;
-import it.polito.dp2.WF.sol2.jaxb.ActorType;
-import it.polito.dp2.WF.sol2.jaxb.ObjectFactory;
-import it.polito.dp2.WF.sol2.jaxb.ProcessActionType;
-import it.polito.dp2.WF.sol2.jaxb.ProcessType;
-import it.polito.dp2.WF.sol2.jaxb.RootType;
-import it.polito.dp2.WF.sol2.jaxb.SimpleActionType;
-import it.polito.dp2.WF.sol2.jaxb.SubActionType;
-import it.polito.dp2.WF.sol2.jaxb.WorkflowType;
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import it.polito.dp2.WF.*;
+import it.polito.dp2.WF.sol2.jaxb.*;
 import it.polito.dp2.WF.sol2.lib.SerializerException;
 import it.polito.dp2.WF.sol2.reference.Reference;
-
-import java.io.File;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -36,10 +13,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import java.io.File;
+import java.util.*;
 
-import org.xml.sax.SAXException;
-
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 public class WFInfoSerializer {
 
@@ -90,16 +67,15 @@ public class WFInfoSerializer {
         for (ActionStatusReader actionStatusReader : actionStatus) {
 
             boolean flag = false;
-            for(ActionType actionType :workflowType.getSimpleActionOrProcessAction()){
-                if(actionType.getName().equals(actionStatusReader.getActionName()))
-                {
+            for (ActionType actionType : workflowType.getSimpleActionOrProcessAction()) {
+                if (actionType.getName().equals(actionStatusReader.getActionName())) {
                     flag = true;
                     break;
                 }
             }
 
-            if(!flag)
-                throw new SerializerException(actionStatusReader.getActionName()+ "does not exist!");
+            if (!flag)
+                throw new SerializerException(actionStatusReader.getActionName() + "does not exist!");
 
             actionStatusTypes.add(createActionStatus(actionStatusReader));
         }
