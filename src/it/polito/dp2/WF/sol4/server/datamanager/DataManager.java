@@ -53,7 +53,7 @@ public class DataManager {
         }
     }
 
-    public List<WorkflowHolder> getWorkflowByNames(List<String> names) {
+    public List<WorkflowHolder> getWorkflowByNames(List<String> names) throws GetWorkflowNameException {
 
         if (names == null)
             return null;
@@ -64,11 +64,8 @@ public class DataManager {
             if (name != null) {
                 WorkflowHolder wH = this.workflowMap.get(name);
 
-                if (wH == null) {
-                    WorkflowHolder.WorkflowHolderError error = new WorkflowHolder.WorkflowHolderError(name);
-                    result.clear();
-                    result.add(error);
-                    return result;
+                if (wH == null || isEmpty) {
+                	throw new GetWorkflowNameException(name);
                 }
 
                 result.add(wH);
@@ -85,7 +82,7 @@ public class DataManager {
 
     public GregorianCalendar addNewProcess(ProcessType process) {
 
-        if (process == null)
+        if (process == null || isEmpty)
             return null;
 
         WorkflowType workflow = (WorkflowType) process.getWorkflow();
@@ -95,6 +92,9 @@ public class DataManager {
 
         String name = workflow.getName();
         GregorianCalendar date = process.getDate().toGregorianCalendar();
+        
+        if(!containWorkflow(name))
+        	return null;
 
         boolean flag = true;
 
@@ -128,7 +128,7 @@ public class DataManager {
 
     public synchronized boolean isProcessPresent(ProcessType process) {
 
-        if (process == null)
+        if (process == null || isEmpty)
             return false;
 
         WorkflowType workflow = (WorkflowType) process.getWorkflow();

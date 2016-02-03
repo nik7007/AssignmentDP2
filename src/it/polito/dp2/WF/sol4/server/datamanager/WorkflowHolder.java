@@ -14,10 +14,6 @@ public class WorkflowHolder {
         this.workflow = workflow;
     }
 
-    private WorkflowHolder() {
-
-    }
-
     public GregorianCalendar getLastMod() {
         return lastMod;
     }
@@ -29,19 +25,6 @@ public class WorkflowHolder {
     public void setWorkflow(WorkflowType workflow) {
         lastMod = new GregorianCalendar();
         this.workflow = workflow;
-    }
-
-    public static class WorkflowHolderError extends WorkflowHolder {
-        String name;
-
-        public WorkflowHolderError(String name) {
-            super();
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 
 }

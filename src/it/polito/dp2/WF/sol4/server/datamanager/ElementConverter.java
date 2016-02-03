@@ -39,12 +39,18 @@ public class ElementConverter {
             Set<WorkflowReader> workflowSet = monitor.getWorkflows();
             Set<ProcessReader> processSet = monitor.getProcesses();
 
-            for (WorkflowReader workflowReader : workflowSet)
-                dataManager.addWorkflow(convert.createWokWorkflow(workflowReader));
-            for (ProcessReader processReader : processSet)
-                dataManager.addNewProcess(convert.createProcess(processReader));
+            try{
+            	
+            	for (WorkflowReader workflowReader : workflowSet)
+            		dataManager.addWorkflow(convert.createWokWorkflow(workflowReader));
+            	for (ProcessReader processReader : processSet)
+            		dataManager.addNewProcess(convert.createProcess(processReader));            
 
-            convert.clear();
+            	convert.clear();
+            	
+            } catch(Exception e){
+            	dataManager.setEmpty(true);
+            }
 
         }
 

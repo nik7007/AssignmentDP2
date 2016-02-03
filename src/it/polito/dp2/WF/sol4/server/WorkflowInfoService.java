@@ -2,14 +2,17 @@ package it.polito.dp2.WF.sol4.server;
 
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+
 import it.polito.dp2.WF.lab4.gen.*;
 import it.polito.dp2.WF.sol4.server.datamanager.DataManager;
+import it.polito.dp2.WF.sol4.server.datamanager.GetWorkflowNameException;
 import it.polito.dp2.WF.sol4.server.datamanager.ProcessHolder;
 import it.polito.dp2.WF.sol4.server.datamanager.WorkflowHolder;
 import it.polito.dp2.WF.sol4.server.reference.Reference;
 
 import javax.jws.WebService;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -86,28 +89,26 @@ public class WorkflowInfoService implements WorkflowInfoInterface {
     @Override
     public GetWorkflow getInfoWorkflow(GetWorkflowByName parameters) throws GetInfoWorkflowFault_Exception {
 
-        List<WorkflowHolder> wfList = DM.getWorkflowByNames(parameters.getWorkflowName());
+        List<WorkflowHolder> wfList;
+		try {			
+			wfList = DM.getWorkflowByNames(parameters.getWorkflowName());			
+		} catch (GetWorkflowNameException exc) {
+			//exc.printStackTrace();
+			String errMessage = exc.getMessage();
+            GetInfoWorkflowFault e = new GetInfoWorkflowFault();
+            e.setGetInfoWorkflowFault(errMessage);
+            throw new GetInfoWorkflowFault_Exception(errMessage, e);
+		}
 
         if (wfList == null) {
+        	
             String errMessage = "ERROR";
             GetInfoWorkflowFault e = new GetInfoWorkflowFault();
             e.setGetInfoWorkflowFault(errMessage);
             throw new GetInfoWorkflowFault_Exception(errMessage, e);
 
         }
-
-        if (wfList.size() == 1) {
-            WorkflowHolder holder = wfList.get(0);
-
-            if (holder instanceof WorkflowHolder.WorkflowHolderError) {
-                WorkflowHolder.WorkflowHolderError error = (WorkflowHolder.WorkflowHolderError) holder;
-                String wfName = error.getName();
-                String errMessage = wfName + " does not exist!";
-                GetInfoWorkflowFault e = new GetInfoWorkflowFault();
-                e.setGetInfoWorkflowFault(errMessage);
-                throw new GetInfoWorkflowFault_Exception(errMessage, e);
-            }
-        }
+        
         GetWorkflow getWorkflow = new GetWorkflow();
         for (WorkflowHolder holder : wfList)
             getWorkflow.getLastModTimeAndWorkflow().add(createElement(new XMLGregorianCalendarImpl(holder.getLastMod()), holder.getWorkflow()));
