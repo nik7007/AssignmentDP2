@@ -5,6 +5,8 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 import it.polito.dp2.WF.*;
 import it.polito.dp2.WF.lab4.gen.*;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 
 public class DataConvert {
@@ -19,7 +21,7 @@ public class DataConvert {
         this.map = map;
     }
 
-    public void clear(){
+    public void clear() {
         this.map.clear();
     }
 
@@ -110,7 +112,7 @@ public class DataConvert {
         WorkflowType workflowType = getWorkflowType(process.getWorkflow().getName());
         processType.setWorkflow(workflowType);
 
-        processType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) process.getStartTime()));
+        processType.setDate(convertCalendar(process.getStartTime()));
 
         List<ActionStatusReader> actionStatus = process.getStatus();
         List<ActionStatusType> actionStatusTypes = processType.getActionStatus();
@@ -132,13 +134,30 @@ public class DataConvert {
         actionStatusType.setTerminated(actionStatus.isTerminated());
 
         if (actionStatus.getTerminationTime() != null)
-            actionStatusType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) actionStatus.getTerminationTime()));
+            actionStatusType.setDate(convertCalendar(actionStatus.getTerminationTime()));
 
         if (actor != null)
             actionStatusType.setActor(createActor(actor));
 
         return actionStatusType;
 
+    }
+
+    private XMLGregorianCalendar convertCalendar(Calendar calendar) {
+
+        XMLGregorianCalendar cal;
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTimeInMillis(calendar.getTimeInMillis());
+
+        try {
+            cal = javax.xml.datatype.DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+
+        } catch (DatatypeConfigurationException e) {
+            //e.printStackTrace();
+            cal = new XMLGregorianCalendarImpl(gregorianCalendar);
+        }
+
+        return cal;
     }
 
     public ActorType createActor(Actor actor) {
