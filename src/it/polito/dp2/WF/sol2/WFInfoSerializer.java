@@ -11,6 +11,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -34,7 +36,7 @@ public class WFInfoSerializer {
         root = createRoot(monitor);
     }
 
-    RootType createRoot(WorkflowMonitor monitor) throws SerializerException {
+    private RootType createRoot(WorkflowMonitor monitor) throws SerializerException {
 
         RootType root = new RootType();
 
@@ -53,13 +55,13 @@ public class WFInfoSerializer {
         return root;
     }
 
-    ProcessType createProcess(ProcessReader process) throws SerializerException {
+    private ProcessType createProcess(ProcessReader process) throws SerializerException {
 
         ProcessType processType = new ProcessType();
         WorkflowType workflowType = getWorkflowType(process.getWorkflow().getName());
         processType.setWorkflow(workflowType);
 
-        processType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) process.getStartTime()));
+        processType.setDate(convertCalendar((GregorianCalendar) process.getStartTime()));
 
         List<ActionStatusReader> actionStatus = process.getStatus();
         List<ActionStatusType> actionStatusTypes = processType.getActionStatus();
@@ -84,7 +86,7 @@ public class WFInfoSerializer {
         return processType;
     }
 
-    ActionStatusType createActionStatus(ActionStatusReader actionStatus) {
+    private ActionStatusType createActionStatus(ActionStatusReader actionStatus) {
 
         ActionStatusType actionStatusType = new ActionStatusType();
         Actor actor = actionStatus.getActor();
@@ -94,7 +96,7 @@ public class WFInfoSerializer {
         actionStatusType.setTerminated(actionStatus.isTerminated());
 
         if (actionStatus.getTerminationTime() != null)
-            actionStatusType.setDate(new XMLGregorianCalendarImpl((GregorianCalendar) actionStatus.getTerminationTime()));
+            actionStatusType.setDate(convertCalendar((GregorianCalendar) actionStatus.getTerminationTime()));
 
         if (actor != null)
             actionStatusType.setActor(createActor(actor));
@@ -103,7 +105,7 @@ public class WFInfoSerializer {
 
     }
 
-    ActorType createActor(Actor actor) {
+    private ActorType createActor(Actor actor) {
         ActorType actorType = new ActorType();
 
         actorType.setName(actor.getName());
@@ -112,8 +114,25 @@ public class WFInfoSerializer {
         return actorType;
     }
 
+    private XMLGregorianCalendar convertCalendar(Calendar calendar) {
 
-    WorkflowType createWokWorkflow(WorkflowReader workflow, WorkflowType workflowType) {
+        XMLGregorianCalendar cal;
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTimeInMillis(calendar.getTimeInMillis());
+
+        try {
+            cal = javax.xml.datatype.DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+
+        } catch (DatatypeConfigurationException e) {
+            //e.printStackTrace();
+            cal = new XMLGregorianCalendarImpl(gregorianCalendar);
+        }
+
+        return cal;
+    }
+
+
+    private WorkflowType createWokWorkflow(WorkflowReader workflow, WorkflowType workflowType) {
 
         workflowType.setName(workflow.getName());
 
@@ -126,14 +145,14 @@ public class WFInfoSerializer {
         return workflowType;
     }
 
-    WorkflowType createWokWorkflow(WorkflowReader workflow) {
+    private WorkflowType createWokWorkflow(WorkflowReader workflow) {
         WorkflowType workflowType = getWorkflowType(workflow.getName());
 
         return createWokWorkflow(workflow, workflowType);
     }
 
 
-    ActionType createAction(ActionReader action) {
+    private ActionType createAction(ActionReader action) {
         ActionType actionType = null;
 
 
@@ -170,7 +189,7 @@ public class WFInfoSerializer {
 
     }
 
-    SubActionType createSubAction(ActionReader action) {
+    private SubActionType createSubAction(ActionReader action) {
 
         SubActionType subAction = new SubActionType();
 
@@ -190,7 +209,7 @@ public class WFInfoSerializer {
 
     }
 
-    WorkflowType getWorkflowType(String name) {
+    private WorkflowType getWorkflowType(String name) {
 
         WorkflowType workflowType;
         if (map.containsKey(name)) {
